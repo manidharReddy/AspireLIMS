@@ -11,6 +11,7 @@
 #import "FAImageView.h"
 #import "UIImage+FontAwesome.h"
 #import "ViewController.h"
+#import "JDAvatarProgress.h"
 @interface LeftSlideMenuTableViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 @property (readwrite , nonatomic) NSString*patientId;
 @property (readwrite , nonatomic) NSString*patientName;
@@ -18,6 +19,8 @@
 @property (strong, nonatomic) IBOutlet UIImageView *userprofileImgView;
 @property (strong, nonatomic) IBOutlet UILabel *userNameLble;
 @property (strong, nonatomic) IBOutlet UILabel *userEmailLble;
+@property (strong, nonatomic) IBOutlet JDAvatarProgress *jdAvatarProfileImage;
+@property (readwrite , nonatomic) NSString*patientProfileImage;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (readwrite , nonatomic) UIImage*profileImage;

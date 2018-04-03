@@ -62,12 +62,25 @@
     self.userNameLble.text = self.patientName;
     self.userEmailLble.text = self.patientEmail;
     [self.userprofileImgView setImage:self.profileImage];
-    
     self.userprofileImgView.layer.cornerRadius = self.userprofileImgView.frame.size.width/2;
     self.userprofileImgView.layer.borderWidth = 2;
     self.userprofileImgView.layer.borderColor = [UIColor whiteColor].CGColor;
     self.userprofileImgView.clipsToBounds = YES;
-    
+
+    /*
+    [self.jdAvatarProfileImage setImageWithURL:[NSURL URLWithString:self.patientProfileImage]
+                            placeholder:nil
+                          progressColor:[UIColor orangeColor]
+                    progressBarLineWidh:JDAvatarDefaultProgressBarLineWidth
+                            borderWidth:JDAvatarDefaultBorderWidth
+                            borderColor:nil
+                             completion:^(UIImage * resultImage, NSError * error){
+                                 
+                                 NSLog(@"image => %@", resultImage);
+                                 NSLog(@"error => %@", error);
+                                 
+                             }];
+     */
     
 }
 -(void)setTitlesIconsForMenu{
@@ -119,7 +132,11 @@
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return (self.tableView.bounds.size.height/menulist_arr.count);
+    if(self.view.bounds.size.width<self.view.bounds.size.height){
+        return (self.tableView.bounds.size.height/menulist_arr.count);
+        
+    }
+    return (self.tableView.bounds.size.height*0.4);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -428,7 +445,9 @@
     //[navigationController pushViewController:vc animated:YES];
 }
 
-
+-(void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
+        [self.tableView reloadData];
+}
 
 
 

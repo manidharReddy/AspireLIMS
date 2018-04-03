@@ -232,7 +232,10 @@
  }
  */
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(self.view.frame.size.width<self.view.frame.size.height){
     return tableView.bounds.size.height*0.08;
+    }
+    return tableView.bounds.size.height*0.2;
 }
 
 /*
@@ -440,6 +443,8 @@
 }
 
 
-
+-(void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
+    [self.tableView reloadData];
+}
 
 @end

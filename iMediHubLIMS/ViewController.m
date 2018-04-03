@@ -54,6 +54,7 @@
     leftSideMenuViewController.patientName = [self.userLogin.firstname stringByAppendingString:self.userLogin.lastname];
     leftSideMenuViewController.patientEmail = self.userLogin.emailid;
     leftSideMenuViewController.profileImage = [UIImage imageWithData:self.userLogin.profileimage];
+    //leftSideMenuViewController.patientProfileImage = [NSString stringWithFormat:@"%@",self.userLogin.profileimage];
     leftSideMenuViewController.patientId = self.patientId;
     [self.menuContainerViewController setLeftMenuViewController:leftSideMenuViewController];
    
@@ -237,6 +238,10 @@
     dropDown = nil;
     
 }
+-(BOOL)shouldAutorotate{
+    
+    return true;
+}
 //////////////////////////////////Finished Drop Down/////////////////////////
 
 //////////////////////////////TableView Delegate Methods/////////////////////
@@ -247,14 +252,18 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
     //return recentListArry.count;
     return 1;
-    
 }
-
+-(void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
+    NSLog(@"orientation change");
+    [self.testlist_tblview reloadData];
+}
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.testlist_tblview.bounds.size.height/3;
+    if (self.view.frame.size.width<self.view.frame.size.height) {
+        return self.testlist_tblview.bounds.size.height/3;
+    }
+    return self.testlist_tblview.bounds.size.height*0.8;
 }
 
 
