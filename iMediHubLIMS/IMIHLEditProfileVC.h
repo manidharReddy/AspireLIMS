@@ -12,6 +12,7 @@
 #import "UIImage+FontAwesome.h"
 #import "TextFieldValidator.h"
 #import "MBProgressHUD.h"
+#import "IMIHLLogin.h"
 @interface IMIHLEditProfileVC : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate,UIAlertViewDelegate>
 @property (strong,nonatomic)NSData*imagedata;
 @property (strong,nonatomic)NSString*image_str;
@@ -36,6 +37,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *maleicon_btn;
 @property (strong, nonatomic) IBOutlet UIButton *femaleicon_btn;
 @property (strong, nonatomic) NSString*patientid_str;
+@property (strong, nonatomic) IMIHLLogin*loginInfo;
 - (IBAction)profileImageUploadClick:(id)sender;
 - (IBAction)genderMaleClick:(id)sender;
 - (IBAction)genderFemaleClick:(id)sender;

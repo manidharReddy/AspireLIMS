@@ -60,7 +60,10 @@
     return self.services_arr.count;
 }
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return (self.serviceListTableView.bounds.size.height)*0.2;
+    if (self.view.frame.size.width<self.view.frame.size.height) {
+        return (self.serviceListTableView.bounds.size.height)*0.18;
+    }
+    return (self.serviceListTableView.bounds.size.height)*0.15;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:
@@ -146,5 +149,8 @@
     // Pass the selected object to the new view controller.
 }
 */
+-(void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
+    [self.serviceListTableView reloadData];
+}
 
 @end

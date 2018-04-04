@@ -21,7 +21,7 @@
 -(int)feedbackService:(NSString*)patientid :(NSString*)feedbacktype :(NSString*)feedbackcontent;
 -(int)changepasswordService:(NSString*)patientid :(NSString*)currentPass :(NSString*)changePass :(NSString*)reenterPass;
 -(int)getAboutUsService:(NSString*)aboutid;
--(int)profileUpdateService:(NSString*)patientid :(NSString*)firstname :(NSString*)lastname :(NSString*)gender :(NSString*)dob :(NSString*)emailid :(NSData*)filedata;
+-(void)profileUpdateService:(NSString*)patientid :(NSString*)firstname :(NSString*)lastname :(NSString*)gender :(NSString*)dob :(NSString*)emailid  :(NSString*)mobilenumber :(NSData*)filedata :(void (^)(NSInteger))handler;
 -(int)createAppointment:(NSString*)patientId :(NSString*)appointmentDate :(NSString*)locationid :(NSString*)departmentId :(NSString*)serviceId;
 -(int)createDoctorAppointment:(NSString*)appointmentDate appointmentTime:(NSString*)appointmentTime doctorId:(NSString*)doctorId patientId:(NSString*)patientId;
 -(int)getSearchResults:(NSString*)patientid :(NSString*)testid;

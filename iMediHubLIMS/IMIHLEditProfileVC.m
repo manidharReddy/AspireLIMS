@@ -13,6 +13,7 @@
 #import "IMIHLDBManager.h"
 #import "IMIHLMyProfile.h"
 #import "TOCropViewController.h"
+#import "IMIHLLogin.h"
 #define REGEX_USER_NAME_LIMIT @"^.{1,10}$"
 #define REGEX_USER_NAME @"[A-Za-z0-9]{1,10}"
 #define REGEX_EMAIL @"[A-Z0-9a-z._%+-]{3,}+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
@@ -65,13 +66,13 @@
     
     self.update_btn.layer.cornerRadius = self.update_btn.bounds.size.height/2;
     self.update_btn.clipsToBounds = YES;
-   _update_btn.enabled=NO;
+   //_update_btn.enabled=NO;
     _dob_txtfld.enabled=NO;
-    _emailid_txtfld.enabled=NO;
+   // _emailid_txtfld.enabled=NO;
     _firstname_txtfld.enabled=NO;
     _patientname_txtfld.enabled=NO;
-    _genderflag_btn.enabled=NO;
-_genderflagfmail_btn.enabled=NO;
+    //_genderflag_btn.enabled=NO;
+//_genderflagfmail_btn.enabled=NO;
 
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -110,18 +111,18 @@ _genderflagfmail_btn.enabled=NO;
 }
 
 -(void)retriveProfile{
-    IMIHLLogin*loginInfo = [self getUserInfo];
+    self.loginInfo = [self getUserInfo];
     //NSString*userName = loginInfo.firstname
     //self.firstname_txtfld.text = @"Helloo";
     [MBProgressHUD hideHUDForView:self.view animated:YES];
    
-    self.firstname_txtfld.text =[NSString stringWithFormat:@"%@",loginInfo.firstname];
+    self.firstname_txtfld.text =[NSString stringWithFormat:@"%@",self.loginInfo.firstname];
     NSLog(@"FirstNameCheck:%@",self.firstname_txtfld.text);
-    self.patientname_txtfld.text = [NSString stringWithFormat:@"%@",loginInfo.firstname];
-    NSLog(@"FirstName:%@",loginInfo.firstname);
+    self.patientname_txtfld.text = [NSString stringWithFormat:@"%@",self.loginInfo.firstname];
+    NSLog(@"FirstName:%@",self.loginInfo.firstname);
     [self.genderflag_btn setTitle:@"" forState:UIControlStateNormal];
     [self.genderflagfmail_btn setTitle:@"" forState:UIControlStateNormal];
-    if ([loginInfo.gender intValue]==2) {
+    if ([self.loginInfo.gender intValue]==2) {
        
         
         [self.genderflag_btn setImage:[UIImage imageWithIcon:@"fa-circle-o" backgroundColor:[UIColor clearColor] iconColor:[UIColor blackColor] fontSize:25] forState:UIControlStateNormal];
@@ -132,12 +133,12 @@ _genderflagfmail_btn.enabled=NO;
         
         [self.genderflagfmail_btn setImage:[UIImage imageWithIcon:@"fa-circle-o" backgroundColor:[UIColor clearColor] iconColor:[UIColor blackColor] fontSize:25] forState:UIControlStateNormal];
     }
-    self.patientid_str = [NSString stringWithFormat:@"%@",loginInfo.patientid];
-    self.genderstr = [NSString stringWithFormat:@"%@",loginInfo.gender];
-    self.dob_txtfld.text = [NSString stringWithFormat:@"%@",loginInfo.dob];
-    self.dob_str = [NSString stringWithFormat:@"%@",loginInfo.dob];
+    self.patientid_str = [NSString stringWithFormat:@"%@",self.loginInfo.patientid];
+    self.genderstr = [NSString stringWithFormat:@"%@",self.loginInfo.gender];
+    self.dob_txtfld.text = [NSString stringWithFormat:@"%@",self.loginInfo.dob];
+    self.dob_str = [NSString stringWithFormat:@"%@",self.loginInfo.dob];
     
-    self.emailid_txtfld.text = [NSString stringWithFormat:@"%@",loginInfo.emailid];
+    self.emailid_txtfld.text = [NSString stringWithFormat:@"%@",self.loginInfo.emailid];
     
     
     
@@ -146,7 +147,7 @@ _genderflagfmail_btn.enabled=NO;
     
     
     // //NSLog(@"image check out:%@",[patientinfo_arr objectAtIndex:8]);
-    self.imagedata = loginInfo.profileimage;
+    self.imagedata = self.loginInfo.profileimage;
     //NSLog(@"image_data:%@",image_data);
     /*
      NSString*imglength = [patientinfo_arr objectAtIndex:8];
@@ -829,7 +830,8 @@ _genderflagfmail_btn.enabled=NO;
 - (IBAction)submit:(id)sender {
     if([self.patientname_txtfld validate] & [self.firstname_txtfld validate]&[self.emailid_txtfld validate] & self.genderstr!=nil & self.genderstr!=NULL&self.imagedata!=nil&self.imagedata!=NULL){
         [self callLoader];
-        [self performSelector:@selector(patientInfoUpdate) withObject:nil afterDelay:0.1];
+        //[self performSelector:@selector(patientInfoUpdate) withObject:nil afterDelay:0.1];
+        [self patientInfoUpdate];
     }
     
 }
@@ -842,47 +844,55 @@ _genderflagfmail_btn.enabled=NO;
     
     // if ([restlogin login:txtUserName.text :txtPassword.text]==200) {
     
-    int statuscode =[restupdate profileUpdateService:self.patientid_str :self.firstname_txtfld.text :self.patientname_txtfld.text :self.genderstr :self.dob_txtfld.text :self.emailid_txtfld.text :self.imagedata];
-    if (statuscode==200) {
-        //IMIHLLogin*loginupdate = [[IMIHLLogin alloc]init];
-        //NSLog(@" update patientid login:%@",self.patientid_str);
-        //[loginupdate getpatientInfo:self.patientid_str];
-        /*
-         IMIHLLogin*login = [[IMIHLLogin alloc]init];
-         //NSLog(@"updatehdfdggdh");
-         //NSLog(@"restupdateresultdcn:%@",restupdate.restresult_dict);
-         IMIHLLogin*loginresult = [login getLoginResult:restupdate.restresult_dict];
-         //NSLog(@"loginresult:%@",loginresult.firstname);
-         */
-       // IMIHLDBManager *dbmanager = [IMIHLDBManager getSharedInstance];
-        //NSLog(@"dbmanager:%@",dbmanager);
-        
-        //BOOL isSuccess = [dbmanager updatePatientinfo:self.patientid_str :self.firstname_txtfld.text :self.patientname_txtfld.text :self.genderstr :self.dob_txtfld.text :self.emailid_txtfld.text :self.imagedata];
-        
-        //NSLog(@"isSuccess:%d",isSuccess);
-        //if (isSuccess==YES) {
-            //NSLog(@"PatientInfo update in db sucess");
-            //[self loadViewControllerFromStoryBoard:@"dashboardvc"];
+   // int statuscode =[restupdate profileUpdateService:self.patientid_str :self.firstname_txtfld.text :self.patientname_txtfld.text :self.genderstr :self.dob_txtfld.text :self.emailid_txtfld.text :self.imagedata];
+    NSLog(@"self.genderstr:%@",self.genderstr);
+    NSLog(@"self.patientid_str:%@",self.patientid_str);
+    NSLog(@"self.firstname_txtfld.text:%@",self.firstname_txtfld.text);
+    NSLog(@"self.patientname_txtfld.text:%@",self.patientname_txtfld.text);
+    NSLog(@"self.dob_txtfld.text:%@",self.dob_txtfld.text);
+    NSLog(@"self.emailid_txtfld.text:%@",self.emailid_txtfld.text);
+    NSLog(@"self.loginInfo.mobile:%@",self.loginInfo.mobile);
+    NSLog(@"self.imagedata:%@",self.imagedata);
+    
+    
+    [restupdate profileUpdateService:self.patientid_str :self.firstname_txtfld.text :self.patientname_txtfld.text :self.genderstr :self.dob_txtfld.text :self.emailid_txtfld.text :self.loginInfo.mobile :self.imagedata :^(NSInteger response) {
+    
+        if (response==200) {
             
             [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [self.loginInfo setProfileimage:self.imagedata];
+            [self.loginInfo setFirstname:self.firstname_txtfld.text];
+            [self.loginInfo setLastname:self.patientname_txtfld.text];
+            [self.loginInfo setGender:self.genderstr];
+            [self.loginInfo setDob:self.dob_txtfld.text];
             
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.loginInfo];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"userprofiles"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [self showAlertController:@"Your profile has been successfully updated"];
             self.pageid_str=@"edit";
             [self loadViewControllerFromStoryBoard:@"myprofileid"];
-            [self showAlertController:@"Success"];
+            //[self goBack];
+           
             
             
-       // }else{
+            // }else{
             //NSLog(@"PatientInfo insert in db failed");
-        //}
-        
-    }else if(statuscode==0){
-        [self showAlertController:@"No Network Connection"];
-    }else{
-        ////NSLog(@"Error Message:%@",[restupdate.restresult_dict objectForKey:@"message"]);
-        
-        [self showAlertController:@"ProfileUpdate failed"];
-        
-    }
+            //}
+            
+        }else if(response==0){
+            [self showAlertController:@"No Network Connection"];
+        }else{
+            NSLog(@"Status Code:%ldl",(long)response);
+            NSLog(@"Error Message:%@",[restupdate.restresult_dict objectForKey:@"message"]);
+            
+            [self showAlertController:@"ProfileUpdate failed"];
+            
+        }
+    }];
+    
+   
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 -(void)showAlertController:(NSString*)alrtmsg{

@@ -413,9 +413,15 @@ return statuscode;
 }
 
 /*Profile Update and Upload ProfileImage*/
--(int)profileUpdateService:(NSString*)patientid :(NSString*)firstname :(NSString*)lastname :(NSString*)gender :(NSString*)dob :(NSString*)emailid :(NSData*)filedata{
-   statuscode = [self uploadData:[NSString stringWithFormat:@"%@/update/updatedetails",IMIHLRestPathName] :patientid :firstname :lastname :gender :dob :emailid :filedata];
-    return statuscode;
+
+    
+-(void)profileUpdateService:(NSString*)patientid :(NSString*)firstname :(NSString*)lastname :(NSString*)gender :(NSString*)dob :(NSString*)emailid  :(NSString*)mobilenumber :(NSData*)filedata :(void (^)(NSInteger))handler{
+   //[self uploadData:[NSString stringWithFormat:@"%@/update/updatedetails",IMIHLRestPathName] :patientid :firstname :lastname :gender :dob :emailid :filedata];
+
+    [self uploadData:[NSString stringWithFormat:@"%@/update/updatedetails",IMIHLRestPathName] :patientid :firstname :lastname :gender :dob :emailid :mobilenumber :filedata :^(NSInteger response) {
+        handler(response);
+    }];
+
 }
 
 
@@ -744,9 +750,17 @@ return statuscode;
  */
 
 
--(int)uploadData:(NSString*)urlpath :(NSString*)patientid :(NSString*)firstname :(NSString*)lastname :(NSString*)gender :(NSString*)dob :(NSString*)emailid :(NSData*)filedata{
+-(void)uploadData:(NSString*)urlpath :(NSString*)patientid :(NSString*)firstname :(NSString*)lastname :(NSString*)gender :(NSString*)dob :(NSString*)emailid  :(NSString*)mobilenumber :(NSData*)filedata :(void (^)(NSInteger))handler{
+   
+    @try {
+        
+        
+        
+        
+        NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+        NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
 
-    //NSLog(@"urlpath:%@",urlpath);
+    NSLog(@"urlpath uploadData:%@",urlpath);
   
     
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
@@ -761,14 +775,7 @@ return statuscode;
     
         [request setHTTPMethod:@"POST"];
     
-   // NSString *authStr = [NSString stringWithFormat:@"%@:%@",@"rest",@"rest"];
-    //NSData *authData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
-    
-    //NSString *authValue = [NSString stringWithFormat:@"Basic %@", [authData base64EncodedDataWithOptions:0]];
-    //NSString *authValue = [NSString stringWithFormat:@"Basic %@", [authData base64Encoding]];
-    
-    //[request setValue:authValue forHTTPHeaderField:@"Authorization"];
-    //[request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+   
     
     /*
      Set Header and content type of your request.
@@ -783,7 +790,7 @@ return statuscode;
     NSMutableData *body = [NSMutableData data];
     
     
-        @try {
+        
            
             
             [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -810,51 +817,17 @@ return statuscode;
             [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
             [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"emailid"] dataUsingEncoding:NSUTF8StringEncoding]];
             [body appendData:[[NSString stringWithFormat:@"%@\r\n", emailid] dataUsingEncoding:NSUTF8StringEncoding]];
-            
-            
-            
-           // [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-            //[body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"patientid\"\r\n\r\n%@", patientid] dataUsingEncoding:NSUTF8StringEncoding]];
-            /*
-            //NSLog(@"firstname:%@",firstname);
-            [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"firstname\"\r\n\r\n%@", firstname] dataUsingEncoding:NSUTF8StringEncoding]];
-            
-            
-            //NSLog(@"lastname:%@",lastname);
-            [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"lastname\"\r\n\r\n%@", lastname] dataUsingEncoding:NSUTF8StringEncoding]];
-            //NSLog(@"gender:%@",gender);
-            [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"gender\"\r\n\r\n%@", gender] dataUsingEncoding:NSUTF8StringEncoding]];
-            //NSLog(@"emialid:%@",emailid);
-            [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"emailid\"\r\n\r\n%@", emailid] dataUsingEncoding:NSUTF8StringEncoding]];
-            //NSLog(@"patientid:%@",patientid);
-            [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"patientid\"\r\n\r\n%@", patientid] dataUsingEncoding:NSUTF8StringEncoding]];
-    */
-        }
-        @catch (NSException *exception) {
-            //NSLog(@"Exception Handle::%@",exception);
-        }
-        @finally {
-            
-            //NSLog(@"Finally Block");
-        }
         
-/*
-    [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"file\"; filename=\"%@.jpg\"\r\n", imageName] dataUsingEncoding:NSUTF8StringEncoding]];
-   [body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[NSData dataWithData:filedata]];
-    //[body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    */
-    
-    
-   // NSData *imageData = UIImageJPEGRepresentation(imageView.image, 1.0);
+        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"mobilenumber"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"%@\r\n", mobilenumber] dataUsingEncoding:NSUTF8StringEncoding]];
+            
+        
+        
+        
+
     if (filedata) {
+       
         [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"file\"; filename=\"%@.jpg\"\r\n", imageName] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
@@ -871,19 +844,49 @@ return statuscode;
     [request addValue:[NSString stringWithFormat:@"%d", (int)[body length]] forHTTPHeaderField:@"Content-Length"];
     
     ////NSLog(@"body data:%@",body);
-   
     
-    NSURLResponse *url_responce;
-    NSError*error;
     
+    
+    
+        NSURLSessionUploadTask*uploadTask = [defaultSession uploadTaskWithRequest:request fromData:body completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            if (error == nil) {
+                
+                NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
+                
+                NSLog(@"StatusCode:%ld",httpResp.statusCode);
+                if (httpResp.statusCode == 200) {
+                    NSLog(@"StatusCode:%ld",httpResp.statusCode);
+                    self.restresult_dict = [self jsonResult:data];
+                    
+                    
+                    
+                }else{
+                    NSLog(@"StatusCode:%ld",httpResp.statusCode);
+                    self.restresult_dict = [self jsonResult:data];
+                    
+                }
+                handler(httpResp.statusCode);
+            }
+        }];
+        [uploadTask resume];
+      /*
     NSData*responcedata = [NSURLConnection sendSynchronousRequest:request returningResponse:&url_responce error:&error];
     NSHTTPURLResponse*httpresponse = (NSHTTPURLResponse*)url_responce;
     //NSLog(@"httpresponse code:%d",(int)[httpresponse statusCode]);
     statuscode = (int)[httpresponse statusCode];
+    NSLog(@"statuscode service:%d",statuscode);
     self.restresult_dict = [self jsonResult:responcedata];
     //NSLog(@"restresult_dict:%@",self.restresult_dict);
     return statuscode;
-    
+       */
+    }
+    @catch (NSException *exception) {
+        //NSLog(@"Exception Handle::%@",exception);
+    }
+    @finally {
+        
+        //NSLog(@"Finally Block");
+    }
 }
 
 /*Download PDF File*/

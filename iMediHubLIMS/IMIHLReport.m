@@ -493,7 +493,10 @@
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return (self.labrprt_tblview.bounds.size.height)*0.2;
+    if (self.view.frame.size.width<self.view.frame.size.height) {
+        return (self.labrprt_tblview.bounds.size.height)*0.2;
+    }
+    return (self.labrprt_tblview.bounds.size.height)*0.4;
 }
 
 
@@ -1028,6 +1031,8 @@
     
     
 }
-
+-(void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
+    [self.labrprt_tblview reloadData];
+}
 
 @end

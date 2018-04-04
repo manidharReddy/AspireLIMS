@@ -197,7 +197,10 @@
     return 1;
 }
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.orders_tblview.bounds.size.height*0.2;
+    if (self.view.frame.size.width<self.view.frame.size.height) {
+        return self.orders_tblview.bounds.size.height*0.2;
+    }
+    return self.orders_tblview.bounds.size.height*0.4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:
@@ -319,5 +322,7 @@
     }
     
 }
-
+-(void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
+    [self.orders_tblview reloadData];
+}
 @end

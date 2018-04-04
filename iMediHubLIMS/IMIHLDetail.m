@@ -342,7 +342,12 @@
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 80;
+    
+    if (self.view.frame.size.width<self.view.frame.size.height) {
+        return self.detailreports_tblview.frame.size.height*0.2;
+
+    }
+    return self.detailreports_tblview.frame.size.height*0.4;
 }
 
 
@@ -994,6 +999,8 @@
     
 }
 
-
+-(void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
+    [self.detailreports_tblview reloadData];
+}
 
 @end
