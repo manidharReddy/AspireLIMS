@@ -7,12 +7,13 @@
 //
 
 #import "IMIHLMyProfile.h"
-#import "IMIHLDBManager.h"
+//#import "IMIHLDBManager.h"
 #import "IMIHLEditProfileVC.h"
-#import "IMIHLDashboardVC.h"
+//#import "IMIHLDashboardVC.h"
 #import "IMIHLRestService.h"
 #import "IMIHLLogin.h"
 #import "IMIHLPassword.h"
+#import "ViewController.h"
 @interface IMIHLMyProfile (){
     NSString*patientfirstname_str;
     NSString*patientlastname_str;
@@ -53,13 +54,14 @@
 - (void)goBack
 {
     self.navigationController.navigationBarHidden = YES;
-    [self.navigationController popViewControllerAnimated:YES];
+   // [self.navigationController popViewControllerAnimated:YES];
+    [self loadViewControllerFromStoryBoard:@"dashboard"];
 }
 
 -(IMIHLLogin*)getUserInfo{
     NSUserDefaults*userdefaults = [NSUserDefaults standardUserDefaults];
     NSData *data = [userdefaults objectForKey:@"userprofiles"];
-    IMIHLLogin * login = (IMIHLLogin*)[NSKeyedUnarchiver unarchiveObjectWithData:data];
+    IMIHLLogin*login = (IMIHLLogin*)[NSKeyedUnarchiver unarchiveObjectWithData:data];
     NSLog(@"login object:%@",login);
     return login;
 }
@@ -122,6 +124,7 @@
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     
 }
+/*
 -(void)retrivePatientInfo{
    
     IMIHLDBManager*imihldb = [IMIHLDBManager getSharedInstance];
@@ -156,20 +159,7 @@
        // //NSLog(@"image check out:%@",[patientinfo_arr objectAtIndex:8]);
         image_data = [patientinfo_arr objectAtIndex:8];
         //NSLog(@"image_data:%@",image_data);
-        /*
-        NSString*imglength = [patientinfo_arr objectAtIndex:8];
-        //NSLog(@"imglength:%d",(int)imglength.length);
-        NSData*tempimg =[patientinfo_arr objectAtIndex:8];
-        image_data = [NSData dataWithBytes:[tempimg bytes] length:tempimg.length] ;
-        
-        //NSLog(@"image_data:%@",image_data);
-        if ([image_data isEqual:[NSNull null]]||[image_data isEqual:@"<31>"]||imglength.length<=10) {
-            //NSLog(@"image check:%@",[patientinfo_arr objectAtIndex:8]);
-        }else{
-
-        self.profileicon_imgview.image = [UIImage imageWithData:image_data];
-        }
-         */
+ 
         if (image_data==nil) {
             [self.profileicon_imgview setImage:[UIImage imageWithIcon:@"fa-user" backgroundColor:[UIColor clearColor] iconColor:[UIColor whiteColor] fontSize:self.profileicon_imgview.frame.size.width / 2]];
 
@@ -266,12 +256,12 @@
         [self showAlertController:@"No Network Connection"];
         [self.profileicon_imgview setImage:[UIImage imageWithIcon:@"fa-user" backgroundColor:[UIColor clearColor] iconColor:[UIColor whiteColor] fontSize:self.profileicon_imgview.frame.size.width / 2]];
         
-        [self retrivePatientInfo];
+       // [self retrivePatientInfo];
     }else{
         
         [self.profileicon_imgview setImage:[UIImage imageWithIcon:@"fa-user" backgroundColor:[UIColor clearColor] iconColor:[UIColor whiteColor] fontSize:self.profileicon_imgview.frame.size.width / 2]];
         
-        [self retrivePatientInfo];
+       // [self retrivePatientInfo];
     }
     
     //NSLog(@"width:%f",self.profileicon_imgview.frame.size.width);
@@ -391,7 +381,7 @@
     //[self setUserDetails];
 }
 
-
+*/
 
 
 
@@ -442,11 +432,11 @@
     
     NSString * storyboardName = @"Main";
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
-    if([identifiername isEqualToString:@"dashboardvc"]){
-    IMIHLDashboardVC * dvc = [storyboard instantiateViewControllerWithIdentifier:identifiername];
-    
-    dvc.patientname_str = self.patientname_str;
-    [self.navigationController pushViewController:dvc animated:YES];
+    if([identifiername isEqualToString:@"dashboard"]){
+    //IMIHLDashboardVC * dvc = [storyboard instantiateViewControllerWithIdentifier:identifiername];
+    ViewController*viewcontrl =[storyboard instantiateViewControllerWithIdentifier:identifiername];
+   // dvc.patientname_str = self.patientname_str;
+    [self.navigationController pushViewController:viewcontrl animated:YES];
     }else if([identifiername isEqualToString:@"changepassword"]){
         
         IMIHLPassword * pvc = [storyboard instantiateViewControllerWithIdentifier:@"changepassword"];

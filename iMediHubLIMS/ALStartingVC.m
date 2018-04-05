@@ -24,6 +24,7 @@
 }
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    [self.navigationController.navigationBar setHidden:YES];
     [self loggedUser];
 }
 
@@ -31,12 +32,70 @@
     _username = [[NSUserDefaults standardUserDefaults]valueForKey:@"username"];
     _userpassword = [[NSUserDefaults standardUserDefaults]valueForKey:@"password"];
     if (_username != NULL && _userpassword != NULL) {
-        [self loginCalled];
+        //[self loginCalled];
+        [self newLoginCalled];
     }else{
        [self loadViewControllerFromStoryBoard:@"login"];
     }
 }
 
+-(void)newLoginCalled{
+    //NSLog(@"loginCalled");
+    IMIHLRestService*restlogin = [IMIHLRestService getSharedInstance];
+    //IMIHLRestService*restlogin = [[IMIHLRestService alloc]init];
+    NSLog(@"logged called");
+    // int statuscode = [restlogin login:txtUserName.text :txtPassword.text];
+    
+    [restlogin newLoginWithUserIdPasswordByBlock:self.username :self.userpassword withCompletionHandler:^(NSInteger response) {
+        if (response == 200) {
+            NSLog(@"restlogin.restresult_dict:%@",restlogin.restresult_dict);
+            NSString*patientid_str = [restlogin.restresult_dict objectForKey:@"patientId"];
+            NSLog(@"patientid login:%@",patientid_str);
+            
+            
+            
+            
+            
+            IMIHLLogin*login = [[IMIHLLogin alloc]init];
+            
+            login = [login getLoginResult:restlogin.restresult_dict];
+            NSLog(@"test1");
+            [[NSUserDefaults standardUserDefaults] setValue:self.username forKey:@"username"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            NSLog(@"test2");
+            [[NSUserDefaults standardUserDefaults] setValue:self.userpassword forKey:@"password"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            NSLog(@"test3");
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:login];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"userprofiles"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            NSLog(@"test4");
+            
+            
+            
+            [self loadViewControllerFromStoryBoard:@"dashboard"];
+            
+            
+            
+            
+        }else if(response >= 201 && response < 300){
+            NSLog(@"Result login 201>:%@",restlogin.restresult_dict);
+           [self loadViewControllerFromStoryBoard:@"login"];
+        }
+        else if(response >= 400 && response < 500){
+            NSLog(@"Result login 400=>:%@",restlogin.restresult_dict);
+            [self loadViewControllerFromStoryBoard:@"login"];
+        }else if(response >= 500 && response < 600){
+            NSLog(@"Result login 500=>:%@",restlogin.restresult_dict);
+           [self loadViewControllerFromStoryBoard:@"login"];
+        }
+    }];
+    
+    
+    
+    //[MBProgressHUD hideHUDForView:self.view animated:YES];
+}
 -(void)loginCalled{
     
     IMIHLRestService*restlogin = [IMIHLRestService getSharedInstance];
@@ -84,6 +143,7 @@
 }
 -(void)loadViewControllerFromStoryBoard:(NSString*)identifiername{
     //NSLog(@"load vc");
+    
     NSString * storyboardName = @"Main";
     if([identifiername isEqualToString:@"dashboard"]){
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];

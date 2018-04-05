@@ -870,12 +870,12 @@
             
             [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"userprofiles"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            [self showAlertController:@"Your profile has been successfully updated"];
+            
             self.pageid_str=@"edit";
             [self loadViewControllerFromStoryBoard:@"myprofileid"];
             //[self goBack];
            
-            
+            [self showAlertController:@"Your profile has been successfully updated"];
             
             // }else{
             //NSLog(@"PatientInfo insert in db failed");
