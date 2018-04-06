@@ -16,7 +16,28 @@
     self.orderflag_arr = [[NSMutableArray alloc]init];
     self.orderservices_dict = [[NSMutableDictionary alloc]init];
 }
+- (void) encodeWithCoder:(NSCoder *)encoder {
+    
+    [encoder encodeObject:self.orderid_arr forKey:@"orderid_arr"];
+    [encoder encodeObject:self.orderdate_arr forKey:@"orderdate_arr"];
+    [encoder encodeObject:self.ordertime_arr forKey:@"ordertime_arr"];
+    [encoder encodeObject:self.orderflag_arr forKey:@"orderflag_arr"];
+    [encoder encodeObject:self.orderservices_dict forKey:@"orderservices_dict"];
+    
+}
 
+- (id)initWithCoder:(NSCoder *)decoder {
+    self.orderid_arr = [decoder decodeObjectForKey:@"orderid_arr"];
+    self.orderdate_arr = [decoder decodeObjectForKey:@"orderdate_arr"];
+    self.ordertime_arr = [decoder decodeObjectForKey:@"ordertime_arr"];
+    self.orderflag_arr = [decoder decodeObjectForKey:@"orderflag_arr"];
+    self.orderservices_dict = [decoder decodeObjectForKey:@"orderservices_dict"];
+    
+    
+    
+    return self;
+    
+}
 -(IMIHLOrdersList*)getOrdersListResult:(NSDictionary *)orderresult_dict{
     
     [self allocteArry];

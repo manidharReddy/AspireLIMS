@@ -61,7 +61,7 @@
         //int statuscode = [restforgtpass forgotPasswordService:self.email_txtfeild.text];
         [restforgtpass forgotPasswordService:self.email_txtfeild.text withCompletionHandler:^(NSInteger response) {
             if (response==200) {
-                //NSLog(@"status of forgotpassword:%@",restforgtpass.restresult_dict);
+                NSLog(@"status of forgotpassword:%@",restforgtpass.restresult_dict);
                 NSString*otp_str = [restforgtpass.restresult_dict objectForKey:@"OTP"];
                 otpglobal_str =otp_str;
                 self.patientid_str= [restforgtpass.restresult_dict objectForKey:@"patientId"];
@@ -143,7 +143,7 @@
     //int statuscode =[restforgtpass confrimForgotPasswordService:self.email_txtfeild.text];
     [restforgtpass confrimForgotPasswordService:self.email_txtfeild.text withCompletionHandler:^(NSInteger response) {
         if (response==200) {
-            //NSLog(@"status of confirmforgotpassword:%@",restforgtpass.restresult_dict);
+            NSLog(@"status of confirmforgotpassword:%@",restforgtpass.restresult_dict);
             // NSString*responsemsg_str = [restforgtpass.restresult_dict objectForKey:@"message"];
             //NSLog(@"responsemsg_str:%@",responsemsg_str);
             // [self showAlertController:@"Your password is send to your mail or mobile number"];

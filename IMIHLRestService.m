@@ -23,8 +23,8 @@
 #define IMIHLRestPathName @"http://192.168.1.100:8082/LIMS_Mobile_MM/rest"
 #define IMIHLDoctorRestPathName @"http://192.168.1.100:8082/DoctorRooster/rest/"
 */
-#define IMIHLRestPathNameTest @"http://192.168.1.100:8080/Maven_LIMS/rest/get/"
-#define IMIHLRestPathName @"http://192.168.1.100:8080/Maven_LIMS/rest"
+#define IMIHLRestPathNameTest @"http://183.82.109.67:8080/Maven_LIMS/rest/get/"
+#define IMIHLRestPathName @"http://183.82.109.67:8080/Maven_LIMS/rest"
 //#define IMIHLRestPathNameTest @"https://aspirelims.com/LIMS_Mobile_MM/rest/get/"
 //#define IMIHLRestPathName @"https://aspirelims.com/LIMS_Mobile_MM/rest"
 #define IMIHLDoctorRestPathName @""
@@ -819,6 +819,7 @@ return statuscode;
             [body appendData:[[NSString stringWithFormat:@"%@\r\n", emailid] dataUsingEncoding:NSUTF8StringEncoding]];
         
         [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+       
         [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"mobilenumber"] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:@"%@\r\n", mobilenumber] dataUsingEncoding:NSUTF8StringEncoding]];
             
@@ -997,6 +998,8 @@ return statuscode;
 //Sample get request with blocks return type
 
 -(void)httpGetCallTypeBlock:(NSString*)urlString parameters:(NSString*)parameter withCompletionHandler:(void (^)(NSInteger))handler{
+    InternetConnection*ic = [InternetConnection getSharedInstance];
+    if (ic.CheckNetwork==YES) {
     @try {
     NSURL *url = [NSURL URLWithString:urlString];
     
@@ -1051,11 +1054,15 @@ return statuscode;
 } @finally {
     NSLog(@"final block");
 }
+}else{
+    handler(0);
+}
 }
 
 
 -(void)httpPostCallTypeBlock:(NSString*)urlString parameters:(NSString*)parameter withCompletionHandler:(void (^)(NSInteger))handler{
-   
+    InternetConnection*ic = [InternetConnection getSharedInstance];
+    if (ic.CheckNetwork==YES) {
     @try {
         
     
@@ -1118,6 +1125,9 @@ return statuscode;
         NSLog(@"Exception:%@",exception);
     } @finally {
         NSLog(@"final block");
+    }
+    }else{
+        handler(0);
     }
 }
 @end

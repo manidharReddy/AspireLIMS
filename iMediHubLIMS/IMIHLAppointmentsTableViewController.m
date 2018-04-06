@@ -136,6 +136,11 @@
                 self.appntmnttime_arr = apptobj.bookedtime_arr;
                 self.appntmntstatus_arr = apptobj.status_arr;
                 
+                NSData *recentacitivitiesdata = [NSKeyedArchiver archivedDataWithRootObject:apptobj];
+                
+                [[NSUserDefaults standardUserDefaults] setObject:recentacitivitiesdata forKey:@"previousAppts"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
                 [self.apntmentTblView reloadData];
                 
                 
@@ -143,11 +148,22 @@
             }else{
                 
                 [self showAlertController:@"You dnt have any appointments"];
+                
             }
             
         }else if(response==0){
-
+            
             [self showAlertController:@"No Network Connection"];
+            NSUserDefaults*userdefaults = [NSUserDefaults standardUserDefaults];
+            NSData *data = [userdefaults objectForKey:@"previousAppts"];
+            IMIHLAppointments*apptobj  = (IMIHLAppointments*)[NSKeyedUnarchiver unarchiveObjectWithData:data];
+            self.appntmntid_arr = apptobj.apointmentId_arr;
+            self.appntmntdptname_arr = apptobj.deptname_arr;
+            self.appntmnttestname_arr = apptobj.testname_arr;
+            self.appntmntdate_arr = apptobj.bookeddate_arr;
+            self.appntmnttime_arr = apptobj.bookedtime_arr;
+            self.appntmntstatus_arr = apptobj.status_arr;
+            [self.apntmentTblView reloadData];
         }else{
             //NSLog(@"Error Message:%@",[restgetappntmts.restresult_dict objectForKey:@"message"]);
             [self showAlertController:@"You dnt have any appointments"];

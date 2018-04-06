@@ -18,6 +18,19 @@
     }
     return self;
 }
+- (void) encodeWithCoder:(NSCoder *)encoder {
+    
+    [encoder encodeObject:self.remainders forKey:@"remainders"];
+   
+    
+}
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    self.remainders = [decoder decodeObjectForKey:@"remainders"];
+    
+    return self;
+    
+}
 -(IMIHLRemaindersList*)getRemainders:(NSDictionary*)response{
     for (NSDictionary*localdict in response) {
        

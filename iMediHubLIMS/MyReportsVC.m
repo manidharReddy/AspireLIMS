@@ -106,8 +106,19 @@
             testobj = [testobj getDepartmentTestsResult:restgetdepttests.restresult_dict];
             self.testidlist_arr = testobj.testid_arr;
             self.testnamelist_arr = testobj.testname_arr;
+            
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:testobj];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"reports"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
         }else if(response==0){
             [self showAlertController:@"No Network Connection"];
+            NSUserDefaults*userdefaults = [NSUserDefaults standardUserDefaults];
+            NSData *data = [userdefaults objectForKey:@"reports"];
+            
+            IMIHLTest*testobj   = (IMIHLTest*)[NSKeyedUnarchiver unarchiveObjectWithData:data];
+            self.testidlist_arr = testobj.testid_arr;
+            self.testnamelist_arr = testobj.testname_arr;
         }else{
             //NSLog(@"Error Message:%@",[restgetdepttests.restresult_dict objectForKey:@"msg"]);
             [self showAlertController:[restgetdepttests.restresult_dict objectForKey:@"msg"]];

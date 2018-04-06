@@ -31,6 +31,7 @@
 		35E44DAA1D13FC9F00E8BD29 /* LeftSlideMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E44DA91D13FC9F00E8BD29 /* LeftSlideMenuTableViewController.m */; };
 		35E44DAB1D13FC9F00E8BD29 /* LeftSlideMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E44DA91D13FC9F00E8BD29 /* LeftSlideMenuTableViewController.m */; };
 		35E44DAC1D13FC9F00E8BD29 /* LeftSlideMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E44DA91D13FC9F00E8BD29 /* LeftSlideMenuTableViewController.m */; };
+		380502F020777E5E00169072 /* ALUserLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 380502EF20777E5E00169072 /* ALUserLogin.m */; };
 		381794C02069278E0054CDB2 /* IMIHLBookAppointment.m in Sources */ = {isa = PBXBuildFile; fileRef = 381794BF2069278E0054CDB2 /* IMIHLBookAppointment.m */; };
 		381794C720692E030054CDB2 /* VSAlertAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 381794C320692E010054CDB2 /* VSAlertAction.m */; };
 		381794C820692E030054CDB2 /* VSAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381794C420692E020054CDB2 /* VSAlertController.m */; };
@@ -195,6 +196,8 @@
 		35E44D9D1D13EFCB00E8BD29 /* UIViewController+MFSideMenuAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MFSideMenuAdditions.m"; sourceTree = "<group>"; };
 		35E44DA81D13FC9F00E8BD29 /* LeftSlideMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftSlideMenuTableViewController.h; sourceTree = "<group>"; };
 		35E44DA91D13FC9F00E8BD29 /* LeftSlideMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftSlideMenuTableViewController.m; sourceTree = "<group>"; };
+		380502EE20777E5E00169072 /* ALUserLogin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALUserLogin.h; sourceTree = "<group>"; };
+		380502EF20777E5E00169072 /* ALUserLogin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALUserLogin.m; sourceTree = "<group>"; };
 		381794BF2069278E0054CDB2 /* IMIHLBookAppointment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMIHLBookAppointment.m; sourceTree = "<group>"; };
 		381794C220692DFE0054CDB2 /* VSAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSAlert.h; sourceTree = "<group>"; };
 		381794C320692E010054CDB2 /* VSAlertAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSAlertAction.m; sourceTree = "<group>"; };
@@ -955,6 +958,8 @@
 				38B3A3F72062503400B4C277 /* ALRemainders.m */,
 				385939422063C1660017F828 /* ALOrders.h */,
 				385939432063C1660017F828 /* ALOrders.m */,
+				380502EE20777E5E00169072 /* ALUserLogin.h */,
+				380502EF20777E5E00169072 /* ALUserLogin.m */,
 			);
 			path = ALModel;
 			sourceTree = "<group>";
@@ -1137,6 +1142,7 @@
 				38F9BD0C1EC3F9DC00E4FAB9 /* IMIHDLocations.m in Sources */,
 				38F9BD031EC3F7E700E4FAB9 /* InternetConnection.m in Sources */,
 				38D7FA581E428DF300421E12 /* IMIHLPdfViewer.m in Sources */,
+				380502F020777E5E00169072 /* ALUserLogin.m in Sources */,
 				389CEC5A20528ADB00DD34C4 /* IMIHLRecentActivities.m in Sources */,
 				38D7FA431E428DF300421E12 /* IMDIHLReport.m in Sources */,
 				38F9BCE71EC3F6F600E4FAB9 /* IMIHDoctorSpecialities.m in Sources */,

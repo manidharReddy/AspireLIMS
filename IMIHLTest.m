@@ -14,7 +14,26 @@
     self.testname_arr = [[NSMutableArray alloc]init];
     self.tmptestdict = [[NSMutableDictionary alloc]init];
 }
+- (void) encodeWithCoder:(NSCoder *)encoder {
+    
+    [encoder encodeObject:self.testid_arr forKey:@"testid_arr"];
+     [encoder encodeObject:self.testname_arr forKey:@"testname_arr"];
+     [encoder encodeObject:self.tmptestdict forKey:@"tmptestdict"];
+    
+    
+    
+    
+}
 
+- (id)initWithCoder:(NSCoder *)decoder {
+    self.testid_arr = [decoder decodeObjectForKey:@"testid_arr"];
+     self.testname_arr = [decoder decodeObjectForKey:@"testname_arr"];
+     self.tmptestdict = [decoder decodeObjectForKey:@"tmptestdict"];
+    
+    
+    return self;
+    
+}
 -(IMIHLTest*)getDepartmentTestsResult:(NSDictionary*)responseresult{
     
     //NSLog(@"getDepartment Service calledddddd");

@@ -14,6 +14,7 @@
 #import "IMIHLDashboardVC.h"
 #import "MBProgressHUD.h"
 #import "ViewController.h"
+#import "ALUserLogin.h"
 #define REGEX_USER_NAME_LIMIT @"^.{3,10}$"
 #define REGEX_USER_NAME @"[A-Za-z0-9]{3,10}"
 #define REGEX_EMAIL @"[A-Z0-9a-z._%+-]{3,}+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
@@ -279,7 +280,7 @@ TextFieldValidator *txtDemo;
     //IMIHLRestService*restlogin = [[IMIHLRestService alloc]init];
     NSLog(@"logged called");
     // int statuscode = [restlogin login:txtUserName.text :txtPassword.text];
-    
+   
     [restlogin newLoginWithUserIdPasswordByBlock:txtUserName.text :txtPassword.text withCompletionHandler:^(NSInteger response) {
         if (response == 200) {
             NSLog(@"restlogin.restresult_dict:%@",restlogin.restresult_dict);
@@ -288,23 +289,36 @@ TextFieldValidator *txtDemo;
             
             
             
-            
+            NSLog(@"username value:%@",self.username_txtfld.text);
             
             IMIHLLogin*login = [[IMIHLLogin alloc]init];
            
             login = [login getLoginResult:restlogin.restresult_dict];
             NSLog(@"test1");
+            /*
             [[NSUserDefaults standardUserDefaults] setValue:self.username_txtfld.text forKey:@"username"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             NSLog(@"test2");
             [[NSUserDefaults standardUserDefaults] setValue:self.usrpasswrd_txt.text forKey:@"password"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             NSLog(@"test3");
+             */
             NSData *data = [NSKeyedArchiver archivedDataWithRootObject:login];
             
             [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"userprofiles"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             NSLog(@"test4");
+            
+            
+            
+            ALUserLogin *userLogin = [[ALUserLogin alloc]init];
+            
+            userLogin.userid = txtUserName.text;
+            userLogin.password = txtPassword.text;
+            NSData *logindata = [NSKeyedArchiver archivedDataWithRootObject:userLogin];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:logindata forKey:@"userlogin"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             
             
            

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface IMIHLAppointments : NSObject
+@interface IMIHLAppointments : NSObject<NSCoding>
 @property (strong,nonatomic) NSMutableArray*apointmentId_arr;
 @property (strong,nonatomic) NSMutableArray*dept_id_arr;
 @property (strong,nonatomic) NSMutableArray*test_id_arr;

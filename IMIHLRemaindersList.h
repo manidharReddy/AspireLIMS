@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ALRemainders.h"
-@interface IMIHLRemaindersList : NSObject
+@interface IMIHLRemaindersList : NSObject<NSCoding>
 @property(strong,nonatomic) NSMutableArray*remainders;
 -(IMIHLRemaindersList*)getRemainders:(NSDictionary*)response;
 @end

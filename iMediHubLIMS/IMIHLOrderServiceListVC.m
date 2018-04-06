@@ -51,17 +51,17 @@
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return self.services_arr.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return self.services_arr.count;
+    return 1;
 }
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.view.frame.size.width<self.view.frame.size.height) {
-        return (self.serviceListTableView.bounds.size.height)*0.18;
+        return (self.serviceListTableView.bounds.size.height)*0.12;
     }
     return (self.serviceListTableView.bounds.size.height)*0.15;
 }
@@ -75,7 +75,7 @@
         //NSLog(@"cell if");
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] ;
     }
-    NSDictionary*dic =[self.services_arr objectAtIndex:indexPath.row];
+    NSDictionary*dic =[self.services_arr objectAtIndex:indexPath.section];
     NSString*serviceName = [dic objectForKey:@"serviceName"];
     if ([serviceName isEqual:[NSNull null]]||[serviceName isEqual:nil]||serviceName == NULL || [serviceName isEqualToString:@"null"]) {
         serviceName =@"Not Available";
@@ -98,9 +98,10 @@
         btn.enabled = false;
         
         [btn setTitle:@"Pending" forState:UIControlStateNormal];
+        [btn setBackgroundColor:[UIColor orangeColor]];
     }
     
-   
+    cell.layer.cornerRadius = 10.0f;
     
     
     return cell;

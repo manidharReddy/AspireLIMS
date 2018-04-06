@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface IMIHLTest : NSObject
+@interface IMIHLTest : NSObject<NSCoding>
 @property (strong,nonatomic) NSMutableArray*testid_arr;
 @property (strong,nonatomic) NSMutableArray*testname_arr;
 @property (strong,nonatomic) NSMutableArray*tesprice_arr;

@@ -11,6 +11,7 @@
 #import "IMIHLSearchResults.h"
 #import "IMIHLReportValue.h"
 #import "IMIHLDetail.h"
+#import "ViewController.h"
 @interface IMIHLSearchVC (){
     int selectedindex;
 }
@@ -92,7 +93,8 @@
 - (void)goBack
 {
     self.navigationController.navigationBar.hidden = YES;
-    [self.navigationController popViewControllerAnimated:YES];
+    [self loadViewControllerFromStoryBoard:@"dashboard"];
+    //[self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)allocateArray{
@@ -745,12 +747,18 @@
 
 -(void)loadViewControllerFromStoryBoard:(NSString*)identifiername{
     //NSLog(@"identifier:%@",identifiername);
-    
     NSString * storyboardName = @"Main";
+    if([identifiername isEqualToString:@"dashboard"]){
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
+        ViewController *vc = [storyboard instantiateViewControllerWithIdentifier:identifiername];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else{
+    
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
     UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:identifiername];
     
     [self.navigationController pushViewController:vc animated:YES];
+    }
     
 }
 

@@ -11,6 +11,7 @@
 #import "IMIHLLogin.h"
 #import "IMIHLLoginViewController.h"
 #import "ViewController.h"
+#import "ALUserLogin.h"
 @interface ALStartingVC ()
 @property (strong,nonatomic) NSString*username;
 @property (strong,nonatomic) NSString*userpassword;
@@ -24,19 +25,29 @@
 }
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self.navigationController.navigationBar setHidden:YES];
+    self.navigationController.navigationBar.hidden = YES;
     [self loggedUser];
 }
 
 -(void)loggedUser{
-    _username = [[NSUserDefaults standardUserDefaults]valueForKey:@"username"];
-    _userpassword = [[NSUserDefaults standardUserDefaults]valueForKey:@"password"];
-    if (_username != NULL && _userpassword != NULL) {
+    ALUserLogin*userLogin = [self getUserLoginDetails];
+    NSLog(@"userid:%@",userLogin.userid);
+    self.username = userLogin.userid;
+    self.userpassword = userLogin.password;
+    NSLog(@"username local:%@",self.userpassword);
+    if (self.username != NULL && self.userpassword != NULL) {
         //[self loginCalled];
         [self newLoginCalled];
     }else{
        [self loadViewControllerFromStoryBoard:@"login"];
     }
+}
+-(ALUserLogin*)getUserLoginDetails{
+    NSUserDefaults*userdefaults = [NSUserDefaults standardUserDefaults];
+    NSData *data = [userdefaults objectForKey:@"userlogin"];
+    ALUserLogin * login = (ALUserLogin*)[NSKeyedUnarchiver unarchiveObjectWithData:data];
+    NSLog(@"login object:%@",login);
+    return login;
 }
 
 -(void)newLoginCalled{
@@ -60,12 +71,14 @@
             
             login = [login getLoginResult:restlogin.restresult_dict];
             NSLog(@"test1");
+            /*
             [[NSUserDefaults standardUserDefaults] setValue:self.username forKey:@"username"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             NSLog(@"test2");
             [[NSUserDefaults standardUserDefaults] setValue:self.userpassword forKey:@"password"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             NSLog(@"test3");
+             */
             NSData *data = [NSKeyedArchiver archivedDataWithRootObject:login];
             
             [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"userprofiles"];
@@ -89,6 +102,8 @@
         }else if(response >= 500 && response < 600){
             NSLog(@"Result login 500=>:%@",restlogin.restresult_dict);
            [self loadViewControllerFromStoryBoard:@"login"];
+        }else if(response == 0){
+           [self loadViewControllerFromStoryBoard:@"dashboard"];
         }
     }];
     

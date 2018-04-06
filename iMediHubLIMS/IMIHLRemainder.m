@@ -82,9 +82,16 @@
             NSLog(@"restResult:%@",rest.restresult_dict);
             self.remList = [self.remList getRemainders:rest.restresult_dict];
             NSLog(@"count");
-            [self.tableView reloadData];
-        }else{
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.remList];
             
+            [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"remainders"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [self.tableView reloadData];
+        }else if(response == 0){
+            NSUserDefaults*userdefaults = [NSUserDefaults standardUserDefaults];
+            NSData *data = [userdefaults objectForKey:@"remainders"];
+             self.remList  = (IMIHLRemaindersList*)[NSKeyedUnarchiver unarchiveObjectWithData:data];
+            [self.tableView reloadData];
         }
     }];
 }

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface IMIHLRecentActivities : NSObject
+@interface IMIHLRecentActivities : NSObject<NSCoding>
 @property(strong,nonatomic) NSMutableDictionary*allRecentActivitiesDict;
 @property(strong,nonatomic) NSMutableArray*allRecentActivities;
 -(NSArray*)filterArrayUsingCustomProperty:(NSArray*)arrayList value:(NSString*)value;

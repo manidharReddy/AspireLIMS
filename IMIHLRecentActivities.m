@@ -30,6 +30,20 @@
     }
     return self;
 }
+- (void) encodeWithCoder:(NSCoder *)encoder {
+    
+    [encoder encodeObject:self.allRecentActivitiesDict forKey:@"allRecentActivitiesDict"];
+    [encoder encodeObject:self.allRecentActivities forKey:@"allRecentActivities"];
+    
+}
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    self.allRecentActivitiesDict = [decoder decodeObjectForKey:@"allRecentActivitiesDict"];
+    self.allRecentActivities = [decoder decodeObjectForKey:@"allRecentActivities"];
+    
+    return self;
+    
+}
 
 -(IMIHLRecentActivities*)setRecentActivitiesList:(NSDictionary*)responseDictionary{
     

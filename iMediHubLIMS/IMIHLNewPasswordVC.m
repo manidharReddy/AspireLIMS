@@ -28,7 +28,7 @@
     
     self.newpasswrd_txtfield.layer.cornerRadius = self.newpasswrd_txtfield.bounds.size.height/2;
     self.newpasswrd_txtfield.layer.borderWidth=2;
-    self.reenterpasswrd_txtfield.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.newpasswrd_txtfield.layer.borderColor = [UIColor whiteColor].CGColor;
     
     self.reenterpasswrd_txtfield.layer.cornerRadius = self.reenterpasswrd_txtfield.bounds.size.height/2;
     self.reenterpasswrd_txtfield.layer.borderWidth=2;
@@ -135,7 +135,7 @@
 
 -(void)callLoader{
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = @"Updating....";
+    hud.labelText = @"Changing....";
 }
 
 - (IBAction)resetpasswrdClick:(id)sender {
@@ -156,9 +156,10 @@
    // int statuscode =[restlogin getForgotResetPassword:self.patientid_str :self.userid_str :self.newpasswrd_txtfield.text];
     [restlogin getForgotResetPassword:self.patientid_str :self.userid_str :self.newpasswrd_txtfield.text withCompletionHandler:^(NSInteger response) {
         if (response==200) {
-            [self showAlertController:@"Your password has changed succesfully"];
-            [self loadViewControllerFromStoryBoard:@"loginpage"];
             
+             [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [self loadViewControllerFromStoryBoard:@"loginpage"];
+            [self showAlertController:@"Your password has changed succesfully"];
             
         }else if(response==0){
             [self showAlertController:@"No Network Connection"];

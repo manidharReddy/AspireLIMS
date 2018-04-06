@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface IMIHLOrdersList : NSObject
+@interface IMIHLOrdersList : NSObject<NSCoding>
 @property(strong,nonatomic)NSMutableArray*orderid_arr;
 @property(strong,nonatomic)NSMutableArray*orderdate_arr;
 @property(strong,nonatomic)NSMutableArray*ordertime_arr;

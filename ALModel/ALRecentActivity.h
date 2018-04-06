@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ALRecentActivity : NSObject
+@interface ALRecentActivity : NSObject<NSCoding>
 {
     BOOL isReportDownloadable;
 }

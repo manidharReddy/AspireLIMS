@@ -96,7 +96,7 @@
     return 1;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 50;
+    return self.table.frame.size.height*0.25;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.list count];
@@ -108,29 +108,31 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
        // cell.textLabel.font = [UIFont systemFontOfSize:14];
-        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        //cell.textLabel.textAlignment = NSTextAlignmentCenter;
     }
-    
+    NSLog(@"imageList if");
     cell.textLabel.text =[list objectAtIndex:indexPath.row];
-    cell.textLabel.font = [UIFont systemFontOfSize:[self screenSize].width/20];
-    //cell.imageView.image = [imageList objectAtIndex:indexPath.row];
-/*
+    cell.textLabel.font = [UIFont systemFontOfSize:table.frame.size.width*0.08];
+    cell.imageView.image = [UIImage imageNamed:[imageList objectAtIndex:indexPath.row]];
     if ([self.imageList count] == [self.list count]) {
         cell.textLabel.text =[list objectAtIndex:indexPath.row];
-        cell.imageView.image = [imageList objectAtIndex:indexPath.row];
+        cell.imageView.image = [UIImage imageNamed:[imageList objectAtIndex:indexPath.row]];
+        NSLog(@"imageList if");
     } else if ([self.imageList count] > [self.list count]) {
         cell.textLabel.text =[list objectAtIndex:indexPath.row];
         if (indexPath.row < [imageList count]) {
-            cell.imageView.image = [imageList objectAtIndex:indexPath.row];
+            cell.imageView.image = [UIImage imageNamed:[imageList objectAtIndex:indexPath.row]];
         }
+         NSLog(@"imageList else if1");
     } else if ([self.imageList count] < [self.list count]) {
         cell.textLabel.text =[list objectAtIndex:indexPath.row];
         if (indexPath.row < [imageList count]) {
-            cell.imageView.image = [imageList objectAtIndex:indexPath.row];
+            cell.imageView.image = [UIImage imageNamed:[imageList objectAtIndex:indexPath.row]];
         }
+         NSLog(@"imageList else if2");
     }
-    */
-    cell.textLabel.textColor = [UIColor blackColor];
+    
+    cell.textLabel.textColor = [UIColor blueColor];
     /*
     UIView * v = [[UIView alloc] init];
     v.backgroundColor = [UIColor grayColor];

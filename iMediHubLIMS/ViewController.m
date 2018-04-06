@@ -19,6 +19,7 @@
 @interface ViewController (){
     BOOL logged_user;
     NSArray*recentMenuPopArr;
+    NSArray*imagesArr;
     NSArray*recentListArry;
 }
 
@@ -103,7 +104,7 @@
         NSLog(@"recentactivities:%@",restService.restresult_dict);
         
      self.activityObj = [self.activityObj setRecentActivitiesList:restService.restresult_dict];
-        
+       
         recentListArry =   [NSArray arrayWithArray:self.activityObj.allRecentActivities];
         NSLog(@"items count :%lu",recentListArry.count);
        
@@ -125,9 +126,21 @@
             recentListArry =   [NSArray arrayWithArray:self.activityObj.allRecentActivities];
             NSLog(@"items count :%lu",recentListArry.count);
             
-            [self.testlist_tblview reloadData];
-        }else{
             
+            
+            
+            NSData *recentacitivitiesdata = [NSKeyedArchiver archivedDataWithRootObject:self.activityObj];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:recentacitivitiesdata forKey:@"recentActivities"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [self.testlist_tblview reloadData];
+        }else if(response == 0){
+            NSUserDefaults*userdefaults = [NSUserDefaults standardUserDefaults];
+            NSData *data = [userdefaults objectForKey:@"recentActivities"];
+            self.activityObj  = (IMIHLRecentActivities*)[NSKeyedUnarchiver unarchiveObjectWithData:data];
+            //NSLog(@"recentacitvities object:%@",login);
+            recentListArry =   [NSArray arrayWithArray:self.activityObj.allRecentActivities];
+            [self.testlist_tblview reloadData];
         }
     }];
     
@@ -173,14 +186,16 @@
     
     if (recentMenuPopArr==nil) {
     recentMenuPopArr = [NSArray arrayWithObjects:@"ALL",@"Reports",@"Appointments", @"Remainders", nil];
+        imagesArr = [NSArray arrayWithObjects:@"ic_content_paste_36pt",@"baricon",@"appointmentCalender",@"bell", nil];
+        
     }else{
     
     }
     if(dropDown == nil) {
-        CGFloat f = self.testlist_tblview.bounds.size.height/2;
+        CGFloat f = self.testlist_tblview.frame.size.height/2;
         
         
-        dropDown = [[NIDropDown alloc]showDropDown:sender :&f :recentMenuPopArr :nil :@"down"];
+        dropDown = [[NIDropDown alloc]showDropDown:sender :&f :recentMenuPopArr :imagesArr :@"down"];
         
     }
     else {
@@ -356,7 +371,7 @@
         
         [self.navigationController pushViewController:vc animated:YES];
     }else if([identifiername isEqualToString:@"searchid"]){
-        
+        self.navigationController.navigationBar.hidden=NO;
         IMIHLSearchVC * bvc = [storyboard instantiateViewControllerWithIdentifier:@"searchid"];
         bvc.patientid_str = self.patientId;
         //bvc.patientname_str = self.patientname_str;

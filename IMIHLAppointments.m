@@ -23,6 +23,37 @@
     
 }
 
+- (void) encodeWithCoder:(NSCoder *)encoder {
+    
+    [encoder encodeObject:self.apointmentId_arr forKey:@"apointmentId_arr"];
+    [encoder encodeObject:self.dept_id_arr forKey:@"dept_id_arr"];
+    [encoder encodeObject:self.test_id_arr forKey:@"test_id_arr"];
+    [encoder encodeObject:self.testname_arr forKey:@"testname_arr"];
+    [encoder encodeObject:self.deptname_arr forKey:@"deptname_arr"];
+    [encoder encodeObject:self.bookedtime_arr forKey:@"bookedtime_arr"];
+    [encoder encodeObject:self.bookeddate_arr forKey:@"bookeddate_arr"];
+    [encoder encodeObject:self.status_arr forKey:@"status_arr"];
+    
+    
+    
+    
+}
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    self.apointmentId_arr = [decoder decodeObjectForKey:@"apointmentId_arr"];
+    self.dept_id_arr = [decoder decodeObjectForKey:@"dept_id_arr"];
+    self.test_id_arr = [decoder decodeObjectForKey:@"test_id_arr"];
+    self.testname_arr = [decoder decodeObjectForKey:@"testname_arr"];
+    self.deptname_arr = [decoder decodeObjectForKey:@"deptname_arr"];
+    self.bookedtime_arr = [decoder decodeObjectForKey:@"bookedtime_arr"];
+    self.bookeddate_arr = [decoder decodeObjectForKey:@"bookeddate_arr"];
+    self.status_arr = [decoder decodeObjectForKey:@"status_arr"];
+    
+    
+    return self;
+    
+}
+
 -(IMIHLAppointments*)getAppointmentsList:(NSDictionary*)responseresult{
     
     [self allocObjects];
