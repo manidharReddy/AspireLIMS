@@ -39,6 +39,69 @@
         self.panelgroup_dict = [[NSMutableDictionary alloc]init];
 }
 
+- (void) encodeWithCoder:(NSCoder *)encoder {
+    
+    [encoder encodeObject:self.testid_arr forKey:@"testid_arr"];
+    [encoder encodeObject:self.testname_arr forKey:@"testname_arr"];
+    [encoder encodeObject:self.departmentid_arr forKey:@"testunits_arr"];
+    [encoder encodeObject:self.testunits_arr forKey:@"orderflag_arr"];
+    [encoder encodeObject:self.departmentname_arr forKey:@"departmentname_arr"];
+    [encoder encodeObject:self.testdate_arr forKey:@"testdate_arr"];
+    [encoder encodeObject:self.testminvalue_arr forKey:@"testminvalue_arr"];
+    [encoder encodeObject:self.testmaxvalue_arr forKey:@"testmaxvalue_arr"];
+    [encoder encodeObject:self.testresultvalue_arr forKey:@"testresultvalue_arr"];
+    [encoder encodeObject:self.testcriticallowvalue_arr forKey:@"testcriticallowvalue_arr"];
+    [encoder encodeObject:self.testcriticalhighvalue_arr forKey:@"testcriticalhighvalue_arr"];
+    [encoder encodeObject:self.type_arr forKey:@"type_arr"];
+    [encoder encodeObject:self.groupttestobj_arr forKey:@"groupttestobj_arr"];
+    [encoder encodeObject:self.panelgroupobj_arr forKey:@"panelgroupobj_arr"];
+    [encoder encodeObject:self.paneltestobj_arr forKey:@"orderservices_dict"];
+    [encoder encodeObject:self.isentered_arr forKey:@"isentered_arr"];
+    [encoder encodeObject:self.testdatesplit_arr forKey:@"testdatesplit_arr"];
+    [encoder encodeObject:self.testtimesplit_arr forKey:@"testtimesplit_arr"];
+    [encoder encodeObject:self.testranges_arr forKey:@"testranges_arr"];
+    [encoder encodeObject:self.isrepeated_arr forKey:@"isrepeated_arr"];
+    
+    
+    [encoder encodeObject:self.grouptest_dict forKey:@"grouptest_dict"];
+    [encoder encodeObject:self.paneltest_dict forKey:@"paneltest_dict"];
+    [encoder encodeObject:self.panelgroup_dict forKey:@"panelgroup_dict"];
+    
+}
+
+- (id)initWithCoder:(NSCoder *)decoder {
+   self.testid_arr = [decoder decodeObjectForKey:@"testid_arr"];
+    self.testname_arr = [decoder decodeObjectForKey:@"testname_arr"];
+    self.departmentid_arr = [decoder decodeObjectForKey:@"departmentid_arr"];
+    self.testunits_arr = [decoder decodeObjectForKey:@"testunits_arr"];
+    self.departmentname_arr = [decoder decodeObjectForKey:@"departmentname_arr"];
+    self.testunits_arr = [decoder decodeObjectForKey:@"testunits_arr"];
+    self.departmentname_arr = [decoder decodeObjectForKey:@"departmentname_arr"];
+    self.testdate_arr = [decoder decodeObjectForKey:@"testdate_arr"];
+    self.testminvalue_arr = [decoder decodeObjectForKey:@"testminvalue_arr"];
+    self.testmaxvalue_arr = [decoder decodeObjectForKey:@"testmaxvalue_arr"];
+    self.testresultvalue_arr = [decoder decodeObjectForKey:@"testresultvalue_arr"];
+    self.testcriticallowvalue_arr = [decoder decodeObjectForKey:@"testcriticallowvalue_arr"];
+    self.testcriticalhighvalue_arr = [decoder decodeObjectForKey:@"testcriticalhighvalue_arr"];
+    self.type_arr = [decoder decodeObjectForKey:@"type_arr"];
+    self.groupttestobj_arr = [decoder decodeObjectForKey:@"groupttestobj_arr"];
+    self.panelgroupobj_arr = [decoder decodeObjectForKey:@"panelgroupobj_arr"];
+    self.paneltestobj_arr = [decoder decodeObjectForKey:@"paneltestobj_arr"];
+    self.isentered_arr = [decoder decodeObjectForKey:@"isentered_arr"];
+    self.testdatesplit_arr = [decoder decodeObjectForKey:@"testdatesplit_arr"];
+    self.testtimesplit_arr = [decoder decodeObjectForKey:@"testtimesplit_arr"];
+    self.testranges_arr = [decoder decodeObjectForKey:@"testranges_arr"];
+    self.isrepeated_arr = [decoder decodeObjectForKey:@"isrepeated_arr"];
+    
+    self.grouptest_dict = [decoder decodeObjectForKey:@"grouptest_dict"];
+    self.paneltest_dict = [decoder decodeObjectForKey:@"paneltest_dict"];
+    self.panelgroup_dict = [decoder decodeObjectForKey:@"panelgroup_dict"];
+    
+    
+    return self;
+    
+}
+
 -(IMIHLReportValue*)getReportResult:(NSDictionary*)responseresult{
  
     [self allocateArray];

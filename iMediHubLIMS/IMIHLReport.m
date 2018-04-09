@@ -57,9 +57,9 @@
     if (self.tempreportdict==nil) {
        // self.calledchg_str=@"1";
         
-    [self performSelector:@selector(callReportMain) withObject:nil afterDelay:0.1];
+    //[self performSelector:@selector(callReportMain) withObject:nil afterDelay:0.1];
         //[self performSelectorInBackground:@selector(callReportMain) withObject:nil];
-       // [self callReportMain];
+        [self callReportMain];
     }else{
         //self.id_str=@"1";
         //NSLog(@"viewdidload else:%@",self.id_str);
@@ -227,11 +227,21 @@
             NSLog(@"restreport.restresult_dict:%@",restreport.restresult_dict);
             reportvalue= [reportvalue getReportResult:restreport.restresult_dict];
             [self testResults:reportvalue];
+            
+            NSData *recentacitivitiesdata = [NSKeyedArchiver archivedDataWithRootObject:reportvalue];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:recentacitivitiesdata forKey:@"testedreports"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             [self.labrprt_tblview reloadData];
             
         }else if(response==0){
             
             [self showAlertController:@"No Network Connection"];
+            NSUserDefaults*userdefaults = [NSUserDefaults standardUserDefaults];
+            NSData *data = [userdefaults objectForKey:@"testedreports"];
+             IMIHLReportValue*reportvalue = [[IMIHLReportValue alloc]init];
+            reportvalue = (IMIHLReportValue*)[NSKeyedUnarchiver unarchiveObjectWithData:data];
+            [self testResults:reportvalue];
         }else if(response==500){
             
             [self showAlertController:@"There is no services on this dates.please try with another dates"];
@@ -700,7 +710,7 @@
             [btn setTitle:@"Pending" forState:UIControlStateNormal];
             //btn.hidden=YES;
             
-            [grphbtn setImage:nil forState:UIControlStateNormal];
+           [grphbtn setImage:nil forState:UIControlStateNormal];
         grphbtn.hidden=YES;
             
             
@@ -747,11 +757,12 @@
             btn.hidden=NO;
             btn.backgroundColor = [UIColor colorWithRed:241.0/255.0 green:145.0/255.0 blue:50.0/255.0 alpha:1.0];
             [btn setTitle:@"Pending" forState:UIControlStateNormal];
+            btn.layer.cornerRadius = btn.frame.size.height/2;
         }
         UIButton*grphbtn = (UIButton*)[cell.contentView viewWithTag:8];
         //[grphbtn setImage:[UIImage imageWithIcon:@"fa-line-chart" backgroundColor:[UIColor clearColor] iconColor:[UIColor whiteColor] fontSize:25] forState:UIControlStateNormal];
         
-        [grphbtn setImage:nil forState:UIControlStateNormal];
+        //[grphbtn setImage:nil forState:UIControlStateNormal];
         grphbtn.hidden=YES;
         
        

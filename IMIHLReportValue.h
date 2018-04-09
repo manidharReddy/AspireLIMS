@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface IMIHLReportValue : NSObject
+@interface IMIHLReportValue : NSObject<NSCoding>
 /*Individual test parameters in Array*/
 @property(strong,nonatomic) NSMutableArray*testid_arr;
 @property(strong,nonatomic) NSMutableArray*testname_arr;

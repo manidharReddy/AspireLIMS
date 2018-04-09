@@ -39,12 +39,14 @@ TextFieldValidator *txtDemo;
     //NSLog(@"loginviewcontroller");
     self.signInBtn.layer.cornerRadius = 20;
     [self setIconsForLoginPage];
-    self.username_txtfld.delegate=self;
-    self.usrpasswrd_txt.delegate=self;
+    //self.username_txtfld.delegate=self;
+    //self.usrpasswrd_txt.delegate=self;
     //self.username_txtfld.layer.cornerRadius = 50;
     //self.usrpasswrd_txt.layer.cornerRadius = 50;
     
     //[self.username_txtfld setBorderStyle:UITextBorderStyleNone];
+    txtUserName.delegate = self;
+    txtPassword.delegate = self;
     txtUserName.layer.cornerRadius = txtUserName.bounds.size.height/2;
     txtUserName.layer.borderColor = [UIColor whiteColor].CGColor;
     txtUserName.layer.borderWidth = 2;
@@ -75,8 +77,36 @@ TextFieldValidator *txtDemo;
  }
  */
     
+    //[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardNotification:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    
 }
 
+-(void)keyboardNotification:(NSNotification*)notification{
+    
+    NSLog(@"keyboard height:%f",[notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height);
+    
+    NSLog(@"keyboard height:%f",[notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].origin.y);
+    
+    double duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    unsigned int curve = [notification.userInfo[UIKeyboardAnimationCurveUserInfoKey]intValue];
+    CGRect curverect = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    CGRect targetrect = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    CGFloat delayY = targetrect.origin.y - curverect.origin.y;
+    NSLog(@"delayY:%f",delayY);
+    [UIView animateKeyframesWithDuration:duration delay:0.0 options:(curve) animations:^{
+        CGRect frameY = self.view.frame;
+        frameY.origin.y = 0;
+        if (delayY<0) {
+          frameY.origin.y = delayY;
+        }
+        
+        self.view.frame = frameY;
+        
+    } completion:^(BOOL finished) {
+        
+    }];
+}
 -(BOOL)loggedPatient{
      self.view.hidden=NO;
     //NSLog(@"login loggedPatient ");
@@ -166,12 +196,19 @@ TextFieldValidator *txtDemo;
     //if(txtDemo==textField){
     //[scrlView setContentOffset:CGPointMake(0, 50) animated:YES];
     //}
+    NSLog(@"textFieldDidBeginEditing");
+     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardNotification:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    
+    
+
 }
 
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     //[self.username_txtfld resignFirstResponder];
     //[self.usrpasswrd_txt resignFirstResponder];
+    NSLog(@"textFieldShouldReturn");
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
     [textField resignFirstResponder];
     return YES;
 }

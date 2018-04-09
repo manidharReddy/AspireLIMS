@@ -18,6 +18,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *usrpasswrd_txt;
 @property (strong, nonatomic) NSString*patientid_str;
 @property (strong, nonatomic) NSString*patientname_str;
+@property (strong, nonatomic) IBOutlet UIView *presentView;
 @property (strong, nonatomic) IBOutlet UIImageView *background_img;
 @property (strong, nonatomic) IBOutlet UIButton *signInBtn;
 

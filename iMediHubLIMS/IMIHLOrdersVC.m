@@ -62,6 +62,7 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
 
         }else if(response == 0){
+           [MBProgressHUD hideHUDForView:self.view animated:YES];
             NSUserDefaults*userdefaults = [NSUserDefaults standardUserDefaults];
             NSData *data = [userdefaults objectForKey:@"orderObj"];
              self.orderlist_obj  = (IMIHLOrdersList*)[NSKeyedUnarchiver unarchiveObjectWithData:data];

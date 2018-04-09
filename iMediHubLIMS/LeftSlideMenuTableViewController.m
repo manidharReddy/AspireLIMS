@@ -427,6 +427,17 @@
         [self.menuContainerViewController setMenuState:MFSideMenuStateClosed];
         [self.menuContainerViewController setLeftMenuViewController:nil];
         
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"testedreports"];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"userprofiles"];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"recentActivities"];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"userlogin"];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"reports"];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"remainders"];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"previousAppts"];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"aboutus"];
+        //[[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"reportsdata"];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"orderObj"];
+        
         //[self.navigationController pushViewController:vc animated:YES];
        // [self presentViewController:vc animated:YES completion:nil];
         
