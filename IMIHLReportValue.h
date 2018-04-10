@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "ALReports.h"
+#import "ALGroup.h"
+#import "ALReports.h"
 @interface IMIHLReportValue : NSObject<NSCoding>
 /*Individual test parameters in Array*/
 @property(strong,nonatomic) NSMutableArray*testid_arr;
@@ -37,6 +39,12 @@
 @property(strong,nonatomic) NSMutableDictionary*grouptest_dict;
 @property(strong,nonatomic) NSMutableDictionary*paneltest_dict;
 @property(strong,nonatomic) NSMutableDictionary*panelgroup_dict;
--(IMIHLReportValue*)getReportResult:(NSDictionary*)responseresult;
 
+
+@property(strong,nonatomic) NSMutableArray<ALReports*>*alReportObjsArry;
+@property(strong,nonatomic) NSMutableOrderedSet<ALReports*>*alReportObjsSet;
+
+-(IMIHLReportValue*)getReportResult:(NSDictionary*)responseresult;
+-(IMIHLReportValue*)getReports:(NSDictionary*)responseresult;
+-(ALTest*)setDataForAlTestObj:(NSDictionary*)dict;
 @end

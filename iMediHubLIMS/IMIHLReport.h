@@ -14,6 +14,8 @@
 #import "IMIHLDetail.h"
 #import "IMIHLRestService.h"
 #import "MBProgressHUD.h"
+#import "ALReports.h"
+#import "IMIHLReportValue.h"
 @interface IMIHLReport : UIViewController<UITableViewDataSource,UITableViewDelegate>{
     int indexvalue;
 }
@@ -30,6 +32,9 @@
 @property (strong, nonatomic) IBOutlet UITableView *labrprt_tblview;
 @property (strong, nonatomic) IBOutlet UIButton *graph_btn;
 @property (strong,nonatomic) NSDictionary*tempreportdict;
+
+
+@property (strong, nonatomic) IMIHLReportValue*reportValueObj;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *backBaritem;
 -(void)restServiceCall:(NSString*)patientid :(NSString*)todate :(NSString*)fromdate;
 - (IBAction)backBtnClick:(id)sender;

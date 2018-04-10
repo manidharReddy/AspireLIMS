@@ -43,6 +43,10 @@
 		383906C11E8465D8005FAD25 /* IMIHDRTimeSlotVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 383906C01E8465D8005FAD25 /* IMIHDRTimeSlotVCViewController.m */; };
 		3844C69E1F0D812400B8A437 /* IMIHLCancelAppnt.m in Sources */ = {isa = PBXBuildFile; fileRef = 3844C69D1F0D812400B8A437 /* IMIHLCancelAppnt.m */; };
 		385939442063C1660017F828 /* ALOrders.m in Sources */ = {isa = PBXBuildFile; fileRef = 385939432063C1660017F828 /* ALOrders.m */; };
+		386A3D89207C961D00643B68 /* ALReports.m in Sources */ = {isa = PBXBuildFile; fileRef = 386A3D88207C961D00643B68 /* ALReports.m */; };
+		386A3D8C207C96BB00643B68 /* ALReportTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 386A3D8B207C96BB00643B68 /* ALReportTest.m */; };
+		386A3D8F207C96F600643B68 /* ALTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 386A3D8E207C96F600643B68 /* ALTest.m */; };
+		386A3D92207C980E00643B68 /* ALGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 386A3D91207C980E00643B68 /* ALGroup.m */; };
 		38880F0F20724C910039339D /* JDAvatarProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 38880F0D20724C900039339D /* JDAvatarProgress.m */; };
 		3890AF51206CC07D00B9DC6A /* ALStartingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3890AF50206CC07D00B9DC6A /* ALStartingVC.m */; };
 		389CEC5A20528ADB00DD34C4 /* IMIHLRecentActivities.m in Sources */ = {isa = PBXBuildFile; fileRef = 389CEC5920528ADB00DD34C4 /* IMIHLRecentActivities.m */; };
@@ -221,6 +225,14 @@
 		3844C69D1F0D812400B8A437 /* IMIHLCancelAppnt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMIHLCancelAppnt.m; sourceTree = "<group>"; };
 		385939422063C1660017F828 /* ALOrders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALOrders.h; sourceTree = "<group>"; };
 		385939432063C1660017F828 /* ALOrders.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALOrders.m; sourceTree = "<group>"; };
+		386A3D87207C961D00643B68 /* ALReports.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALReports.h; sourceTree = "<group>"; };
+		386A3D88207C961D00643B68 /* ALReports.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALReports.m; sourceTree = "<group>"; };
+		386A3D8A207C96BB00643B68 /* ALReportTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALReportTest.h; sourceTree = "<group>"; };
+		386A3D8B207C96BB00643B68 /* ALReportTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALReportTest.m; sourceTree = "<group>"; };
+		386A3D8D207C96F600643B68 /* ALTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALTest.h; sourceTree = "<group>"; };
+		386A3D8E207C96F600643B68 /* ALTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALTest.m; sourceTree = "<group>"; };
+		386A3D90207C980E00643B68 /* ALGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALGroup.h; sourceTree = "<group>"; };
+		386A3D91207C980E00643B68 /* ALGroup.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALGroup.m; sourceTree = "<group>"; };
 		38842B0E1F7DB02500554A52 /* AspireLIMS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AspireLIMS.entitlements; sourceTree = "<group>"; };
 		38880F0D20724C900039339D /* JDAvatarProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JDAvatarProgress.m; sourceTree = "<group>"; };
 		38880F0E20724C900039339D /* JDAvatarProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDAvatarProgress.h; sourceTree = "<group>"; };
@@ -960,6 +972,14 @@
 				385939432063C1660017F828 /* ALOrders.m */,
 				380502EE20777E5E00169072 /* ALUserLogin.h */,
 				380502EF20777E5E00169072 /* ALUserLogin.m */,
+				386A3D87207C961D00643B68 /* ALReports.h */,
+				386A3D88207C961D00643B68 /* ALReports.m */,
+				386A3D8A207C96BB00643B68 /* ALReportTest.h */,
+				386A3D8B207C96BB00643B68 /* ALReportTest.m */,
+				386A3D8D207C96F600643B68 /* ALTest.h */,
+				386A3D8E207C96F600643B68 /* ALTest.m */,
+				386A3D90207C980E00643B68 /* ALGroup.h */,
+				386A3D91207C980E00643B68 /* ALGroup.m */,
 			);
 			path = ALModel;
 			sourceTree = "<group>";
@@ -1141,10 +1161,12 @@
 				38E4C4D71EC3F1B90091640B /* FSCalendarEventIndicator.m in Sources */,
 				38F9BD0C1EC3F9DC00E4FAB9 /* IMIHDLocations.m in Sources */,
 				38F9BD031EC3F7E700E4FAB9 /* InternetConnection.m in Sources */,
+				386A3D8C207C96BB00643B68 /* ALReportTest.m in Sources */,
 				38D7FA581E428DF300421E12 /* IMIHLPdfViewer.m in Sources */,
 				380502F020777E5E00169072 /* ALUserLogin.m in Sources */,
 				389CEC5A20528ADB00DD34C4 /* IMIHLRecentActivities.m in Sources */,
 				38D7FA431E428DF300421E12 /* IMDIHLReport.m in Sources */,
+				386A3D92207C980E00643B68 /* ALGroup.m in Sources */,
 				38F9BCE71EC3F6F600E4FAB9 /* IMIHDoctorSpecialities.m in Sources */,
 				381794C02069278E0054CDB2 /* IMIHLBookAppointment.m in Sources */,
 				38D7FA531E428DF300421E12 /* IMIHLDrBookAppointment.m in Sources */,
@@ -1194,6 +1216,7 @@
 				38E4C4D11EC3F1B90091640B /* FSCalendar+IBExtension.m in Sources */,
 				35E44DA11D13EFCB00E8BD29 /* MFSideMenuShadow.m in Sources */,
 				38F9BCEB1EC3F6F600E4FAB9 /* IMIHLDoctorList.m in Sources */,
+				386A3D8F207C96F600643B68 /* ALTest.m in Sources */,
 				38E4C5151EC3F2570091640B /* PNPieChartDataItem.m in Sources */,
 				38E4C47E1EC3D4920091640B /* TOCropOverlayView.m in Sources */,
 				38E4C47F1EC3D4920091640B /* TOCropScrollView.m in Sources */,
@@ -1235,6 +1258,7 @@
 				385939442063C1660017F828 /* ALOrders.m in Sources */,
 				3831ACC81EF8B26000B39270 /* DropDownViewCell.m in Sources */,
 				38E4C4DB1EC3F1B90091640B /* FSCalendarStickyHeader.m in Sources */,
+				386A3D89207C961D00643B68 /* ALReports.m in Sources */,
 				38D7FA481E428DF300421E12 /* IMIHLFeedback.m in Sources */,
 				382DB4ED1EE7794900ACE9DB /* IMDIHDrPrAppnts.m in Sources */,
 				38D7FA541E428DF300421E12 /* IMIHLDoctorsList.m in Sources */,
