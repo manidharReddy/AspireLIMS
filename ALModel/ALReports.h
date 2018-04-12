@@ -11,7 +11,7 @@
 @interface ALReports : NSObject
 @property(strong,nonatomic) NSString*testTypeObj;
 @property(strong,nonatomic) NSString*testIsRepeatedObj;
-@property(strong,nonatomic) NSDictionary<NSString*,ALTest*>*repeatedTestsDict;
+//@property(strong,nonatomic) NSMutableDictionary<NSString*,ALTest*>*repeatedTestsDict;
 @property(strong,nonatomic) NSMutableArray*resultDataArrObj;
 
 +(ALReports*)getSharedInstance;

@@ -9,45 +9,26 @@
 #import "IMDIHLReport.h"
 #import "IMIHLReport.h"
 #define ARC4RANDOM_MAX 0x100000000
+#import "IMIHLReportValue.h"
+#import "IMIHLDBManager.h"
 @interface IMDIHLReport (){
-    NSArray*patienttestrange_arr;
-    NSArray*patienttestdate_arr;
-    NSArray*patienttesttime_arr;
-    NSArray*patientteststatus_arr;
     NSMutableArray*xChart_arr;
     float max_range,min_range;
     
-    NSIndexPath *path;
+    //NSIndexPath *path;
    // UUChart *chartView;
     BOOL showgraph;
 }
 
-
-
-
-@property(nonatomic,retain)NSMutableArray*departmentstxtarr;
-@property(nonatomic,retain)NSMutableArray*departmentsimgarr;
-@property(nonatomic,retain)NSMutableArray*teststxtarr;
-
-
-@property(nonatomic,retain)NSMutableArray*testyearsarr;
 @property(nonatomic,retain)NSMutableArray*testMaxrangearr;
-@property(nonatomic,retain)NSMutableArray*testMinrangearr;
-@property(nonatomic,retain)NSMutableArray*testNormalrangearr;
+
+
 //@property(nonatomic,retain)NSMutableArray*xChart_arr;
 
-@property(nonatomic,retain)NSMutableArray*yChart_arr;
+
 @property(nonatomic,retain)NSMutableArray*yMaxChart_arr;
-@property(nonatomic,retain)NSMutableArray*yMinChart_arr;
-@property(nonatomic,retain)NSMutableArray*colorChart_arr;
 
-
-
-
-
-
-
-
+//@property(nonatomic,retain)NSMutableArray*colorChart_arr;
 
 
 @end
@@ -61,31 +42,15 @@
 
     //[self allocateArray];
         //[self setData];
-    xChart_arr = [[NSMutableArray alloc]init];
-    self.colorChart_arr = [[NSMutableArray alloc]init];
-    self.testMaxrangearr = [[NSMutableArray alloc]init];
-    self.yMaxChart_arr = [[NSMutableArray alloc]init];
+   // xChart_arr = [[NSMutableArray alloc]init];
+   // self.colorChart_arr = [[NSMutableArray alloc]init];
+    //self.testMaxrangearr = [[NSMutableArray alloc]init];
+    //self.yMaxChart_arr = [[NSMutableArray alloc]init];
     
     [self setChartData];
-    [self.reporttblView reloadData];
+   // [self.reporttblView reloadData];
 }
 
--(void)allocateArray{
-    self.patienttestid_arr = [[NSMutableArray alloc]init];
-    self.patienttesttype_arr = [[NSMutableArray alloc]init];
-    self.patienttestname_arr = [[NSMutableArray alloc]init];
-    self.patienttestrange_arr = [[NSMutableArray alloc]init];
-    self.patienttestdate_arr = [[NSMutableArray alloc]init];
-    self.patienttesttime_arr = [[NSMutableArray alloc]init];
-    self.patienttestvalue_arr = [[NSMutableArray alloc]init];
-    self.patienttestunits_arr = [[NSMutableArray alloc]init];
-    self.patienttestminvalue_arr = [[NSMutableArray alloc]init];
-    self.patienttestmaxvalue_arr = [[NSMutableArray alloc]init];
-    self.patienttestisready = [[NSMutableArray alloc]init];
-    self.patientgrouptestname_arr = [[NSMutableArray alloc]init];
-    
-    
-}
 
 -(void)viewWillAppear:(BOOL)animated{
     //[self.backbarItem setImage:[UIImage imageWithIcon:@"fa-arrow-left" backgroundColor:[UIColor clearColor] iconColor:[UIColor whiteColor] fontSize:20]];
@@ -104,161 +69,54 @@
 
 
 
--(void)setData{
-    
-    max_range=35;
-    min_range=15;
-    self.departmentstxtarr = [[NSMutableArray alloc]init];
-    self.departmentsimgarr = [[NSMutableArray alloc]init];
-    self.teststxtarr = [[NSMutableArray alloc]init];
-     //self.testyearsarr = [[NSMutableArray alloc]init];
-    //self.testrangearr = [[NSMutableArray alloc]init];
-    self.testMaxrangearr = [[NSMutableArray alloc]init];
-    self.testMinrangearr = [[NSMutableArray alloc]init];
-    self.testNormalrangearr = [[NSMutableArray alloc]init];
-   
-    
-    NSArray*tmpdepttxtarr = [NSArray arrayWithObjects:@"Bio Chemistry",@"Hematology & Hemostasis",@"Immutology",@"Histopathology",@"Microbiology",@"infectious Molecular Biology",@"Pathology",@"Microbiology",@"Toxicology",@"Urin", nil];
-    [self.departmentstxtarr setArray:tmpdepttxtarr];
-    NSArray*tmpdeptimgarr = [NSArray arrayWithObjects:@"deptmolecularicon",@"deptmolecularicon",@"deptmolecularicon",@"deptmolecularicon",@"deptmolecularicon",@"deptmolecularicon",@"deptmolecularicon",@"deptmolecularicon",@"deptmolecularicon",@"deptmolecularicon", nil];
-    [self.departmentsimgarr setArray:tmpdeptimgarr];
-    
-    NSArray*tmptesttxtarr = [NSArray arrayWithObjects:@"CBC",@"Lipid Profile",@"Hemoglobin",@"Test1",@"CBC",@"Lipid Profile",@"Hemoglobin",@"Test1",@"Test2",@"Test3",nil];
-    [self.teststxtarr setArray:tmptesttxtarr];
-    
-    
-    //NSArray*tmpTestMaxRange = [NSArray arrayWithObjects:@"41.2", @"18.2", @"32.2", @"16.2",@"15.2",@"22.2",@"36.2",@"34.2",@"10.2",@"21.2",nil];
-    
-    //self.testMaxrangearr =
-    patienttestrange_arr = [NSArray arrayWithObjects:@"41.2", @"18.2", @"32.2", @"16.2",@"15.2",@"22.2",@"36.2",@"34.2",@"10.2",@"21.2",nil];
-    patienttestdate_arr = [NSArray arrayWithObjects:@"24th Jan 2016", @"29th Jan 2016", @"2th Feb 2016", @"12th Feb 2016",@"5th Mar 2016",@"15th Mar 2016",@"10th Apr 2016",@"16th May 2016",@"25th May 2016",@"20th Jun 2016",nil];
-    patienttesttime_arr = [NSArray arrayWithObjects:@"10.30pm", @"10.30pm", @"10.30pm", @"10.30pm",@"10.30pm",@"10.30pm",@"10.30pm",@"10.30pm",@"10.30pm",@"10.30pm",nil];
-    patientteststatus_arr = [NSArray arrayWithObjects:@"High", @"Normal", @"Normal", @"Normal",@"Normal",@"Normal",@"High",@"Normal",@"Low",@"Normal",nil];
-    
-
-    self.navigationController.navigationBarHidden=NO;
-        //[self loadBarChartUsingArray];
-    //[self setDataInChart:0];
-
-
-}
 
 
 
 -(void)setChartData{
     
-    self.deptName_lbl.text = self.departmentname_str;
-    self.testName_lbl.text = [self.patienttestname_arr objectAtIndex:0];
+    IMIHLDBManager*dbManager = [IMIHLDBManager getSharedInstance];
+    self.listOfTests = [dbManager listOfTestsFilteredByDate:self.testId];
     
+    if (self.listOfTests.count!=0) {
+    ALTest*testObj = [self.listOfTests objectAtIndex:0];
     
-    //NSLog(@"cahrtncmcmdkmc");
-   // int index = [self.selected_index intValue];
-    //NSLog(@"indexvalue:%d",index);
-    //NSLog(@"patienttestmaxvalue_arr:%@",self.patienttestmaxvalue_arr);
-    //NSLog(@"testrange:%@",self.patienttestrange_arr);
-    
-    max_range=[[self.patienttestmaxvalue_arr objectAtIndex:self.patienttestmaxvalue_arr.count-1]floatValue];
-    min_range=[[self.patienttestminvalue_arr objectAtIndex:self.patienttestminvalue_arr.count-1]floatValue];
+        
+        self.deptName_lbl.text = testObj.departmentname;
+        self.testName_lbl.text = testObj.testname;
+        max_range=[testObj.testmaxvalue floatValue];
+        min_range=[testObj.testmaxvalue floatValue];
 
+        self.testMaxrangearr = [NSMutableArray new];
+        self.yMaxChart_arr = [NSMutableArray new];
+        xChart_arr = [NSMutableArray new];
+        
+        for (ALTest*tstObj in self.listOfTests) {
+            [self.testMaxrangearr addObject:tstObj.testresultvalue];
+            [self.yMaxChart_arr addObject:tstObj.testmaxvalue];
+            [xChart_arr addObject:tstObj.testdatesplit];
+        }
+        [self.reports_tblview reloadData];
+
+    }else{
+       
+        
+    
+    }
    
-    //[self.yMaxChart_arr addObject:[self.patienttestmaxvalue_arr objectAtIndex:index]];
-    
-    //NSLog(@"check1");
-   // //NSLog(@"testyears:%@",[patienttestdate_arr objectAtIndex:0]);
-   // [xChart_arr addObject:[self.patienttestdate_arr objectAtIndex:index]];
-    
-    //NSLog(@"check2");
-    //NSLog(@"testnamessss:%@",self.patienttestname_arr);
-    
-        NSMutableArray*arrtestname = [[NSMutableArray alloc]init];
-    NSMutableArray*arrrangename = [[NSMutableArray alloc]init];
-    NSMutableArray*arrdatename = [[NSMutableArray alloc]init];
-    NSMutableArray*arrmaindatename = [[NSMutableArray alloc]init];
-    
-    for (int i=0;i<self.patienttestname_arr.count;i++) {
-        if ([[self.patienttestisready objectAtIndex:i]intValue]==1) {
-            
-            //NSLog(@"max in loop:%@",[self.patienttestminvalue_arr objectAtIndex:i]);
-            if ([[self.patienttestvalue_arr objectAtIndex:i]floatValue]<min_range) {
-                //NSLog(@"min");
-                min_range = [[self.patienttestvalue_arr objectAtIndex:i]floatValue];
-                //NSLog(@"min value:%f",min_range);
-                
-            }else if ([[self.patienttestvalue_arr objectAtIndex:i]floatValue]>max_range){
-                //NSLog(@"max");
-                max_range = [[self.patienttestvalue_arr objectAtIndex:i]floatValue];
-                //NSLog(@"max value:%f",max_range);
-            }
-            
-            [arrtestname addObject:[self.patienttestname_arr objectAtIndex:i]];
-            [arrrangename addObject:[self.patienttestvalue_arr objectAtIndex:i]];
-            [arrdatename addObject:[self.patienttestmaxvalue_arr objectAtIndex:i]];
-            [arrmaindatename addObject:[self.patienttestdate_arr objectAtIndex:i]];
-        }
-    }
-    //NSLog(@"self.patienttestvalue_arr check2:%@",self.patienttestvalue_arr);
-    if (arrtestname.count==0) {
-        //NSLog(@"self.patienttestvalue_arr check1:%@",self.patienttestvalue_arr);
-        self.testMaxrangearr =self.patienttestvalue_arr;
-        self.yMaxChart_arr = self.patienttestmaxvalue_arr;
-        //NSLog(@"self.patienttestdate_arr:%@",self.patienttestdate_arr);
-        xChart_arr = self.patienttestdate_arr;
-
-    }else{
-        [self.patienttestname_arr removeAllObjects];
-        [self.patienttestvalue_arr removeAllObjects];
-        [self.patienttestmaxvalue_arr removeAllObjects];
-        [self.patienttestdate_arr removeAllObjects];
-        [xChart_arr removeAllObjects];
-        //NSLog(@"arrmaindatename:%@",arrmaindatename);
-        self.testMaxrangearr =arrrangename;
-        self.yMaxChart_arr = arrdatename;
-        xChart_arr = arrmaindatename;
-        //NSLog(@"xChart_arr:%@",xChart_arr);
-        
-        self.patienttestname_arr = arrtestname;
-        self.patienttestvalue_arr =arrrangename;
-        self.patienttestmaxvalue_arr=arrdatename;
-        self.patienttestdate_arr=arrmaindatename;
-    }
-    /*
-    for (int i=0; i<self.patienttestname_arr.count; i++) {
-        
-    
-    if ([[self.patienttestvalue_arr objectAtIndex:i] integerValue]>max_range) {
-        //NSLog(@"greater max_range");
-        max_range = [[self.patienttestvalue_arr objectAtIndex:i] floatValue];
-        [self.colorChart_arr addObject:PNRed];
-        //[self.testMaxrangearr addObject:[patienttestrange_arr objectAtIndex:i]];
-    }else if ([[self.patienttestvalue_arr objectAtIndex:i] integerValue]<min_range){
-        min_range = [[self.patienttestvalue_arr objectAtIndex:i] floatValue];
-        [self.colorChart_arr addObject:PNStarYellow];
-        //NSLog(@"lessthan min_range");
-        //[self.testMinrangearr addObject:[patienttestrange_arr objectAtIndex:i]];
-    }else{
-        [self.colorChart_arr addObject:PNGreen];
-        //[self.testNormalrangearr addObject:[patienttestrange_arr objectAtIndex:i]];
-    }
-        if (xChart_arr.count<2) {
-        //[xChart_arr addObject:@""];
-        }
-        
-        
-    }
-     */
-    
-    //[xChart_arr addObject:@""];
-    //[xChart_arr addObject:@""];
-    
-
-//NSLog(@"check3");
-  //[self barChartView];
     [self lineChartView];
-    [self.reporttblView reloadData];
+    
 
 }
 
+- (void)dealloc
+{
+    self.listOfTests = nil;
+    self.testMaxrangearr = nil;
+    self.yMaxChart_arr = nil;
+    xChart_arr =nil;
+}
 
+/*
 -(void)setDataInChart:(int)index{
     
     
@@ -294,7 +152,7 @@
                 n++;
             }
         }
-        
+        */
         /*
         if (self.patienttestid_arr.count==2) {
             [xChart_arr addObject:@" "];
@@ -320,12 +178,12 @@
         }
          */
         
-    }
+   // }
     
         //[self barChartView];
     
    // [self lineChartView];
-}
+//}
 
 
 
@@ -562,7 +420,7 @@
     
     
     //[self.barChart setStrokeColors:@[PNGreen,PNRed]];
-    [self.barChart setStrokeColors:self.colorChart_arr];
+   // [self.barChart setStrokeColors:self.colorChart_arr];
     self.barChart.isGradientShow = NO;
     self.barChart.isShowNumbers = YES;
     
@@ -633,13 +491,14 @@
         [self.navigationController pushViewController:myvc animated:YES];
          */
         //NSLog(@"labreport");
-        
+        /*
         IMIHLReport * mrvc = [storyboard instantiateViewControllerWithIdentifier:@"labreport"];
         mrvc.patientid_str = self.patientid_str;
         mrvc.id_str =@"0";
         mrvc.datestore_str = self.filterdateshow_str;
         mrvc.tempreportdict = self.tempreportdict;
         [self.navigationController pushViewController:mrvc animated:YES];
+         */
     }else{
     
     UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:identifiername];
@@ -657,18 +516,21 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //NSLog(@"count patient names:%d",(int)self.patienttestname_arr.count);
-    return self.patienttestname_arr.count;
+    return self.listOfTests.count;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 80;
+    if (self.view.frame.size.width<self.view.frame.size.height) {
+        return (self.reporttblView.bounds.size.height)*0.2;
+    }
+    return (self.reporttblView.bounds.size.height)*0.4;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     // Configure the cell...
     
-    //NSLog(@"cell for row at index");
+    NSLog(@"cell for row at index");
     static NSString *CellIdentifier = @"testlisttblcell";
     
     UITableViewCell *cell = [self.reports_tblview dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -679,7 +541,7 @@
     //mtable.separatorStyle= UITableViewCellSeparatorStyleSingleLine;
     
     
-    //NSLog(@"cellcheck1");
+    NSLog(@"cellcheck1");
     //if ([[self.patienttesttype_arr objectAtIndex:indexPath.row]intValue]==1) {
         //NSLog(@"cellcheck2");
         
@@ -687,44 +549,45 @@
         //if ([[self.patienttestisready objectAtIndex:indexPath.row]intValue]==1) {
             
             //NSLog(@"cellcheck3");
+    ALTest*testObj = (ALTest*)[self.listOfTests objectAtIndex:indexPath.row];
             UILabel*lbl;
-            
+    NSLog(@"testObj.testresultvalue:%@",testObj.testresultvalue);
             UILabel*lbl_range;
             //NSLog(@"cellcheck4");
             lbl_range=(UILabel*)[cell viewWithTag:1];
-            lbl_range.text = [self.patienttestvalue_arr objectAtIndex:indexPath.row];
+            lbl_range.text =testObj.testresultvalue;
             //NSLog(@"cellcheck5");
             lbl=(UILabel*)[cell viewWithTag:2];
-            lbl.text = [self.patienttestunits_arr objectAtIndex:indexPath.row];
+            lbl.text = testObj.testunits;
             //NSLog(@"cellcheck6");
             lbl=(UILabel*)[cell viewWithTag:3];
-            lbl.text = [self.patienttestdate_arr objectAtIndex:indexPath.row];
+            lbl.text = testObj.testdatesplit;
             //NSLog(@"cellcheck7");
             lbl=(UILabel*)[cell viewWithTag:4];
-            lbl.text = [self.patienttesttime_arr objectAtIndex:indexPath.row];
+            lbl.text = testObj.testtimesplit;
             //NSLog(@"cellcheck8");
             UIButton*btn = (UIButton*)[cell viewWithTag:5];
             
             //NSLog(@"patientteststatus_arr value:%@",[self.patientteststatus_arr objectAtIndex:indexPath.row]);
             
-            if ([[self.patienttestvalue_arr objectAtIndex:indexPath.row] isEqualToString:@"Positive"]||[[self.patienttestvalue_arr objectAtIndex:indexPath.row] isEqualToString:@"Negative"]) {
+            if ([testObj.testresultvalue isEqualToString:@"Positive"]||[testObj.testresultvalue isEqualToString:@"Negative"]) {
                 
-                //NSLog(@"cellcheck9");
+                NSLog(@"cellcheck9");
                 
                 
                 lbl=(UILabel*)[cell viewWithTag:6];
-                lbl.hidden=YES;
+                //lbl.hidden=YES;
                 // lbl_range.text = [self.patienttestrange_arr objectAtIndex:indexPath.row];
                 //NSLog(@"cellcheck5");
                 //lbl_range.hidden=YES;
                 lbl=(UILabel*)[cell viewWithTag:2];
-                lbl.hidden=YES;
+                //lbl.hidden=YES;
                 //lbl.text = [self.patienttestunits_arr objectAtIndex:indexPath.row];
                 //lbl.hidden=YES;
                 //NSLog(@"cellcheck6");
                 
                 //NSLog(@"cellcheck9");
-                if ([[self.patienttestvalue_arr objectAtIndex:indexPath.row] isEqualToString:@"Negative"]) {
+                if ([testObj.testresultvalue isEqualToString:@"Negative"]) {
                     //NSLog(@"cellcheck21");
                     
                     btn.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:51.0/255.0 blue:0/255.0 alpha:1.0];
@@ -742,151 +605,36 @@
             }else{
                 
                
-                if ([[self.patienttestvalue_arr objectAtIndex:indexPath.row]intValue]>[[self.patienttestmaxvalue_arr objectAtIndex:indexPath.row]intValue]) {
-                    //NSLog(@"cellcheck10");
+                if ([testObj.testresultvalue intValue]>[testObj.testmaxvalue intValue]) {
+                    NSLog(@"cellcheck10");
                     btn.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:51.0/255.0 blue:0/255.0 alpha:1.0];
                     [btn setTitle:@"High" forState:UIControlStateNormal];
-                    lbl_range.textColor = [UIColor colorWithRed:255.0/255.0 green:51.0/255.0 blue:0/255.0 alpha:1.0];                }else if ([[self.patienttestvalue_arr objectAtIndex:indexPath.row]intValue]<[[self.patienttestminvalue_arr objectAtIndex:indexPath.row]intValue]) {
+                    lbl_range.textColor = [UIColor colorWithRed:255.0/255.0 green:51.0/255.0 blue:0/255.0 alpha:1.0];                }else if ([testObj.testresultvalue intValue]<[testObj.testminvalue intValue]) {
                     //NSLog(@"cellcheck11");
                         btn.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:204.0/255.0 blue:0.0/255.0 alpha:1.0];
                         
                         [btn setTitle:@"Low" forState:UIControlStateNormal];
                         lbl_range.textColor = [UIColor colorWithRed:255.0/255.0 green:204.0/255.0 blue:0.0/255.0 alpha:1.0];
-                }else if ([[self.patienttestvalue_arr objectAtIndex:indexPath.row]intValue]>=[[self.patienttestminvalue_arr objectAtIndex:indexPath.row]intValue] ||
-                          [[self.patienttestvalue_arr objectAtIndex:indexPath.row]intValue]<=[[self.patienttestmaxvalue_arr objectAtIndex:indexPath.row]intValue]) {
-                    //NSLog(@"cellcheck12");
+                }else if ([testObj.testresultvalue intValue]>=[testObj.testminvalue intValue] ||
+                          [testObj.testresultvalue intValue]<=[testObj.testmaxvalue intValue]) {
+                    NSLog(@"cellcheck12");
                     btn.backgroundColor = [UIColor colorWithRed:0/255.0 green:204.0/255.0 blue:102.0/255.0 alpha:1.0];
                     
                     [btn setTitle:@"Normal" forState:UIControlStateNormal];
                     lbl_range.textColor = [UIColor colorWithRed:0/255.0 green:204.0/255.0 blue:102.0/255.0 alpha:1.0];                }
                 lbl=(UILabel*)[cell viewWithTag:6];
                 
-                NSString*strl = [NSString stringWithFormat:@"%@",[self.patienttestrange_arr objectAtIndex:indexPath.row]];
-                //NSLog(@"strlenth:%d",(int)strl.length);
-                if (strl.length>10) {
-                    lbl.font = [UIFont systemFontOfSize:8];
-                }
-                lbl.text = strl;
+                
+                lbl.text = testObj.testranges;
                 //lbl.text = [self.patienttestrange_arr objectAtIndex:indexPath.row];
                 //NSLog(@"cellcheck13");
             }
             
             lbl=(UILabel*)[cell viewWithTag:7];
-            lbl.text = [self.patienttestname_arr objectAtIndex:indexPath.row];
+            lbl.text = testObj.testname;
             
     
 
-/*}else{
-        
-            UILabel*lbl;
-            
-            UILabel*lbl_range;
-            
-            lbl_range=(UILabel*)[cell viewWithTag:1];
-            lbl_range.hidden=YES;
-            lbl=(UILabel*)[cell viewWithTag:2];
-            lbl.hidden=YES;
-            lbl=(UILabel*)[cell viewWithTag:3];
-            lbl.hidden=YES;
-            lbl=(UILabel*)[cell viewWithTag:4];
-            lbl.hidden=YES;
-            lbl=(UILabel*)[cell viewWithTag:6];
-            lbl.hidden=YES;
-            lbl=(UILabel*)[cell viewWithTag:7];
-            //lbl.text = [self.patienttestname_arr objectAtIndex:indexPath.row];
-            lbl.hidden=YES;
-            UIButton*btn = (UIButton*)[cell viewWithTag:5];
-            btn.hidden=YES;
-           // cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-
-        
-        }
- */
-    
-    /*
-        else{
-            //NSLog(@"cellcheck14");
-            
-            
-            //NSLog(@"celldate:%@",[self.patienttestdate_arr objectAtIndex:indexPath.row]);
-            //NSLog(@"celldate:%@",[self.patienttesttime_arr objectAtIndex:indexPath.row]);
-            UILabel*lbl;
-            
-            UILabel*lbl_range;
-            
-            lbl_range=(UILabel*)[cell viewWithTag:1];
-            lbl_range.hidden=YES;
-            lbl=(UILabel*)[cell viewWithTag:2];
-            lbl.hidden=YES;
-            lbl=(UILabel*)[cell viewWithTag:3];
-            lbl.hidden=NO;
-            lbl.text = [self.patienttestdate_arr objectAtIndex:indexPath.row];
-            lbl=(UILabel*)[cell viewWithTag:4];
-            lbl.hidden=NO;
-            lbl.text = [self.patienttesttime_arr objectAtIndex:indexPath.row];
-            lbl=(UILabel*)[cell viewWithTag:6];
-            lbl.hidden=YES;
-            lbl=(UILabel*)[cell viewWithTag:7];
-            lbl.text = [self.patienttestname_arr objectAtIndex:indexPath.row];
-            UIButton*btn = (UIButton*)[cell viewWithTag:5];
-            btn.hidden=YES;
-            //btn.backgroundColor = [UIColor colorWithRed:13/255.0 green:183.0/255.0 blue:13.0/255.0 alpha:1.0];
-            //[btn setTitle:@"Pending" forState:UIControlStateNormal];
-            //lbl_range.textColor = [UIColor colorWithRed:13/255.0 green:183.0/255.0 blue:13.0/255.0 alpha:1.0];
-            
-            
-            
-        }
-        cell.accessoryType = UITableViewCellAccessoryNone;
-     */
-   /*
-    }else if ([[self.patienttesttype_arr objectAtIndex:indexPath.row]intValue]==2){
-        //NSLog(@"Group");
-        UILabel*lbl;
-        
-        UILabel*lbl_range;
-        
-        lbl_range=(UILabel*)[cell viewWithTag:1];
-        lbl_range.hidden=YES;
-        lbl=(UILabel*)[cell viewWithTag:2];
-        lbl.hidden=YES;
-        lbl=(UILabel*)[cell viewWithTag:3];
-        lbl.hidden=YES;
-        lbl=(UILabel*)[cell viewWithTag:4];
-        lbl.hidden=YES;
-        lbl=(UILabel*)[cell viewWithTag:6];
-        lbl.hidden=YES;
-        lbl=(UILabel*)[cell viewWithTag:7];
-        lbl.text = [self.patienttestname_arr objectAtIndex:indexPath.row];
-        UIButton*btn = (UIButton*)[cell viewWithTag:5];
-        btn.hidden=YES;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        //cell.accessoryView
-        
-    }else if ([[self.patienttesttype_arr objectAtIndex:indexPath.row]intValue]==3){
-        //NSLog(@"Panel");
-        UILabel*lbl;
-        
-        UILabel*lbl_range;
-        
-        lbl_range=(UILabel*)[cell viewWithTag:1];
-        lbl_range.hidden=YES;
-        lbl=(UILabel*)[cell viewWithTag:2];
-        lbl.hidden=YES;
-        lbl=(UILabel*)[cell viewWithTag:3];
-        lbl.hidden=YES;
-        lbl=(UILabel*)[cell viewWithTag:4];
-        lbl.hidden=YES;
-        lbl=(UILabel*)[cell viewWithTag:6];
-        lbl.hidden=YES;
-        lbl=(UILabel*)[cell viewWithTag:7];
-        lbl.text = [self.patienttestname_arr objectAtIndex:indexPath.row];
-        //NSLog(@"cellcheck15");
-        UIButton*btn = (UIButton*)[cell viewWithTag:5];
-        btn.hidden=YES;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
-    */
     return cell;
 }
 

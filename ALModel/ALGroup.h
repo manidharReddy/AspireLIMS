@@ -13,8 +13,6 @@
 @property (strong,nonatomic) NSString*groupDate;
 @property (strong,nonatomic) NSString*groupTime;
 @property (strong,nonatomic) NSString*groupIsEntered;
-@property (strong,nonatomic) NSDictionary<NSString*,NSDictionary *>*tests;
-
-+(ALGroup*)getSharedInstance;
--(void)allocate;
+//@property (strong,nonatomic) NSMutableDictionary<NSString*,NSDictionary*>*groupTests;
+@property (strong,nonatomic) NSDictionary*grouptests;
 @end

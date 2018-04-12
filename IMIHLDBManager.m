@@ -848,6 +848,106 @@ static sqlite3_stmt *statement = nil;
     return x;
     
 }
-
+-(NSMutableArray<ALTest*>*)listOfTestsFilteredByDate:(NSString*)testId{
+    
+    NSMutableArray<ALTest*>*listOfTests = nil;
+    const char *dbpath = [databasePath UTF8String];
+    if (sqlite3_open(dbpath, &database) == SQLITE_OK)
+    {
+        
+        
+        //NSLog(@"test:%@",testname);
+        NSString *querySQL = [NSString stringWithFormat:@"select * from testslist WHERE testid='%@' LIMIT 5",testId];
+        const char *query_stmt = [querySQL UTF8String];
+        // NSMutableArray *resultArray = [[NSMutableArray alloc]init];
+        if (sqlite3_prepare_v2(database,
+                               query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            //if (sqlite3_step(statement) == SQLITE_ROW)
+           listOfTests = [NSMutableArray new];
+            while (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                //NSLog(@"getallll");
+                
+                ALTest*testObj = [ALTest new];
+                NSString *testid_str = [[NSString alloc] initWithUTF8String:
+                                        (const char *) sqlite3_column_text(statement, 0)];
+                testObj.testid = testid_str;
+                
+                NSString *testname_str = [[NSString alloc] initWithUTF8String:
+                                          (const char *) sqlite3_column_text(statement, 1)];
+                testObj.testname = testname_str;
+                
+                //NSLog(@"testname from db:%@",testname_str);
+                
+                NSString *type_str = [[NSString alloc]initWithUTF8String:
+                                      (const char *) sqlite3_column_text(statement, 2)];
+                testObj.type = type_str;
+                
+                NSString *testdate_str = [[NSString alloc]initWithUTF8String:
+                                          (const char *) sqlite3_column_text(statement, 3)];
+                testObj.testdatesplit = testdate_str;
+                
+                NSString *testtime_str = [[NSString alloc]initWithUTF8String:
+                                          (const char *) sqlite3_column_text(statement, 4)];
+                testObj.testtimesplit = testtime_str;
+                
+                
+                NSString *deptid_str = [[NSString alloc]initWithUTF8String:
+                                        (const char *) sqlite3_column_text(statement, 5)];
+                testObj.departmentid = deptid_str;
+                
+                NSString *units_str = [[NSString alloc]initWithUTF8String:
+                                       (const char *) sqlite3_column_text(statement, 6)];
+                testObj.testunits = units_str;
+                
+                NSString *departname_str = [[NSString alloc]initWithUTF8String:
+                                            (const char *) sqlite3_column_text(statement, 7)];
+                testObj.departmentname = departname_str;
+                
+                NSString *testminvalue_str = [[NSString alloc]initWithUTF8String:
+                                              (const char *) sqlite3_column_text(statement, 8)];
+                testObj.testminvalue = testminvalue_str;
+                
+                NSString *testmaxvalue_str = [[NSString alloc]initWithUTF8String:
+                                              (const char *) sqlite3_column_text(statement, 9)];
+                testObj.testmaxvalue = testmaxvalue_str;
+                
+                NSString *testresultvalue_str = [[NSString alloc]initWithUTF8String:
+                                                 (const char *) sqlite3_column_text(statement, 10)];
+                testObj.testresultvalue = testresultvalue_str;
+                
+                NSString *criticallowvalue_str = [[NSString alloc]initWithUTF8String:
+                                                  (const char *) sqlite3_column_text(statement, 11)];
+                testObj.testcriticallowvalue = criticallowvalue_str;
+                
+                NSString *criticalhighvalue_str = [[NSString alloc]initWithUTF8String:
+                                                   (const char *) sqlite3_column_text(statement, 12)];
+                
+                testObj.testcriticallowvalue = criticalhighvalue_str;
+                
+                NSString *isEntered_str = [[NSString alloc]initWithUTF8String:
+                                           (const char *) sqlite3_column_text(statement, 13)];
+                 testObj.isentered = isEntered_str;
+                
+                [listOfTests addObject:testObj];
+                // sqlite3_finalize(statement);
+                //sqlite3_close(database);
+                
+                //return self;
+            }
+            //else{
+            //  //NSLog(@"Not found");
+            //return self;
+            //}
+            // sqlite3_reset(statement);
+        }
+    }
+    
+    
+    sqlite3_finalize(statement);
+    sqlite3_close(database);
+    return listOfTests;
+}
 
 @end

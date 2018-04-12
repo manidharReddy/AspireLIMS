@@ -10,7 +10,7 @@
 #import "NSString+FontAwesome.h"
 #import "FAImageView.h"
 #import "UIImage+FontAwesome.h"
-
+#import "ALGroup.h"
 @interface IMIHLDetail : UIViewController<UITableViewDelegate,UITableViewDataSource>{
 bool isback;
 }
@@ -28,7 +28,7 @@ bool isback;
 @property(nonatomic,retain)NSMutableArray*grpreloadtests_arr;
 @property (strong,nonatomic) NSDictionary*tempreportdict;
 @property (strong, nonatomic) NSString*filterdateshow_str;
-
+@property (strong, nonatomic) ALGroup*groupObj;
 - (IBAction)backItemClick:(id)sender;
 
 @end

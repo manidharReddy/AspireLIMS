@@ -9,14 +9,21 @@
 #import "ALGroup.h"
 static ALGroup *sharedALGroupInstance = nil;
 @implementation ALGroup
-+(ALGroup*)getSharedInstance{
-    if (!sharedALGroupInstance) {
-        sharedALGroupInstance = [[super allocWithZone:NULL]init];
-        [sharedALGroupInstance allocate];
+
+- (BOOL)isEqual:(id)other
+{
+    if (other == self) {
+        return YES;
+    } else if (![super isEqual:other]) {
+        return NO;
+    } else {
+        ALGroup*group = (ALGroup*)other;
+        return [self.groupName isEqual:group.groupName] && [self.groupDate isEqual:group.groupDate] && [self.groupTime isEqual:group.groupTime];
     }
-    return sharedALGroupInstance;
 }
--(void)allocate{
-   // self.tests = [NSDictionary new];
+
+- (NSUInteger)hash
+{
+    return self.groupName.hash+self.groupTime.hash+self.groupDate.hash;
 }
 @end

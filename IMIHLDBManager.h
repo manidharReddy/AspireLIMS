@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
-
+#import "ALTest.h"
 @interface IMIHLDBManager : NSObject
 {
     NSString *databasePath;
@@ -54,6 +54,11 @@
 - (IMIHLDBManager*)getPatientAppointmentsList;
 - (IMIHLDBManager*)getPatientLogin;
 - (NSArray*)getPatientInfoDB;
+
+
+-(NSMutableArray<ALTest*>*)listOfTestsFilteredByDate:(NSString*)testId;
+
+
 //-(int)deletePatientLoginDB;
 -(int)deleteOldAppoinmentsList:(NSString*)datestr;
 //-(int)deletePatientInfoDB;

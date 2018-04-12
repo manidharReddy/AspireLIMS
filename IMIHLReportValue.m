@@ -921,13 +921,19 @@
 ///////////Edited////////////////////////
 -(IMIHLReportValue*)getReports:(NSDictionary*)responseresult{
     [self allocateMemory];
-        
+    
+    IMIHLDBManager*testdb = [IMIHLDBManager getSharedInstance];
+    
+    [testdb deleteGroupTestsInfoDB];
+    BOOL issuccess;
+    
     ALReports *report = [ALReports getSharedInstance];
     //[report allocate];
     report.resultDataArrObj = [[NSMutableArray alloc]init];
+    
     for (NSDictionary*localdict in responseresult) {
         //NSLog(@"localdict:%@",localdict);
-        NSLog(@"localdick:%@",localdict);
+       // NSLog(@"localdick:%@",localdict);
         //NSLog(@"repeated value:%@",[localdict objectForKey:@"isRepeated"]);
         NSString*isrepeated_str = [NSString stringWithFormat:@"%@",[localdict objectForKey:@"isRepeated"]];
         if ([isrepeated_str isEqualToString:@""]||[isrepeated_str isEqualToString:@"(null)"]||isrepeated_str==nil||isrepeated_str==NULL||[isrepeated_str isEqual:[NSNull null]]||[isrepeated_str isEqualToString:@"<null>"])
@@ -952,7 +958,7 @@
             
             NSDictionary*datakeydict = [localdict objectForKey:@"data"];
             
-            NSLog(@"datakeydict1:%@",datakeydict);
+            //NSLog(@"datakeydict1:%@",datakeydict);
             //if ([datakeydict objectForKey:@"isEntered"]==false) {
             
             //}else{
@@ -965,150 +971,154 @@
                 NSLog(@"check mate5");
                ALTest*testObj = [self setDataForAlTestObj:datakeydict];
                 NSLog(@"check mate6");
-                if ([testObj.isrepeated isEqualToString:@"1"]) {
-                    NSLog(@"check mate7");
-                    [report setRepeatedTestsDict:[NSDictionary dictionaryWithObject:testObj forKey:testObj.testname]];
-
-                }
-NSLog(@"check mate8");
-                 [report.resultDataArrObj addObject:testObj];
-                //[self.alReportObjsArry addObject:report];
-                NSLog(@"check mate9");
+                NSLog(@"ieRepeatedVlaue:%@",testObj.isrepeated);
+                NSLog(@"testObj.testresultvalue:%@",testObj.testresultvalue);
+                [report.resultDataArrObj addObject:testObj];
                 [self.alReportObjsArry addObject:report];
-                testObj = nil;
+                if ([testObj.isrepeated isEqualToString:@"1"]) {
+                     NSLog(@"check mate23");
+                    if ([testObj.testresultvalue isEqualToString:@"POSITIVE"] || [testObj.testresultvalue isEqualToString:@"NEGATIVE"]) {
+                        
+                    }else if([testObj.testresultvalue intValue]>0.0){
+                         NSLog(@"check mate24");
+                issuccess= [testdb saveGroupTests:testObj.testid :testObj.testname :testObj.type :testObj.testdatesplit :testObj.testtimesplit :testObj.departmentid :testObj.testunits :testObj.departmentname :testObj.testminvalue :testObj.testmaxvalue :testObj.testresultvalue :testObj.testcriticallowvalue :testObj.testcriticalhighvalue :[testObj.isentered intValue]];
+                    
+            
                 
+                if (issuccess==YES) {
+                    NSLog(@"inserted group tests in db");
+                }else{
+                    NSLog(@" failed to insert group tests in db");
+                    
+                }
+                }
+                    
+                testObj = nil;
+                }else{
+                    
+                }
+            
             }else{
                 
             }
-            
             NSLog(@"check mate10");
             
         }
         else if ([type_str isEqualToString:@"2"]){
-            NSLog(@"check mate");
-            //NSLog(@"isrepeated_str:%@",isrepeated_str);
-            //[self.isrepeated_arr addObject:isrepeated_str];
-            NSLog(@"type2 entered");
+            
+            NSLog(@"type2 entered resultvlue");
             report.testIsRepeatedObj = isrepeated_str;
             NSDictionary*datakeydict = [localdict objectForKey:@"data"];
-            NSArray*arrytestdict =[datakeydict objectForKey:@"dateWaseReportResForGroups"];
-            if (arrytestdict.count!=0) {
+           NSArray*dateWaseReportResForGroupsArry =[datakeydict objectForKey:@"dateWaseReportResForGroups"];
+            if (dateWaseReportResForGroupsArry.count!=0) {
+                NSDictionary*dataDict = [dateWaseReportResForGroupsArry objectAtIndex:0];
+            NSDictionary*secondDataDict = [dataDict objectForKey:@"data"];
+                //NSDictionary*tempGeneralDict = [arryDataValue objectAtIndex:0];
                 
-            
-            datakeydict = [arrytestdict objectAtIndex:0];
-            arrytestdict=nil;
-            //datakeydict = [datakeydict objectForKey:@"dateWaseReportResForGroups"];
-            
-            datakeydict = [datakeydict objectForKey:@"data"];
-            
-            // NSString*type_str = [NSString stringWithFormat:@"%d",[[localdict objectForKey:@"type"]intValue]];
-            
-           // [self.type_arr addObject:type_str];
-            
-            // NSString*grpname_str = [NSString stringWithFormat:@"%@%d",[datakeydict objectForKey:@"groupName"],grp];
-            //[self.testname_arr addObject:[datakeydict objectForKey:@"groupName"]];
-            
-            ALGroup*groupObj = [ALGroup getSharedInstance];
-            
-             NSLog(@"check mate1");
-            groupObj.groupName = [datakeydict objectForKey:@"groupName"];
-            //[self.grouptest_dict setObject:[datakeydict objectForKey:@"dateWaseReportResForTests"] forKey:[datakeydict objectForKey:@"groupName"]];
-            NSLog(@"check mate2");
-            //NSArray*arrytestdictgrp =[datakeydict objectForKey:@"dateWaseReportResForTests"];
-            //datakeydict = [arrytestdictgrp objectAtIndex:0];
-            
-            
-            NSDictionary*tempdict = [NSDictionary dictionaryWithObject:[datakeydict objectForKey:@"dateWaseReportResForTests"] forKey:[datakeydict objectForKey:@"groupName"]];
-             NSLog(@"check mate3");
-           // [self.groupttestobj_arr addObject:tempdict];
-            //NSLog(@"tempdict:%@",tempdict);
-           
-            
-            NSDictionary*tempdbdict = [tempdict objectForKey:[datakeydict objectForKey:@"groupName"]];
-            int isentred = 0,enteredvalue = 0;
-            NSMutableString*strdatemut =[NSMutableString new];
-            NSMutableString*strtimemut = [NSMutableString new];
-            for (NSDictionary*testsdict in tempdbdict) {
-                //NSLog(@"testsdict:%@",testsdict);
-                NSString*testdate_str = [NSString stringWithFormat:@"%@",[testsdict objectForKey:@"testDate"]];
-                if ([testdate_str isEqualToString:@""]||[testdate_str isEqualToString:@"(null)"]||testdate_str==nil||testdate_str==NULL||[testdate_str isEqual:[NSNull null]]||[testdate_str isEqualToString:@"<null>"])
+                NSString*groupName = [secondDataDict objectForKey:@"groupName"];
+                if ([groupName isEqualToString:@""]||[groupName isEqualToString:@"(null)"]||groupName==nil||groupName==NULL||[groupName isEqual:[NSNull null]]||[groupName isEqualToString:@"<null>"])
                 {
-                    //NSLog(@"testdate_str is :%@",testdate_str);
-                    testdate_str=@"";
+                    NSLog(@"groupName_str is :%@",groupName);
+                    groupName=@"";
                 }else{
+                    NSArray*testsArry = [secondDataDict objectForKey:@"dateWaseReportResForTests"];
+                   
+                    if (testsArry.count!=0) {
+                         NSDictionary*testsList = [secondDataDict objectForKey:@"dateWaseReportResForTests"];
+                        ALGroup*groupObj = [self setGroupObjectWithData:testsList :groupName];
+                        //groupObj.groupName = groupName;
+                       // NSString*keyForGroupTest = [NSString stringWithFormat:@"%@%@",groupName,groupObj.groupDate];
+                        //[report.groupTests setObject:testsList forKey:keyForGroupTest];
+                        [report.resultDataArrObj addObject:groupObj];
+                        groupObj=nil;
+                        [self.alReportObjsArry addObject:report];
+                       }
                     
-                }
-                
-                //NSLog(@"testdate_str:%@",testdate_str);
-                
-                
-                NSArray * arr = [testdate_str componentsSeparatedByString:@" "];
-                //NSLog(@"Array values are : %@",arr);
-                NSString*strtime = [NSString stringWithFormat:@"%@ %@",[arr objectAtIndex:1],[arr objectAtIndex:2]];
-                //NSLog(@"date set:%@ Time Set:%@",strdatemut,strtimemut);
-                if ([strdatemut isEqualToString:@""]) {
-                    //strdatemut = [arr objectAtIndex:0];
-                    [strdatemut setString:[arr objectAtIndex:0]];
-                    [strtimemut setString:strtime];
-                    //strtimemut = strtime;
-                }else{
-                    
-                }
-                
-                if (isentred==0) {
-                    
-                    
-                    NSString*isentred_str = [NSString stringWithFormat:@"%@",[testsdict objectForKey:@"isEntered"]];
-                    if ([isentred_str isEqualToString:@""]||[isentred_str isEqualToString:@"(null)"]||isentred_str==nil||isentred_str==NULL||[isentred_str isEqual:[NSNull null]]||[isentred_str isEqualToString:@"<null>"])
-                    {
-                        //NSLog(@"isentred_str is :%@",isentred_str);
-                        isentred_str=@"";
-                    }else{
-                        
                     }
-                    if ([isentred_str isEqualToString:@"1"]) {
-                        enteredvalue=1;
-                    }else if ([isentred_str isEqualToString:@"0"]){
-                        enteredvalue=0;
-                    }
-                    //NSLog(@"isentred_str:%@",isentred_str);
-                    
-                }else{
-                    isentred=1;
-                }
-                
-            }
-            NSLog(@"check mate4:%@",strdatemut);
-            NSString*keyForGroupTest = [NSString stringWithFormat:@"%@%@",[datakeydict objectForKey:@"groupName"],strdatemut];
-             NSDictionary*grouptestsdict = [NSDictionary dictionaryWithObject:[datakeydict objectForKey:@"dateWaseReportResForTests"] forKey:keyForGroupTest];
-            [groupObj setTests:grouptestsdict];
-            groupObj.groupIsEntered = [NSString stringWithFormat:@"%d",(int)enteredvalue];
-            groupObj.groupDate = [NSString stringWithFormat:@"%@",strdatemut];
-            
-            
-            NSLog(@"isEnteredStr:%d",(int)enteredvalue);
-            groupObj.groupTime = [NSString stringWithFormat:@"%@",strtimemut];
-            
-           
-            strdatemut=nil;
-            strtimemut=nil;
-            
-            [report.resultDataArrObj addObject:groupObj];
-           // [self.alReportObjsArry addObject:report];
-                [self.alReportObjsArry addObject:report];
-            }
-            
-        }
-        
-       
-        
-        
-       //[self.alReportObjsArry addObject:report];
-    }
+               }
+          }//type 2 condition end
+}
     NSLog(@"count value check:%d",self.alReportObjsArry.count);
     return self;
     
 }
+
+-(ALGroup*)setGroupObjectWithData:(NSDictionary*)testList :(NSString*)groupName{
+        int isentred = 0,enteredvalue = 0;
+        NSMutableString*strdatemut =[NSMutableString new];
+        NSMutableString*strtimemut = [NSMutableString new];
+        for (NSDictionary*testsdict in testList) {
+            //NSLog(@"testsdict:%@",testsdict);
+            NSString*testdate_str = [NSString stringWithFormat:@"%@",[testsdict objectForKey:@"testDate"]];
+            if ([testdate_str isEqualToString:@""]||[testdate_str isEqualToString:@"(null)"]||testdate_str==nil||testdate_str==NULL||[testdate_str isEqual:[NSNull null]]||[testdate_str isEqualToString:@"<null>"])
+            {
+                //NSLog(@"testdate_str is :%@",testdate_str);
+                testdate_str=@"";
+            }else{
+                
+            }
+            NSArray * arr = [testdate_str componentsSeparatedByString:@" "];
+            //NSLog(@"Array values are : %@",arr);
+            NSString*strtime = [NSString stringWithFormat:@"%@ %@",[arr objectAtIndex:1],[arr objectAtIndex:2]];
+            //NSLog(@"date set:%@ Time Set:%@",strdatemut,strtimemut);
+            if ([strdatemut isEqualToString:@""]) {
+                //strdatemut = [arr objectAtIndex:0];
+                [strdatemut setString:[arr objectAtIndex:0]];
+                [strtimemut setString:strtime];
+                //strtimemut = strtime;
+            }else{
+                
+            }
+            
+            if (isentred==0) {
+                NSString*isentred_str = [NSString stringWithFormat:@"%@",[testsdict objectForKey:@"isEntered"]];
+                if ([isentred_str isEqualToString:@""]||[isentred_str isEqualToString:@"(null)"]||isentred_str==nil||isentred_str==NULL||[isentred_str isEqual:[NSNull null]]||[isentred_str isEqualToString:@"<null>"])
+                {
+                    //NSLog(@"isentred_str is :%@",isentred_str);
+                    isentred_str=@"";
+                }else{
+                    
+                }
+                if ([isentred_str isEqualToString:@"1"]) {
+                    enteredvalue=1;
+                }else if ([isentred_str isEqualToString:@"0"]){
+                    enteredvalue=0;
+                }
+                //NSLog(@"isentred_str:%@",isentred_str);
+                
+            }else{
+                isentred=1;
+            }
+            
+            break;
+        }
+        
+    NSLog(@"gorupName Data:%@",groupName);
+        NSLog(@"check mate4 gorup:%@",strdatemut);
+       // NSString*keyForGroupTest = [NSString stringWithFormat:@"%@%@",groupName,strdatemut];
+       //NSDictionary*grouptestsdict = [NSDictionary dictionaryWithObject:testList forKey:keyForGroupTest];
+    
+    ALGroup* groupObj = [ALGroup new];
+    
+       //[groupObj setTests:grouptestsdict];
+    //[groupObj.tests setValue:testList forKey:keyForGroupTest];
+        groupObj.groupName = groupName;
+        groupObj.groupIsEntered = [NSString stringWithFormat:@"%d",(int)enteredvalue];
+        groupObj.groupDate = [NSString stringWithFormat:@"%@",strdatemut];
+        
+        
+        NSLog(@"isEnteredStr:%d",(int)enteredvalue);
+        groupObj.groupTime = [NSString stringWithFormat:@"%@",strtimemut];
+        groupObj.grouptests = testList;
+    
+        
+        strdatemut=nil;
+        strtimemut=nil;
+        
+    return groupObj;
+}
+
+
 -(ALTest*)setDataForAlTestObj:(NSDictionary*)dict{
      ALTest*testObj =nil;
  
@@ -1290,14 +1300,22 @@ NSLog(@"check mate8");
         }else{
             
         }
+    
         //NSLog(@"testcriticalhighvalue_str:%@",testcriticalhighvalue_str);
     
         // }
         
         testObj.testcriticalhighvalue = testcriticalhighvalue_str;
         
+    NSString*isrepeated_str = [NSString stringWithFormat:@"%@",[dict objectForKey:@"isRepeated"]];
+    if ([isrepeated_str isEqualToString:@""]||[isrepeated_str isEqualToString:@"(null)"]||isrepeated_str==nil||isrepeated_str==NULL||[isrepeated_str isEqual:[NSNull null]]||[isrepeated_str isEqualToString:@"<null>"])
+    {
+        //NSLog(@"isrepeated_str value :%@",isrepeated_str);
+        isrepeated_str=@"0";
+    }else{
         
-       
+    }
+    testObj.isrepeated = isrepeated_str;
         
         return testObj;
 }

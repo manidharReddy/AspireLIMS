@@ -224,11 +224,14 @@
         
     
     ALReports*report = (ALReports*)[self.reportValueObj.alReportObjsArry objectAtIndex:indexPath.section];
-    NSLog(@"report value:%@",report.testTypeObj);
+    
+        NSLog(@"report.resultDataArrObj count:%d",report.resultDataArrObj.count);
+        
+        NSLog(@"report value:%@",report.testTypeObj);
     NSLog(@"Index Count:%d",indexPath.section);
     
     id objct = [report.resultDataArrObj objectAtIndex:indexPath.section];
-    NSLog(@"report.resultDataArrObj:%d",report.resultDataArrObj.count);
+    
     if ([objct class] == [ALTest class]) {
         
     
@@ -245,6 +248,8 @@
             //NSLog(@"isrepeated value:%d",[[self.patienttestisrepeated_arr objectAtIndex:indexPath.row]intValue]);
             //if ([[self.patienttestisrepeated_arr objectAtIndex:indexPath.row]intValue]==1) {
             
+            if ([testObj.isrepeated isEqualToString:@"1"]) {
+                
             
             
             grphbtn.hidden=NO;
@@ -255,9 +260,15 @@
                // [grphbtn setImage:[UIImage imageWithIcon:@"fa-line-chart" backgroundColor:[UIColor clearColor] iconColor:[UIColor whiteColor] fontSize:25] forState:UIControlStateNormal];
                 
                  
-            [grphbtn setTag:indexPath.row];
+            [grphbtn setTag:indexPath.section];
            [grphbtn addTarget:self action:@selector(graphBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-              /*
+            }else if([testObj.isrepeated isEqualToString:@"0"]){
+                grphbtn.hidden=YES;
+                
+                [grphbtn setImage:nil forState:UIControlStateNormal];
+                [grphbtn setHidden:YES];
+            }
+                /*
             }else if ([[self.patienttestisrepeated_arr objectAtIndex:indexPath.row]intValue]==0){
                // grphbtn.hidden=YES;
                 //grphbtn=nil;
@@ -497,13 +508,15 @@
         IMIHLDetail*detailreport = [storyboard instantiateViewControllerWithIdentifier:@"detailreport"];
         self.navigationController.title = groupObj.groupName;
         detailreport.patientid_str = self.patientid_str;
-         NSString*keyForGroupTest = [NSString stringWithFormat:@"%@%@",groupObj.groupName,groupObj.groupDate];
-        detailreport.testdict = [groupObj.tests objectForKey:keyForGroupTest];
+         //NSString*keyForGroupTest = [NSString stringWithFormat:@"%@%@",groupObj.groupName,groupObj.groupDate];
+        //detailreport.testdict = groupObj.grouptests;
         //NSLog(@"group tests one:%@",[self.patientgrouptestname_arr objectAtIndex:indexPath.row]);
         //NSLog(@"group tests details:%@",detailreport.testdict);
-        detailreport.filterdateshow_str = self.datestore_str;
-        detailreport.tempreportdict = self.tempreportdict;
+        //detailreport.filterdateshow_str = self.datestore_str;
+        //detailreport.tempreportdict = self.tempreportdict;
+        detailreport.groupObj = groupObj;
         [self.navigationController pushViewController:detailreport animated:YES];
+        
     }
     self.datestore_str =[NSString stringWithFormat:@"%@",self.dateshow_lbl.text];
     
@@ -527,16 +540,9 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
 
     IMDIHLReport * mrvc = [storyboard instantiateViewControllerWithIdentifier:@"reportgraph"];
-    mrvc.patientid_str = self.patientid_str;
-    mrvc.tempreportdict = self.tempreportdict;
-    self.datestore_str =[NSString stringWithFormat:@"%@",self.dateshow_lbl.text];
-    mrvc.filterdateshow_str = self.datestore_str;
-    
-    mrvc.selected_index = [NSString stringWithFormat:@"%d",indexvalue];
-    NSLog(@"reportcheck");
-    
-    ALReports*report = (ALReports*)[self.reportValueObj.alReportObjsArry objectAtIndex:indexvalue];
-    ALTest*testObj = (ALTest*)[report.resultDataArrObj objectAtIndex:indexvalue];
+    ALReports*report = [self.reportValueObj.alReportObjsArry objectAtIndex:indexvalue];
+   ALTest*testObj = [report.resultDataArrObj objectAtIndex:indexvalue];
+    mrvc.testId = testObj.testid;
     [self.navigationController pushViewController:mrvc animated:YES];
     
     

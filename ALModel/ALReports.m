@@ -19,6 +19,7 @@ static ALReports *sharedAlReportsInstance = nil;
 }
 -(void)allocate{
     self.resultDataArrObj = [NSMutableArray new];
-    self.repeatedTestsDict = [NSDictionary new];
+   // self.repeatedTestsDict = [NSMutableDictionary new];
+    
 }
 @end
