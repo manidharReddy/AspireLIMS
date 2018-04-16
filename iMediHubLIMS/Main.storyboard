@@ -2356,7 +2356,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zD9-AP-lBa">
-                                                    <rect key="frame" x="5" y="5" width="74.5" height="22"/>
+                                                    <rect key="frame" x="5" y="5" width="74.5" height="28"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                                     <color key="textColor" red="1" green="0.57637232540000005" blue="0.0" alpha="0.69849636130000003" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2368,7 +2368,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" verticalHuggingPriority="251" text="Kiran G" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y6I-pI-ZKe">
-                                                    <rect key="frame" x="79.5" y="5" width="601.5" height="22"/>
+                                                    <rect key="frame" x="79.5" y="5" width="601.5" height="28"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                                     <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2380,7 +2380,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Services:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EMP-iq-xm0">
-                                                    <rect key="frame" x="5" y="34" width="74.5" height="21.5"/>
+                                                    <rect key="frame" x="5" y="40" width="74.5" height="27.5"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.73725490199999999" blue="0.81960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2392,7 +2392,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="4" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21 April 2016" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2AH-PM-sXQ">
-                                                    <rect key="frame" x="79.5" y="112.5" width="601.5" height="22"/>
+                                                    <rect key="frame" x="79.5" y="130.5" width="601.5" height="27.5"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2407,7 +2407,7 @@
                                                     </variation>
                                                 </label>
                                                 <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X8x-TP-4HQ">
-                                                    <rect key="frame" x="478.5" y="172" width="207.5" height="22"/>
+                                                    <rect key="frame" x="513.5" y="166" width="172.5" height="28"/>
                                                     <color key="backgroundColor" red="0.0" green="0.73725490199999999" blue="0.81960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                                     <state key="normal" title="Re-Schedule">
@@ -2427,7 +2427,7 @@
                                                     </variation>
                                                 </button>
                                                 <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="001-e5-Rco">
-                                                    <rect key="frame" x="259" y="172" width="207.5" height="22"/>
+                                                    <rect key="frame" x="328.5" y="166" width="173" height="28"/>
                                                     <color key="backgroundColor" red="1" green="0.57637232540000005" blue="0.0" alpha="0.69849636130136983" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
                                                     <state key="normal" title="Cancel">
@@ -2448,7 +2448,7 @@
                                                     </variation>
                                                 </button>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="3" contentMode="scaleToFill" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bOD-G9-MFP">
-                                                    <rect key="frame" x="79.5" y="34" width="611.5" height="43.5"/>
+                                                    <rect key="frame" x="79.5" y="40" width="611.5" height="49.5"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
@@ -2464,7 +2464,7 @@
                                                     </variation>
                                                 </textView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6xJ-Kx-raY">
-                                                    <rect key="frame" x="5" y="82.5" width="74.5" height="22"/>
+                                                    <rect key="frame" x="5" y="94.5" width="74.5" height="28"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                                     <color key="textColor" red="0.19981836720000001" green="0.62021707059999998" blue="0.78257852159999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2479,7 +2479,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qZ8-ju-r3c">
-                                                    <rect key="frame" x="5" y="112.5" width="74.5" height="22"/>
+                                                    <rect key="frame" x="5" y="130.5" width="74.5" height="27.5"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                                     <color key="textColor" red="0.78257852159999997" green="0.17757878799999999" blue="0.1115229755" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2494,7 +2494,7 @@
                                                     </variation>
                                                 </label>
                                                 <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IMK-xw-iEA">
-                                                    <rect key="frame" x="79.5" y="82.5" width="601.5" height="22"/>
+                                                    <rect key="frame" x="79.5" y="94.5" width="601.5" height="28"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                                     <state key="normal" title="Pending"/>
                                                     <variation key="heightClass=compact-widthClass=regular">
@@ -2527,7 +2527,7 @@
                                                 <constraint firstItem="IMK-xw-iEA" firstAttribute="height" secondItem="zD9-AP-lBa" secondAttribute="height" id="Kw9-gC-wKe"/>
                                                 <constraint firstItem="001-e5-Rco" firstAttribute="width" secondItem="jna-gT-fpD" secondAttribute="width" multiplier="0.2" id="MIN-TP-qql"/>
                                                 <constraint firstItem="bOD-G9-MFP" firstAttribute="leading" secondItem="EMP-iq-xm0" secondAttribute="trailing" id="NwL-V1-PsJ"/>
-                                                <constraint firstItem="X8x-TP-4HQ" firstAttribute="width" secondItem="jna-gT-fpD" secondAttribute="width" multiplier="0.3" id="OWf-Av-fFT"/>
+                                                <constraint firstItem="X8x-TP-4HQ" firstAttribute="width" secondItem="jna-gT-fpD" secondAttribute="width" multiplier="0.25" id="OWf-Av-fFT"/>
                                                 <constraint firstItem="zD9-AP-lBa" firstAttribute="leading" secondItem="jna-gT-fpD" secondAttribute="leading" constant="5" id="QcO-C3-3lK"/>
                                                 <constraint firstItem="IMK-xw-iEA" firstAttribute="top" secondItem="bOD-G9-MFP" secondAttribute="bottom" constant="5" id="R0G-Ti-fHg"/>
                                                 <constraint firstItem="2AH-PM-sXQ" firstAttribute="centerY" secondItem="qZ8-ju-r3c" secondAttribute="centerY" id="VkO-uN-Qgm"/>
@@ -2550,7 +2550,7 @@
                                                 <constraint firstItem="y6I-pI-ZKe" firstAttribute="top" secondItem="jna-gT-fpD" secondAttribute="top" constant="5" id="sbe-lI-1lf"/>
                                                 <constraint firstItem="y6I-pI-ZKe" firstAttribute="height" secondItem="zD9-AP-lBa" secondAttribute="height" id="vuM-tx-WKE"/>
                                                 <constraint firstItem="IMK-xw-iEA" firstAttribute="centerY" secondItem="6xJ-Kx-raY" secondAttribute="centerY" id="yUV-yF-6S1"/>
-                                                <constraint firstItem="X8x-TP-4HQ" firstAttribute="height" secondItem="jna-gT-fpD" secondAttribute="height" multiplier="0.11" id="zIT-7d-oXN"/>
+                                                <constraint firstItem="X8x-TP-4HQ" firstAttribute="height" secondItem="jna-gT-fpD" secondAttribute="height" multiplier="0.14" id="zIT-7d-oXN"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -3217,7 +3217,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="06:50 AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Xl-zv-epT">
-                                                    <rect key="frame" x="103.5" y="38.5" width="68" height="18"/>
+                                                    <rect key="frame" x="103.5" y="40" width="68" height="15"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Oblique" family="Helvetica" pointSize="14"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -3232,7 +3232,7 @@
                                                     </variation>
                                                 </label>
                                                 <button opaque="NO" tag="5" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iZh-Ni-Xnc">
-                                                    <rect key="frame" x="588.5" y="39.5" width="96.5" height="18"/>
+                                                    <rect key="frame" x="588.5" y="42.5" width="96.5" height="15"/>
                                                     <color key="backgroundColor" red="0.0" green="0.73725490199999999" blue="0.81960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3253,7 +3253,7 @@
                                                     </variation>
                                                 </button>
                                                 <button opaque="NO" tag="4" contentMode="center" semanticContentAttribute="forceLeftToRight" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4OE-S9-W0b">
-                                                    <rect key="frame" x="486.5" y="39.5" width="97" height="18"/>
+                                                    <rect key="frame" x="486.5" y="42.5" width="97" height="15"/>
                                                     <color key="backgroundColor" red="0.0" green="0.73725490199999999" blue="0.81960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3278,7 +3278,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="iZh-Ni-Xnc" secondAttribute="trailing" constant="6" id="HF9-ry-sBx"/>
                                                 <constraint firstItem="KTX-Lp-8ll" firstAttribute="width" secondItem="0OE-xR-r7T" secondAttribute="width" id="LBd-gW-tCA"/>
                                                 <constraint firstAttribute="bottom" secondItem="uRv-h3-e99" secondAttribute="bottom" constant="2" id="Ugi-CW-KFT"/>
-                                                <constraint firstItem="4OE-S9-W0b" firstAttribute="height" secondItem="0OE-xR-r7T" secondAttribute="height" multiplier="0.3" id="Vun-cD-EZA"/>
+                                                <constraint firstItem="4OE-S9-W0b" firstAttribute="height" secondItem="0OE-xR-r7T" secondAttribute="height" multiplier="0.25" id="Vun-cD-EZA"/>
                                                 <constraint firstItem="KTX-Lp-8ll" firstAttribute="top" secondItem="0OE-xR-r7T" secondAttribute="topMargin" id="Wab-Wy-sCu"/>
                                                 <constraint firstItem="4OE-S9-W0b" firstAttribute="height" secondItem="8Xl-zv-epT" secondAttribute="height" id="Y1z-A3-dgB"/>
                                                 <constraint firstItem="uRv-h3-e99" firstAttribute="width" secondItem="0OE-xR-r7T" secondAttribute="width" multiplier="0.14" id="YCX-EL-yF7"/>
@@ -4180,7 +4180,7 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="separatorColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="testlisttblcell" id="pGo-w9-ytI">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" showsReorderControl="YES" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="testlisttblreportcell" id="pGo-w9-ytI">
                                         <rect key="frame" x="0.0" y="28" width="768" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pGo-w9-ytI" id="JBD-eJ-AGb">
@@ -4502,6 +4502,7 @@
                         <outlet property="myreportbarbtnitem" destination="uUl-aR-yae" id="drd-zM-zZl"/>
                         <outlet property="reports_tblview" destination="K15-qP-Tqi" id="b5f-pj-Tqt"/>
                         <outlet property="testName_lbl" destination="gJm-hL-kba" id="dAe-gP-RUb"/>
+                        <outlet property="view" destination="8ZB-RL-AZP" id="6MK-C5-N1k"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IkZ-eo-d85" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -5277,7 +5278,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroundimg" translatesAutoresizingMaskIntoConstraints="NO" id="v8H-MT-oMr">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroundimg" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v8H-MT-oMr">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="960"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imedihublogo" translatesAutoresizingMaskIntoConstraints="NO" id="Srb-Cr-eOU">
@@ -5291,6 +5292,7 @@
                             <constraint firstItem="v8H-MT-oMr" firstAttribute="width" secondItem="zDW-2z-6T0" secondAttribute="width" id="ClM-DD-jdw"/>
                             <constraint firstItem="v8H-MT-oMr" firstAttribute="height" secondItem="zDW-2z-6T0" secondAttribute="height" id="FZL-Un-xJh"/>
                             <constraint firstItem="Srb-Cr-eOU" firstAttribute="width" secondItem="zDW-2z-6T0" secondAttribute="width" multiplier="0.5" id="IPx-Bh-wVy"/>
+                            <constraint firstItem="v8H-MT-oMr" firstAttribute="top" secondItem="TzR-Ip-0Vg" secondAttribute="bottom" id="KfJ-fd-ovR"/>
                             <constraint firstItem="Srb-Cr-eOU" firstAttribute="height" secondItem="zDW-2z-6T0" secondAttribute="height" multiplier="0.1" id="L95-0k-BvI"/>
                             <constraint firstItem="v8H-MT-oMr" firstAttribute="centerY" secondItem="zDW-2z-6T0" secondAttribute="centerY" id="TFH-Pu-k33"/>
                             <constraint firstItem="v8H-MT-oMr" firstAttribute="centerX" secondItem="zDW-2z-6T0" secondAttribute="centerX" id="VQI-Sy-IaV"/>

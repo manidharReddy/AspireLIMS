@@ -14,7 +14,7 @@
 #import "ALTest.h"
 #import "IMIHLReportValue.h"
 @interface IMIHLDetail ()
-@property (strong,nonatomic)NSMutableArray<ALTest*>*listOfTests;
+
 
 @end
 
@@ -32,11 +32,16 @@
     [self.navigationItem setLeftBarButtonItem:self.backbaritem_btn];
 }
 -(void)setTestDataInTable{
-    self.listOfTests = [NSMutableArray new];
-    IMIHLReportValue*reportValue = [IMIHLReportValue new];
+    self.listOfTests = [[NSMutableArray alloc]init];
+    
+    IMIHLReportValue*reportValue = [[IMIHLReportValue alloc]init];
     for (NSDictionary*dict in self.groupObj.grouptests) {
-       ALTest*testObj = [reportValue setDataForAlTestObj:dict];
+        
+        
+      ALTest* testObj = [reportValue setDataForAlTestObj:dict];
+        NSLog(@"TestObject:%@",testObj.testname);
         [self.listOfTests addObject:testObj];
+        testObj = nil;
     }
     [self.detailreports_tblview reloadData];
 }
@@ -62,12 +67,15 @@
 */
 
 //////////////////////////////TableView Delegate Methods/////////////////////
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return self.listOfTests.count;
 }
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    //NSLog(@"count patient names:%d",(int)self.patienttestname_arr.count);
+    return 1;
+}
+
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -141,7 +149,7 @@
             UILabel*lbl_range;
             //NSLog(@"cellcheck4");
             lbl_range=(UILabel*)[cell viewWithTag:1];
-            lbl_range.text = testObj.testranges;
+            lbl_range.text = testObj.testresultvalue;
             //NSLog(@"cellcheck5");
             lbl=(UILabel*)[cell viewWithTag:2];
             lbl.text = testObj.testunits;
@@ -156,7 +164,7 @@
             
             //NSLog(@"patientteststatus_arr value:%@",[self.patientteststatus_arr objectAtIndex:indexPath.row]);
             //NSLog(@"self.patienttestvalue_arr:%@",self.patienttestvalue_arr);
-            if ([testObj.testresultvalue isEqualToString:@"Positive"]||[testObj.testresultvalue isEqualToString:@"Negative"]) {
+            if ([testObj.testresultvalue isEqualToString:@"POSITIVE"]||[testObj.testresultvalue isEqualToString:@"NEGATIVE"]) {
                 
                 lbl=(UILabel*)[cell viewWithTag:6];
                 lbl.hidden=YES;
@@ -170,19 +178,19 @@
                 //NSLog(@"cellcheck6");
                 
                 //NSLog(@"cellcheck9");
-                if ([testObj.testresultvalue isEqualToString:@"Negative"]) {
+                if ([testObj.testresultvalue isEqualToString:@"NEGATIVE"]) {
                     //NSLog(@"cellcheck21");
                 
                 //btn.backgroundColor = [UIColor colorWithRed:255/255.0 green:56.0/255.0 blue:56.0/255.0 alpha:1.0];
                     btn.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:51.0/255.0 blue:0/255.0 alpha:1.0];
-                [btn setTitle:@"Negative" forState:UIControlStateNormal];
+                [btn setTitle:@"NEGATIVE" forState:UIControlStateNormal];
                // lbl_range.textColor = [UIColor colorWithRed:255.0/255.0 green:56.0/255.0 blue:56.0/255.0 alpha:1.0];
                     lbl_range.textColor = [UIColor colorWithRed:255.0/255.0 green:51.0/255.0 blue:0/255.0 alpha:1.0];
                 }else{
                     //NSLog(@"cellcheck22");
                    // btn.backgroundColor = [UIColor colorWithRed:13/255.0 green:183.0/255.0 blue:13.0/255.0 alpha:1.0];
                      btn.backgroundColor = [UIColor colorWithRed:0/255.0 green:204.0/255.0 blue:102.0/255.0 alpha:1.0];
-                    [btn setTitle:@"Positive" forState:UIControlStateNormal];
+                    [btn setTitle:@"POSITIVE" forState:UIControlStateNormal];
                   //  lbl_range.textColor = [UIColor colorWithRed:13/255.0 green:183.0/255.0 blue:13.0/255.0 alpha:1.0];
                     lbl_range.textColor = [UIColor colorWithRed:0/255.0 green:204.0/255.0 blue:102.0/255.0 alpha:1.0];
                 }
@@ -264,7 +272,7 @@
             }
             lbl=(UILabel*)[cell viewWithTag:7];
             lbl.text = testObj.testname;
-            
+            NSLog(@"TestName:%@",testObj.testname);
             
         }else{
             //NSLog(@"cellcheck14");
@@ -299,13 +307,11 @@
             grphbtn.hidden=YES;
             [grphbtn setImage:nil forState:UIControlStateNormal];
             //grphbtn.hidden=YES;
-
-            
-            
+  
         }
 
 
-    
+    testObj = nil;
     return cell;
 }
 
@@ -345,12 +351,12 @@
         mrvc.patientid_str = self.patientid_str;
         mrvc.id_str =@"0";
         mrvc.datestore_str = self.filterdateshow_str;
-        mrvc.tempreportdict = self.tempreportdict;
+       
         [self.navigationController pushViewController:mrvc animated:YES];
     }else{
         MyReportsVC * mrvc = [storyboard instantiateViewControllerWithIdentifier:identifiername];
         mrvc.patientid_str = self.patientid_str;
-        mrvc.tempreportdict = self.tempreportdict;
+      
         [self.navigationController pushViewController:mrvc animated:YES];
     }
     

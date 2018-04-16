@@ -10,28 +10,22 @@
 
 @implementation IMIHLRemaindersList
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        self.remainders = [[NSMutableArray alloc]init];
-    }
-    return self;
-}
+
 - (void) encodeWithCoder:(NSCoder *)encoder {
     
-    [encoder encodeObject:self.remainders forKey:@"remainders"];
+    [encoder encodeObject:self.remainders forKey:@"remainder"];
    
     
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {
-    self.remainders = [decoder decodeObjectForKey:@"remainders"];
+    self.remainders = [decoder decodeObjectForKey:@"remainder"];
     
     return self;
     
 }
 -(IMIHLRemaindersList*)getRemainders:(NSDictionary*)response{
+    self.remainders = [[NSMutableArray alloc]init];
     for (NSDictionary*localdict in response) {
        
         ALRemainders*remiander = [[ALRemainders alloc]init];

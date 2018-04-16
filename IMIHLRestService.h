@@ -8,34 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "InternetConnection.h"
-@interface IMIHLRestService : NSObject{
-    int statuscode;
-}
+@interface IMIHLRestService : NSObject
 @property (strong,nonatomic) NSDictionary*restresult_dict;
 @property (strong,nonatomic) NSString*urlpathstr;
 
 +(IMIHLRestService*)getSharedInstance;
--(int)login:(NSString*)username :(NSString*)password;
--(int)reports:(NSString*)registeredID :(NSString*)fromdate :(NSString*)todate;
--(int)getpatientInfo:(NSString*)patientid;
--(int)feedbackService:(NSString*)patientid :(NSString*)feedbacktype :(NSString*)feedbackcontent;
--(int)changepasswordService:(NSString*)patientid :(NSString*)currentPass :(NSString*)changePass :(NSString*)reenterPass;
--(int)getAboutUsService:(NSString*)aboutid;
 -(void)profileUpdateService:(NSString*)patientid :(NSString*)firstname :(NSString*)lastname :(NSString*)gender :(NSString*)dob :(NSString*)emailid  :(NSString*)mobilenumber :(NSData*)filedata :(void (^)(NSInteger))handler;
--(int)createAppointment:(NSString*)patientId :(NSString*)appointmentDate :(NSString*)locationid :(NSString*)departmentId :(NSString*)serviceId;
--(int)createDoctorAppointment:(NSString*)appointmentDate appointmentTime:(NSString*)appointmentTime doctorId:(NSString*)doctorId patientId:(NSString*)patientId;
--(int)getSearchResults:(NSString*)patientid :(NSString*)testid;
--(int)getSearchServices:(NSString*)patientid;
--(int)getDepartments:(NSString*)locationid;
--(int)getAllAppointments:(NSString*)patientid;
--(int)getDrAppointments:(NSString*)patientid;
--(int)getLocations:(NSString*)patientid;
--(int)getServices:(NSString*)departid;
--(int)forgotPasswordService:(NSString*)patientid;
--(int)confrimForgotPasswordService:(NSString*)patientid;
--(int)getForgotResetPassword:(NSString*)patientid :(NSString*)userid :(NSString*)password;
--(int)getTestName:(NSString*)testname :(NSString*)locid;
-//-(int)previousAppointmentsService:
+
 ///////////////////////Doctor Services///////////////////////////////
 -(int)getDoctorLocations:(NSString*)patientid;
 -(int)getDoctorDepartments:(NSString*)locationid;
@@ -43,16 +22,7 @@
 -(int)getDoctorsDates:(NSString*)doctid;
 -(int)getDoctorsTimes:(NSString*)doctid;
 -(int)getDoctorSpecialities:(NSString*)locationid;
--(int)getPatientOrdersList:(NSString*)patientid;
--(int)reportDownloadPdf:(NSString*)orderid_str :(NSString*)type;
--(int)invoiceDownloadPdf:(NSString *)orderid_str :(NSString*)type;
-//-(int)downloadFile:(NSString*)url_str :(NSString*)orderid_str;
--(int)reportDownloadInPDF:(NSString*)orderid_str :(NSString*)serviceId :(NSString*)type;
--(int)cancelAppointment:(NSString*)appntId :(NSString*)reason;
--(int)reSchedule:(NSString*)appntId :(NSString*)reason;
--(int)recentActivities:(NSString*)patientId;
--(int)newLogin:(NSString*)username :(NSString*)password;
--(int)remainders:(NSString*)patientId;
+
 
 //////////////////////New Services/////////////////////////////
 -(void)recentActivities:(NSString*)patientId withCompletionHandler:(void (^)(NSInteger))handler;
@@ -78,4 +48,10 @@
 -(void)getForgotResetPassword:(NSString*)patientid :(NSString*)userid :(NSString*)password withCompletionHandler:(void (^)(NSInteger))handler;
 -(void)getTestName:(NSString*)testname :(NSString*)locid
 withCompletionHandler:(void (^)(NSInteger))handler;
+
+
+-(void)reportDownloadPdf:(NSString*)orderid_str :(NSString*)type withCompletionHandler:(void (^)(NSInteger))handler;
+-(void)invoiceDownloadPdf:(NSString *)orderid_str :(NSString*)type withCompletionHandler:(void (^)(NSInteger))handler;
+//-(int)downloadFile:(NSString*)url_str :(NSString*)orderid_str;
+-(void)reportDownloadInPDF:(NSString*)orderid_str :(NSString*)serviceId :(NSString*)type withCompletionHandler:(void (^)(NSInteger))handler;
 @end

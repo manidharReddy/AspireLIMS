@@ -479,6 +479,7 @@ BOOL dropdownflagone,dropdownflagtwo,dropdownflaglocation;
         self.doctid_str=@"";
         //self.locationid_str=@"";
     }
+    /*
     int statuscode =[restcreateappt createAppointment:self.patientid_str :self.apptdate_str :self.locationid_str :self.deptid_str :self.doctid_str];
     if (statuscode==200) {
         //NSLog(@"status of restcreateappt:%@",restcreateappt.restresult_dict);
@@ -521,7 +522,7 @@ BOOL dropdownflagone,dropdownflagtwo,dropdownflaglocation;
         // [self showAlertController:[restcreateappt.restresult_dict objectForKey:@"message"]];
         [self showAlertController:[NSString stringWithFormat:@"You have failed to book an appointment"]];
     }
-    
+    */
     
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 }

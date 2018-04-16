@@ -22,11 +22,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.navigationController.navigationBar.hidden = YES;
+    [self loggedUser];
 }
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    self.navigationController.navigationBar.hidden = YES;
-    [self loggedUser];
 }
 
 -(void)loggedUser{
@@ -111,51 +112,7 @@
     
     //[MBProgressHUD hideHUDForView:self.view animated:YES];
 }
--(void)loginCalled{
-    
-    IMIHLRestService*restlogin = [IMIHLRestService getSharedInstance];
-    
-    NSLog(@"logged called");
-    
-    int statuscode = [restlogin newLogin:_username :_userpassword];
-    NSLog(@"statuscode login:%d",statuscode);
-    if (statuscode==200) {
-       
-        NSLog(@"restlogin.restresult_dict:%@",restlogin.restresult_dict);
-        NSString*patientid_str = [restlogin.restresult_dict objectForKey:@"patientId"];
-        NSLog(@"patientid login:%@",patientid_str);
-   
-        IMIHLLogin*login = [[IMIHLLogin alloc]init];
-      
-        login = [login getLoginResult:restlogin.restresult_dict];
-        NSLog(@"test1");
-        
-        NSLog(@"test3");
-        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:login];
-        
-        [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"userprofiles"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        NSLog(@"test4");
-        
-        
-        
-        [self loadViewControllerFromStoryBoard:@"dashboard"];
-        
-        
-        
-        NSLog(@"status code:%d",statuscode);
-    }else if (statuscode==500){
-        
-        [self loadViewControllerFromStoryBoard:@"login"];
-        
-    }else if (statuscode==0){
-         [self loadViewControllerFromStoryBoard:@"login"];
-    }else{
-         [self loadViewControllerFromStoryBoard:@"login"];
-       
-    }
-    
-}
+
 -(void)loadViewControllerFromStoryBoard:(NSString*)identifiername{
     //NSLog(@"load vc");
     

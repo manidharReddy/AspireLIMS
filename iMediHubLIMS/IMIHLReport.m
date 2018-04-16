@@ -304,7 +304,7 @@
             btn.hidden=NO;
     //NSLog(@"patientteststatus_arr value:%@",[self.patientteststatus_arr objectAtIndex:indexPath.row]);
 
-            if ([testObj.testresultvalue isEqualToString:@"Positive"]||[testObj.testresultvalue isEqualToString:@"Negative"]) {
+            if ([testObj.testresultvalue isEqualToString:@"POSITIVE"]||[testObj.testresultvalue isEqualToString:@"NEGATIVE"]) {
                 
                          NSLog(@"cellcheck9");
                 [grphbtn setImage:[UIImage imageNamed:@"blankimg"] forState:UIControlStateNormal];
@@ -321,19 +321,19 @@
                 //NSLog(@"cellcheck6");
                 
                 //NSLog(@"cellcheck9");
-                if ([testObj.testresultvalue isEqualToString:@"Negative"]) {
+                if ([testObj.testresultvalue isEqualToString:@"NEGATIVE"]) {
                     NSLog(@"cellcheck21");
                     
                     //btn.backgroundColor = [UIColor colorWithRed:255/255.0 green:56.0/255.0 blue:56.0/255.0 alpha:1.0];
                      btn.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:51.0/255.0 blue:0/255.0 alpha:1.0];
-                    [btn setTitle:@"Negative" forState:UIControlStateNormal];
+                    [btn setTitle:@"NEGATIVE" forState:UIControlStateNormal];
                     //lbl_range.textColor = [UIColor colorWithRed:255.0/255.0 green:56.0/255.0 blue:56.0/255.0 alpha:1.0];
                     lbl_range.textColor = [UIColor colorWithRed:255.0/255.0 green:51.0/255.0 blue:0/255.0 alpha:1.0];
                 }else{
                     NSLog(@"cellcheck22");
                     //btn.backgroundColor = [UIColor colorWithRed:13/255.0 green:183.0/255.0 blue:13.0/255.0 alpha:1.0];
                     btn.backgroundColor = [UIColor colorWithRed:0/255.0 green:204.0/255.0 blue:102.0/255.0 alpha:1.0];
-                    [btn setTitle:@"Positive" forState:UIControlStateNormal];
+                    [btn setTitle:@"POSITIVE" forState:UIControlStateNormal];
                     //lbl_range.textColor = [UIColor colorWithRed:13/255.0 green:183.0/255.0 blue:13.0/255.0 alpha:1.0];
                     lbl_range.textColor = [UIColor colorWithRed:0/255.0 green:204.0/255.0 blue:102.0/255.0 alpha:1.0];
                 }
@@ -500,7 +500,15 @@
     
     //self.navigationController.title=self.navigation_name_str;
     ALReports*report = (ALReports*)[self.reportValueObj.alReportObjsArry objectAtIndex:indexPath.section];
-    if ([report.testTypeObj isEqualToString:@"2"]) {
+    
+    NSLog(@"report.resultDataArrObj count:%d",report.resultDataArrObj.count);
+    
+    NSLog(@"report value:%@",report.testTypeObj);
+    NSLog(@"Index Count:%d",indexPath.section);
+    
+    id objct = [report.resultDataArrObj objectAtIndex:indexPath.section];
+    
+    if([objct class] == [ALGroup class]){
         //NSLog(@"group entredee didselet");
         ALGroup*groupObj = [report.resultDataArrObj objectAtIndex:indexPath.section];
         NSString * storyboardName = @"Main";

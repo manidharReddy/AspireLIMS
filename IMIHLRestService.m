@@ -7,6 +7,7 @@
 //
 
 #import "IMIHLRestService.h"
+#import "AppDelegate.h"
 /*
 #define IMIHLRestPathNameTest @"http://144.76.40.143:8081/LIMS_Mobile/rest/get/"
 #define IMIHLRestPathName @"http://144.76.40.143:8081/LIMS_Mobile/rest"
@@ -307,110 +308,28 @@ static IMIHLRestService *sharedRestInstance = nil;
     }];
 }
 
+
+-(void)reportDownloadPdf:(NSString*)orderid_str :(NSString*)type withCompletionHandler:(void (^)(NSInteger))handler{
+    [self downloadTask:[NSString stringWithFormat:@"%@/get/testreportsave?orderid=%@",IMIHLRestPathName,orderid_str] orderId:orderid_str orderType:@"report" withCompletionHandler:^(NSInteger response) {
+        handler(response);
+    }];
+}
+-(void)invoiceDownloadPdf:(NSString *)orderid_str :(NSString*)type withCompletionHandler:(void (^)(NSInteger))handler{
+    [self downloadTask:[NSString stringWithFormat:@"%@/get/getinvoice?orderid=%@",IMIHLRestPathName,orderid_str] orderId:orderid_str orderType:@"invoice" withCompletionHandler:^(NSInteger response) {
+        handler(response);
+    }];
+}
+
+-(void)reportDownloadInPDF:(NSString*)orderid_str :(NSString*)serviceId :(NSString*)type withCompletionHandler:(void (^)(NSInteger))handler{
+    [self downloadTask:[NSString stringWithFormat:@"%@getlabreport?patientServiceid=%@",IMIHLRestPathNameTest,serviceId] orderId:[orderid_str stringByAppendingString:serviceId] orderType:@"report" withCompletionHandler:^(NSInteger response) {
+        handler(response);
+    }];
+}
+
 /////////////////////////////////End with New Service Blocks//////////////////////////
 
 
-//Login Service
--(int)login:(NSString*)username :(NSString*)password{
-    
-    NSString*postdata = [NSString stringWithFormat:@"{\"userId\":\"%@\",\"password\":\"%@\"}",username,password];
-    
-    statuscode = [self httpPostWithCustomDelegate:[NSString stringWithFormat:@"%@/loginpage/authenticate",IMIHLRestPathName] :postdata :@"login"];
-    NSLog(@"status code:%d",statuscode);
-    
-    
-    return statuscode;
-}
--(int)newLogin:(NSString*)username :(NSString*)password{
-    
-    NSString*postdata = [NSString stringWithFormat:@"{\"userId\":\"%@\",\"password\":\"%@\"}",username,password];
-    
-    statuscode = [self httpPostWithCustomDelegate:[NSString stringWithFormat:@"%@/loginpage/login",IMIHLRestPathName] :postdata :@"login"];
-    NSLog(@"status code:%d",statuscode);
-    
-    
-    return statuscode;
-}
 
-
-/*Remainders*/
--(int)remainders:(NSString*)patientId{
-    statuscode = [self sendHTTPGet:[NSString stringWithFormat:@"%@/appointments/reminders?patientid=%@",IMIHLRestPathName,patientId] :@"reaminders"];
-    return statuscode;
-}
-/*RecentActivities*/
--(int)recentActivities:(NSString*)patientId{
-    statuscode = [self sendHTTPGet:[NSString stringWithFormat:@"%@/recentactivities/gethistory?patientid=%@",IMIHLRestPathName,patientId] :@"recentActivities"];
-    return statuscode;
-}
-
-
-/*Patient Report Service*/
--(int)reports:(NSString*)registeredID :(NSString*)fromdate :(NSString*)todate{
-    //NSLog(@"reports service");
-
-    NSString*postdata = [NSString stringWithFormat:@"{\"patientId\":\"%@\",\"toDate\":\"%@\",\"fromDate\":\"%@\"}",registeredID,todate,fromdate];
-    //NSLog(@"postdata:%@",postdata);
-    
-    statuscode =  [self httpPostWithCustomDelegate:[NSString stringWithFormat:@"%@/patientservicelistNew/getdatewasedetails",IMIHLRestPathName] :postdata :@"reports"];
-return statuscode;
-}
-
-
-/*Patient Info Service*/
--(int)getpatientInfo:(NSString*)patientid{
-    //NSLog(@"patientinfo service");
-    //NSLog(@"patientid:%@",patientid);
-    statuscode = [self sendHTTPGet:[NSString stringWithFormat:@"%@/update/getdetails?patientid=%@",IMIHLRestPathName,patientid] :@"patientinfo"];
-    //NSLog(@"statuscode1:%d",statuscode);
-    return statuscode;
-}
-
-/*Feedback Service*/
--(int)feedbackService:(NSString*)patientid :(NSString*)feedbacktype :(NSString*)feedbackcontent{
-    NSString*postdata = [NSString stringWithFormat:@"{\"patientId\":\"%@\",\"feedback_type\":\"%@\",\"feedback_content\":\"%@\"}",patientid,feedbacktype,feedbackcontent];
-    //NSLog(@"postdata:%@",postdata);
-    
-    statuscode = [self httpPostWithCustomDelegate:[NSString stringWithFormat:@"%@/feedback/details",IMIHLRestPathName] :postdata :@"feedback"];
-    return statuscode;
-}
-
-
-/*Change Password Service*/
--(int)changepasswordService:(NSString*)patientid :(NSString*)currentPass :(NSString*)changePass :(NSString*)reenterPass{
-    NSString*postdata = [NSString stringWithFormat:@"{\"patientId\":\"%@\",\"currentPass\":\"%@\",\"changePass\":\"%@\",\"reenterPass\":\"%@\"}",patientid,currentPass,changePass,reenterPass];
-    //NSLog(@"postdata:%@",postdata);
-    
-    statuscode = [self httpPostWithCustomDelegate:[NSString stringWithFormat:@"%@/password/change",IMIHLRestPathName] :postdata :@"changepasswrd"];
-    return statuscode;
-}
-/*Forgot Password Service*/
--(int)forgotPasswordService:(NSString*)patientid{
-    //NSLog(@"Forgotpassword service");
-    
-    statuscode = [self sendHTTPGet:[NSString stringWithFormat:@"%@/forgotpassword/%@",IMIHLRestPathName,patientid] :patientid];
-
-    return statuscode;
-}
-
-/*Confirm Forgot Password Using OTP Service*/
--(int)confrimForgotPasswordService:(NSString*)patientid{
-    //NSLog(@"confirmForgotpassword OTP service");
-    
-    statuscode = [self sendHTTPGet:[NSString stringWithFormat:@"%@/forgotpassword/reset/%@",IMIHLRestPathName,patientid] :patientid];
-    
-    return statuscode;
-}
-
-
-
-/*AboutUs  Service*/
--(int)getAboutUsService:(NSString*)aboutid{
-    //NSLog(@"AboutUs service");
-    
-    statuscode = [self sendHTTPGet:[NSString stringWithFormat:@"%@/aboutus/getdetails?id=%@",IMIHLRestPathName,aboutid] :@"Aboutus"];
-    return statuscode;
-}
 
 /*Profile Update and Upload ProfileImage*/
 
@@ -425,134 +344,7 @@ return statuscode;
 }
 
 
-/*Appointment Creation Service*/
--(int)createAppointment:(NSString*)patientId :(NSString*)appointmentDate :(NSString*)locationid :(NSString*)departmentId :(NSString*)serviceId{
-    //NSLog(@"create appointment service");
-    
-    //NSString*postdata = [NSString stringWithFormat:@"{\"patientId\":\"%@\",\"appointmentDate\":\"%@\",\"locid\":\"%@\",\"departmentId\":\"%@\",\"serviceId\":\"%@\"}",patientId,appointmentDate,locationid,departmentId,serviceId];
-    NSString*postdata = [NSString stringWithFormat:@"{\"patientId\":\"%@\",\"appointmentDate\":\"%@\",\"locid\":\"%@\",\"servicesLst\":%@}",patientId,appointmentDate,locationid,serviceId];
-
-    //NSLog(@"postdata:%@",postdata);
-    
-    statuscode = [self httpPostWithCustomDelegate:[NSString stringWithFormat:@"%@/appointments/create",IMIHLRestPathName] :postdata :@"createappointment"];
-    return statuscode;
-    
-}
-
-/*Cancel appointments*/
--(int)cancelAppointment:(NSString*)appntId :(NSString*)reason{
-    NSString*postdata = [NSString stringWithFormat:@"{\"appointmentId\":\"%@\",\"reason\":\"%@\"}",appntId,reason];
-    
-    //NSLog(@"postdata cancel appoints:%@",postdata);
-    
-    statuscode = [self httpPostWithCustomDelegate:[NSString stringWithFormat:@"%@/appointments/cancel",IMIHLRestPathName] :postdata :@""];
-    return statuscode;
-}
-/*Reschedule appointments*/
--(int)reSchedule:(NSString *)appntId :(NSString *)reason{
-    NSString*postdata = [NSString stringWithFormat:@"{\"appointmentId\":\"%@\",\"reason\":\"%@\"}",appntId,reason];
-    
-    //NSLog(@"postdata cancel appoints:%@",postdata);
-    
-    statuscode = [self httpPostWithCustomDelegate:[NSString stringWithFormat:@"%@/appointments/reschedule",IMIHLRestPathName] :postdata :@""];
-    return statuscode;
-}
-/*Get Deparments  Service*/
--(int)getDepartments:(NSString*)locationid{
-    //NSLog(@"Get Departments service");
-    statuscode = [self sendHTTPGet:[NSString stringWithFormat:@"%@/appointments/getDepartments/%@",IMIHLRestPathName,locationid] :@"departments"];
- return statuscode;
-}
-
-/*Get Services  Service*/
--(int)getServices:(NSString*)departid{
-    //NSLog(@"Get Services service");
-    statuscode = [self sendHTTPGet:[NSString stringWithFormat:@"%@/appointments/getservices/%@",IMIHLRestPathName,departid] :@"services"];
- return statuscode;
-}
-
-/*Get All Appointments  Service*/
--(int)getAllAppointments:(NSString*)patientid{
-    //NSLog(@"Get All Appointments service");
-    statuscode = [self sendHTTPGet:[NSString stringWithFormat:@"%@/appointments/getAllAppointments/%@",IMIHLRestPathName,patientid] :@"limsappointments"];
-    return statuscode;
-}
-
-/*Get All Appointments  Service*/
--(int)getDrAppointments:(NSString*)patientid{
-    //NSLog(@"Get All Appointments service");
-   // statuscode = [self sendHTTPGet:[NSString stringWithFormat:@"%@PreviousAppointments/get?patienid=%@",IMIHLDoctorRestPathName,patientid] :@"limsappointments"];
-    statuscode = [self sendHTTPGet:[NSString stringWithFormat:@"%@PreviousAppointments/get?patienid=%@",IMIHLDoctorRestPathName,@"1_1@MR17000041"] :@"limsappointments"];
-    return statuscode;
-}
--(int)getLocations:(NSString*)patientid{
-    //NSLog(@"Get Locations service");
-    statuscode = [self sendHTTPGet:[NSString stringWithFormat:@"%@/appointments/getLocations/%@",IMIHLRestPathName,patientid] :@"limslocations"];
-    return statuscode;
-}
-
-/*getSearchServices  Service*/
--(int)getSearchServices:(NSString*)patientid{
-    //NSLog(@"Get All Appointments service");
-    statuscode = [self sendHTTPGet:[NSString stringWithFormat:@"%@/patient/gettestrecords?patientid=%@",IMIHLRestPathName,patientid] :@""];
-    return statuscode;
-}
-
--(int)getPatientOrdersList:(NSString *)patientid{
-    //NSLog(@"Get Orders List service");
-    statuscode = [self sendHTTPGet:[NSString stringWithFormat:@"%@/get/patientorders?patientid=%@",IMIHLRestPathName,patientid] :@"limsorders"];
-    return statuscode;
-}
-
-/*getSearchResults  Service*/
--(int)getSearchResults:(NSString*)patientid :(NSString*)testid{
-    //NSLog(@"Get Search Results service");
-    
-    NSString*postdata = [NSString stringWithFormat:@"{\"patientid\":\"%@\",\"serviceId\":\"%@\"}",patientid,testid];
-    //NSLog(@"postdata:%@",postdata);
-    
-    statuscode = [self httpPostWithCustomDelegate:[NSString stringWithFormat:@"%@/patientservicelistNew/getrecordbytestname",IMIHLRestPathName] :postdata :@"searchresult"];
-    return statuscode;
-    
-   
-}
-/*getForgotPasswordChangePassword  Service*/
--(int)getForgotResetPassword:(NSString*)patientid :(NSString*)userid :(NSString*)password{
-    //NSLog(@"Get Forgotpassword service");
-    
-    NSString*postdata = [NSString stringWithFormat:@"{\"userId\":\"%@\",\"patientId\":\"%@\",\"password\":\"%@\"}",userid,patientid,password];
-    //NSLog(@"postdata:%@",postdata);
-    
-    statuscode = [self httpPostWithCustomDelegate:[NSString stringWithFormat:@"%@/forgotpassword/changePassword",IMIHLRestPathName] :postdata :@"frgtpaswrd"];
-    return statuscode;
-    
-    
-}
-
--(int)reportDownloadPdf:(NSString *)orderid_str :(NSString*)type{
-    //NSLog(@"Report Dowload  service");
-    statuscode = [self downloadFile:[NSString stringWithFormat:@"%@/get/testreportsave?orderid=%@",IMIHLRestPathName,orderid_str] :orderid_str :@"report"];
-    return statuscode;
-}
--(int)reportDownloadInPDF:(NSString*)orderid_str :(NSString*)serviceId :(NSString*)type{
-    statuscode = [self downloadFile:[NSString stringWithFormat:@"%@getlabreport?patientServiceid=%@",IMIHLRestPathNameTest,serviceId] :[orderid_str stringByAppendingString:serviceId] :@"report"];
-    return statuscode;
-}
-
--(int)invoiceDownloadPdf:(NSString *)orderid_str :(NSString*)type{
-    //NSLog(@"Report Dowload  service");
-    statuscode = [self downloadFile:[NSString stringWithFormat:@"%@/get/getinvoice?orderid=%@",IMIHLRestPathName,orderid_str] :orderid_str :@"invoice"];
-    return statuscode;
-}
-
-//getTestNameService
--(int)getTestName:(NSString*)testname :(NSString*)locid
-{
-    //NSLog(@"Get TestNameService");
-    statuscode=[self sendHTTPGet:[NSString stringWithFormat:@"%@servicename?testname=%@&locid=%@",IMIHLRestPathNameTest,testname,locid]:@"autosearch"];
-
-    return statuscode;
-}
+/*
 /////////////////////////////////////////Doctors//////////////////////////////////////////////
 -(int)getDoctorLocations:(NSString*)patientid{
     //NSLog(@"Get Locations service");
@@ -611,135 +403,12 @@ return statuscode;
 }
 
 /////////////////////////////////////////END/////////////////////////////////////////////////
-
+*/
 
 ///forgotpassword/changePassword
 
 
 
-# pragma GET
-
-/*
- GET Service with  Basic Authorization
- */
-
-
--(int)sendHTTPGet:(NSString*)urlpath :(NSString*)key_str
-{
-
-    NSLog(@"urlPath:%@",urlpath);
-    InternetConnection*ic = [InternetConnection getSharedInstance];
-    if (ic.CheckNetwork==YES) {
-        
-   
-    NSURL * url = [NSURL URLWithString:urlpath];
-    
-    
-    NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
-    
-    [urlRequest setHTTPMethod:@"GET"];
-    
-    
-   // NSString *authStr = [NSString stringWithFormat:@"%@:%@",@"rest",@"rest"];
-    //NSData *authData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
-   // NSString *authValue = [NSString stringWithFormat:@"Basic %@", [authData base64Encoding]];
-    
-    //[urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
-    [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    
-    //NSLog(@"lasttttcdcjjdcdj");
-    
-    
-    
-    NSURLResponse *url_responce;
-    NSError*error;
-    
-    NSData*responcedata = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&url_responce error:&error];
-    NSHTTPURLResponse*httpresponse = (NSHTTPURLResponse*)url_responce;
-    //NSLog(@"httpresponse code:%d",(int)[httpresponse statusCode]);
-    statuscode = (int)[httpresponse statusCode];
-        if (statuscode==0) {
-            
-        }else{
-    self.restresult_dict = [self jsonResult:responcedata];
-    
-        }
-
-    }else{
-    
-        //[self getSavedJsonData:key_str];
-        //NSLog(@"No NetworkConnection");
-        
-    }
-    return statuscode;
-}
-
-
-
-# pragma POST
-
-/*
- Post Service with Basic  Authorization
- */
-
--(int)httpPostWithCustomDelegate:(NSString*)urlstr :(NSString*)postdata :(NSString*)key_str{
-    NSLog(@"post");
-    InternetConnection*ic = [InternetConnection getSharedInstance];
-    if (ic.CheckNetwork==YES) {
-        NSLog(@"Post Url:%@",urlstr);
-        NSLog(@"Postda:%@",postdata);
-    //NSLog(@"post called");
-   
-    
-    NSURL * url = [NSURL URLWithString:urlstr];
-    //NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
-        
-        NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url
-                                                               cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                                           timeoutInterval:60.0];
-    NSString * params =postdata;
-    [urlRequest setHTTPMethod:@"POST"];
-    [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    //NSString *authStr = [NSString stringWithFormat:@"%@:%@",@"rest",@"rest"];
-   // NSData *authData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
-    
-        //NSString *authValue = [NSString stringWithFormat:@"Basic %@", [authData base64EncodedStringWithOptions:0]];
-    
-   // [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
-    [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    //NSLog(@"post last");
-    
-    
-    NSURLResponse *url_responce;
-    NSError*error;
-        
-        
-   
-    NSData*responcedata = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&url_responce error:&error];
-    NSHTTPURLResponse*httpresponse = (NSHTTPURLResponse*)url_responce;
-    NSLog(@"httpresponse code:%d",(int)[httpresponse statusCode]);
-    statuscode = (int)[httpresponse statusCode];
-        
-        if (statuscode==0) {
-            
-        }else{
-            self.restresult_dict = [self jsonResult:responcedata];
-            }
-            return statuscode;
-    
-    
-    }else{
-    //[self getSavedJsonData:key_str];
-        //NSLog(@"No NetworkConnection");
-    }
-    //NSLog(@"end of post method");
-    
-    
-    
-    
-    return statuscode;
-}
 
 
 
@@ -890,21 +559,25 @@ return statuscode;
     }
 }
 
-/*Download PDF File*/
--(int)downloadFile:(NSString*)url_str :(NSString*)orderid_str :(NSString*)type{
+
+-(void)downloadTask:(NSString*)url_str orderId:(NSString*)orderId orderType:(NSString*)type withCompletionHandler:(void (^)(NSInteger))handler{
+    NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+   
+    
     InternetConnection*ic = [InternetConnection getSharedInstance];
     if (ic.CheckNetwork==YES) {
-       
+        
         NSFileManager*filemanagerObj = [NSFileManager defaultManager];
         NSString*docsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-      
+        
         
         NSString*filepath = nil ;
         if ([type isEqualToString:@"invoice"]) {
-            filepath = [docsDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@.pdf",type,orderid_str]];
+            filepath = [docsDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@.pdf",type,orderId]];
             
         }else{
-            filepath = [docsDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@.pdf",type,orderid_str]];
+            filepath = [docsDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@.pdf",type,orderId]];
             
         }
         NSLog(@"urlstr:%@",url_str);
@@ -916,58 +589,60 @@ return statuscode;
         [urlRequest setHTTPMethod:@"GET"];
         
         /*
-        NSString *authStr = [NSString stringWithFormat:@"%@:%@",@"rest",@"rest"];
-        NSData *authData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
-        NSString *authValue = [NSString stringWithFormat:@"Basic %@", [authData base64Encoding]];
-        
-        [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
-        [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        */
-        
+         NSString *authStr = [NSString stringWithFormat:@"%@:%@",@"rest",@"rest"];
+         NSData *authData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
+         NSString *authValue = [NSString stringWithFormat:@"Basic %@", [authData base64Encoding]];
          
+         [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
+         [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+         */
+        
+        
         
         if ([filemanagerObj fileExistsAtPath:filepath]) {
             NSLog(@"File already Exist");
-            return 200;
+             handler(200);
         }else{
-        NSURLResponse *url_responce;
-        NSError*error;
-        
-        NSData*responcedata = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&url_responce error:&error];
-        NSHTTPURLResponse*httpresponse = (NSHTTPURLResponse*)url_responce;
-        NSLog(@"httpresponse code:%d",(int)[httpresponse statusCode]);
-        statuscode = (int)[httpresponse statusCode];
-        if (statuscode==0) {
-            
-        }else{
-            
-            if(error==nil){
-              
-                
-                
-                if ([filemanagerObj createFileAtPath:filepath contents:responcedata attributes:nil]) {
-                    NSLog(@"Create Success");
-                }else{
-                    //NSLog(@"Error File:%@",err);
+           // NSURL*urlFile = [NSURL URLWithString:filepath];
+            NSURLSessionDownloadTask*downloadTask = [defaultSession downloadTaskWithRequest:urlRequest completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                NSError *err = nil;
+                 NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
+                if (error==nil) {
+                    if (httpResp.statusCode == 200) {
+                        
+                        NSLog(@"LOcation File:%@",location);
+                    if ([filemanagerObj createFileAtPath:filepath contents:[NSData dataWithContentsOfURL:location] attributes:nil])
+                    {
+                        NSLog(@"File is saved to =%@",docsDir);
+                        //handler(httpResp.statusCode);
+                        
+                    }
+                    else
+                    {
+                        NSLog(@"failed to move: %@",[err userInfo]);
+                    }
+                    }else if(httpResp.statusCode >=201 && httpResp.statusCode<=299){
+                        
+                    }else if(httpResp.statusCode >=300 && httpResp.statusCode<=399){
+                        
+                    }else if(httpResp.statusCode >=400 && httpResp.statusCode<=500){
+                        
+                    }
                 }
-                }
-            }
-            self.restresult_dict = [self jsonResult:responcedata];
-           NSLog(@"restresult_dict:%@",self.restresult_dict);
+                handler(httpResp.statusCode);
+            }];
+                    
+            [downloadTask resume];
+            
         }
         
-        
-        //NSLog(@"sgdsjdhsjdhdskdl");
-        
     }else{
-        
+        handler(0);
         //NSLog(@"No NetworkConnection");
         
     }
-    return statuscode;
+    
 }
-
-
 
 #pragma JSON Serialization
 
@@ -1130,4 +805,7 @@ return statuscode;
         handler(0);
     }
 }
+
+
+
 @end

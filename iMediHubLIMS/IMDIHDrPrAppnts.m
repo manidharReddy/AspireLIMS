@@ -53,6 +53,7 @@
 
 
 -(void)getAppointments{
+    /*
     IMIHLRestService*restgetappntmts = [IMIHLRestService getSharedInstance];
     int statuscode =[restgetappntmts getDrAppointments:self.patientid_str];
     if (statuscode==200) {
@@ -98,6 +99,7 @@
         [self showAlertController:@"You dnt have any appointments"];
     }
     [self.apntmentTblView reloadData];
+     */
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 

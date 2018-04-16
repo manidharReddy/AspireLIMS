@@ -104,20 +104,23 @@
     IMIHLRestService*restserviceObj = [IMIHLRestService getSharedInstance];
    // [restserviceObj downloadFile:orderid_str :self.patientid_str];
     if ([type isEqualToString:@"report"]) {
-        if ([restserviceObj reportDownloadPdf:orderid_str :type]==200) {
-            self.pdfname = [NSString stringWithFormat:@"%@_%@",type,orderid_str];
-            [self loadViewControllerFromStoryBoard:@"pdfviewer"];
-        }else{
-            
-            [self showAlertController:@"Report is not available"];
-        }
+        [restserviceObj reportDownloadPdf:orderid_str :self.patientid_str withCompletionHandler:^(NSInteger response) {
+            if (response == 200) {
+                self.pdfname = [NSString stringWithFormat:@"%@_%@",type,orderid_str];
+                [self loadViewControllerFromStoryBoard:@"pdfviewer"];
+            }else{
+                [self showAlertController:@"Report is not available"];
+            }
+        }];
     }else{
-        if ([restserviceObj invoiceDownloadPdf:orderid_str :type]==200) {
+        [restserviceObj invoiceDownloadPdf:orderid_str :type withCompletionHandler:^(NSInteger response) {
+            if (response == 200) {
             self.pdfname = [NSString stringWithFormat:@"%@_%@",type,orderid_str];
             [self loadViewControllerFromStoryBoard:@"pdfviewer"];
         }else{
             [self showAlertController:@"Invoice is not available"];
         }
+         }];
     }
     
 }
@@ -208,7 +211,7 @@
 }
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.view.frame.size.width<self.view.frame.size.height) {
-        return self.orders_tblview.bounds.size.height*0.18;
+        return self.orders_tblview.bounds.size.height*0.12;
     }
     return self.orders_tblview.bounds.size.height*0.38;
 }
@@ -291,12 +294,14 @@
     UIButton*btn = (UIButton*)sender;
     self.orderid_str=[self.orderlist_obj.orderid_arr objectAtIndex:btn.tag];
     IMIHLRestService*restserviceObj = [IMIHLRestService getSharedInstance];
-    if ([restserviceObj invoiceDownloadPdf:self.orderid_str :@"invoice"]==200) {
-      
-        [self loadViewControllerFromStoryBoard:@"pdfviewer"];
-    }else{
-        [self showAlertController:@"Invoice is not available"];
-    }
+    [restserviceObj invoiceDownloadPdf:self.orderid_str :@"invoice" withCompletionHandler:^(NSInteger response) {
+        if (response == 200) {
+            [self loadViewControllerFromStoryBoard:@"pdfviewer"];
+        }else{
+           [self showAlertController:@"Invoice is not available"];
+        }
+    }];
+    
 }
 #pragma mark - TableView delegate
 

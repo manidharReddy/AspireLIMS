@@ -620,7 +620,7 @@
         
         detailreport.patientid_str = self.patientid_str;
         //NSLog(@"self.patientgrouptestname_arr did select:%@",self.patientgrouptestname_arr);
-        detailreport.testdict = [self.patientgrouptestname_arr objectAtIndex:indexPath.section];
+       // detailreport.testdict = [self.patientgrouptestname_arr objectAtIndex:indexPath.section];
         //NSLog(@"group tests one:%@",[self.patientgrouptestname_arr objectAtIndex:indexPath.row]);
         //NSLog(@"group tests details:%@",detailreport.testdict);
         self.navigationController.title = [self.patienttestname_arr objectAtIndex:indexPath.section];
@@ -635,8 +635,8 @@
         IMIHLDetail*detailreport = [storyboard instantiateViewControllerWithIdentifier:@"detailreport"];
         
         detailreport.patientid_str = self.patientid_str;
-        detailreport.paneltest_dict = [self.paneltests_arr objectAtIndex:indexPath.section];
-        detailreport.panelgrps_dict = [self.panelgrps_arr objectAtIndex:indexPath.section];
+        //detailreport.paneltest_dict = [self.paneltests_arr objectAtIndex:indexPath.section];
+       // detailreport.panelgrps_dict = [self.panelgrps_arr objectAtIndex:indexPath.section];
         
         [self.navigationController pushViewController:detailreport animated:YES];
         

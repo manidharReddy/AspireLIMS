@@ -62,17 +62,6 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(void)getReminders{
-    IMIHLRestService*rest = [IMIHLRestService getSharedInstance];
-    if ([rest remainders:self.patientId] == 200) {
-        self.remList  = [[IMIHLRemaindersList alloc]init];
-        NSLog(@"restResult:%@",rest.restresult_dict);
-        self.remList = [self.remList getRemainders:rest.restresult_dict];
-        NSLog(@"count");
-        [self.tableView reloadData];
-    }
-    
-}
 
 -(void)remainders{
    IMIHLRestService*rest = [IMIHLRestService getSharedInstance];
@@ -192,7 +181,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 //#warning Incomplete implementation, return the number of rows
     //NSLog(@"reminderarr count:%u",self.reminderdata_arr.count);
-    NSLog(@"reminderscount:%lu",self.remList.remainders.count);
+    //NSLog(@"reminderscount:%lu",self.remList.remainders.count);
     //return self.remList.remainders.count;
     return 1;
 }
@@ -220,7 +209,7 @@
      //cell.textLabel.text = @"You have an appointment booked on 17-Nov-2016 for ABO Blood Test";
     
     cell.layer.cornerRadius = 10.0f;
-    [cell.imageView setImage:[UIImage imageWithIcon:@"fa-clock-o" backgroundColor:[UIColor clearColor] iconColor:[UIColor brownColor] fontSize:cell.bounds.size.height/3]];
+    [cell.imageView setImage:[UIImage imageWithIcon:@"fa-clock-o" backgroundColor:[UIColor clearColor] iconColor:[UIColor brownColor] fontSize:cell.bounds.size.height/2]];
      //cell.textLabel.text = [NSString stringWithFormat:@"%@",remainder.appointmentDate];
     cell.textLabel.text =[NSString stringWithFormat:@"You have an appointment booked on %@ by appointment id %@",remainder.appointmentDate,remainder.apptmtId];
      //cell.detailTextLabel.text = @"";

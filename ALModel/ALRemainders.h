@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ALRemainders : NSObject
+@interface ALRemainders : NSObject<NSCoding>
 @property(strong,nonatomic) NSString*apptmtId;
 @property(strong,nonatomic) NSString*name;
 @property(strong,nonatomic) NSString*appointmentDate;

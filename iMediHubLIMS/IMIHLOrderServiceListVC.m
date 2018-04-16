@@ -117,10 +117,12 @@
     UIButton*dwnbtn = (UIButton*)sender;
     IMIHLRestService*restservice = [IMIHLRestService getSharedInstance];
     self.serviceid =[NSString stringWithFormat:@"%ld" ,(long)dwnbtn.tag];
-    if ([restservice reportDownloadInPDF:self.orderid :self.serviceid :@"report"] == 200) {
-        NSLog(@"entred in downlod report");
-        [self loadViewControllerFromStoryBoard:@"pdfviewer"];
-    }
+    [restservice reportDownloadInPDF:self.orderid :self.serviceid :@"report" withCompletionHandler:^(NSInteger response) {
+        if (response == 200) {
+            NSLog(@"entred in downlod report");
+            [self loadViewControllerFromStoryBoard:@"pdfviewer"];
+        }
+    }];
 }
 
 -(void)loadViewControllerFromStoryBoard:(NSString*)identifiername{

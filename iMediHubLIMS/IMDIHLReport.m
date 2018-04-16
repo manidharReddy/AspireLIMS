@@ -512,18 +512,20 @@
 
 
 //////////////////////////////TableView Delegate Methods/////////////////////
-
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return self.listOfTests.count;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //NSLog(@"count patient names:%d",(int)self.patienttestname_arr.count);
-    return self.listOfTests.count;
+    return 1;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.view.frame.size.width<self.view.frame.size.height) {
-        return (self.reporttblView.bounds.size.height)*0.2;
+        return (self.reports_tblview.bounds.size.height)*0.2;
     }
-    return (self.reporttblView.bounds.size.height)*0.4;
+    return (self.reports_tblview.bounds.size.height)*0.4;
 }
 
 
@@ -531,34 +533,33 @@
     // Configure the cell...
     
     NSLog(@"cell for row at index");
-    static NSString *CellIdentifier = @"testlisttblcell";
+    
+    
+    static NSString *CellIdentifier = @"testlisttblreportcell";
     
     UITableViewCell *cell = [self.reports_tblview dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
+        NSLog(@"cell if");
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] ;
     }
+    
     self.reports_tblview.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     //mtable.separatorStyle= UITableViewCellSeparatorStyleSingleLine;
     
-    
+   
     NSLog(@"cellcheck1");
-    //if ([[self.patienttesttype_arr objectAtIndex:indexPath.row]intValue]==1) {
-        //NSLog(@"cellcheck2");
-        
-        
-        //if ([[self.patienttestisready objectAtIndex:indexPath.row]intValue]==1) {
-            
-            //NSLog(@"cellcheck3");
-    ALTest*testObj = (ALTest*)[self.listOfTests objectAtIndex:indexPath.row];
+    ALTest*testObj = (ALTest*)[self.listOfTests objectAtIndex:indexPath.section];
             UILabel*lbl;
     NSLog(@"testObj.testresultvalue:%@",testObj.testresultvalue);
             UILabel*lbl_range;
             //NSLog(@"cellcheck4");
             lbl_range=(UILabel*)[cell viewWithTag:1];
             lbl_range.text =testObj.testresultvalue;
+    lbl_range.hidden = NO;
             //NSLog(@"cellcheck5");
             lbl=(UILabel*)[cell viewWithTag:2];
             lbl.text = testObj.testunits;
+    lbl.hidden=NO;
             //NSLog(@"cellcheck6");
             lbl=(UILabel*)[cell viewWithTag:3];
             lbl.text = testObj.testdatesplit;
@@ -570,40 +571,7 @@
             
             //NSLog(@"patientteststatus_arr value:%@",[self.patientteststatus_arr objectAtIndex:indexPath.row]);
             
-            if ([testObj.testresultvalue isEqualToString:@"Positive"]||[testObj.testresultvalue isEqualToString:@"Negative"]) {
-                
-                NSLog(@"cellcheck9");
-                
-                
-                lbl=(UILabel*)[cell viewWithTag:6];
-                //lbl.hidden=YES;
-                // lbl_range.text = [self.patienttestrange_arr objectAtIndex:indexPath.row];
-                //NSLog(@"cellcheck5");
-                //lbl_range.hidden=YES;
-                lbl=(UILabel*)[cell viewWithTag:2];
-                //lbl.hidden=YES;
-                //lbl.text = [self.patienttestunits_arr objectAtIndex:indexPath.row];
-                //lbl.hidden=YES;
-                //NSLog(@"cellcheck6");
-                
-                //NSLog(@"cellcheck9");
-                if ([testObj.testresultvalue isEqualToString:@"Negative"]) {
-                    //NSLog(@"cellcheck21");
-                    
-                    btn.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:51.0/255.0 blue:0/255.0 alpha:1.0];
-                    [btn setTitle:@"Negative" forState:UIControlStateNormal];
-                    //lbl_range.textColor = [UIColor colorWithRed:255.0/255.0 green:56.0/255.0 blue:56.0/255.0 alpha:1.0];
-                    lbl_range.textColor = [UIColor colorWithRed:255.0/255.0 green:51.0/255.0 blue:0/255.0 alpha:1.0];
-                }else{
-                    //NSLog(@"cellcheck22");
-                    btn.backgroundColor = [UIColor colorWithRed:0/255.0 green:204.0/255.0 blue:102.0/255.0 alpha:1.0];
-                    [btn setTitle:@"Positive" forState:UIControlStateNormal];
-                    //lbl_range.textColor = [UIColor colorWithRed:13/255.0 green:183.0/255.0 blue:13.0/255.0 alpha:1.0];
-                    lbl_range.textColor = [UIColor colorWithRed:0/255.0 green:204.0/255.0 blue:102.0/255.0 alpha:1.0];
-                }
-                
-            }else{
-                
+    
                
                 if ([testObj.testresultvalue intValue]>[testObj.testmaxvalue intValue]) {
                     NSLog(@"cellcheck10");
@@ -621,51 +589,24 @@
                     btn.backgroundColor = [UIColor colorWithRed:0/255.0 green:204.0/255.0 blue:102.0/255.0 alpha:1.0];
                     
                     [btn setTitle:@"Normal" forState:UIControlStateNormal];
-                    lbl_range.textColor = [UIColor colorWithRed:0/255.0 green:204.0/255.0 blue:102.0/255.0 alpha:1.0];                }
+                    lbl_range.textColor = [UIColor colorWithRed:0/255.0 green:204.0/255.0 blue:102.0/255.0 alpha:1.0];
+                    
+                }
                 lbl=(UILabel*)[cell viewWithTag:6];
-                
-                
+
                 lbl.text = testObj.testranges;
                 //lbl.text = [self.patienttestrange_arr objectAtIndex:indexPath.row];
-                //NSLog(@"cellcheck13");
-            }
+                NSLog(@"cellcheck13");
+    
             
             lbl=(UILabel*)[cell viewWithTag:7];
             lbl.text = testObj.testname;
             
-    
+   
 
     return cell;
 }
 
-/*
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    //NSLog(@"didselect method.....");
-    //NSLog(@"didselect type:%@",[self.patienttesttype_arr objectAtIndex:indexPath.row]);
-    NSString * storyboardName = @"Main";
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
-    IMIHLDetail*detailreport = [storyboard instantiateViewControllerWithIdentifier:@"detailreport"];
-    self.navigation_name_str = [self.patienttestname_arr objectAtIndex:indexPath.row];
-    
-    
-    self.navigationController.title=self.navigation_name_str;
-    
-    if ([[self.patienttesttype_arr objectAtIndex:indexPath.row]intValue]==2) {
-        //NSLog(@"group entredee didselet");
-        
-        detailreport.testdict = [self.patientgrouptestname_arr objectAtIndex:indexPath.row];
-        [self.navigationController pushViewController:detailreport animated:YES];
-        
-        
-    } else if ([[self.patienttesttype_arr objectAtIndex:indexPath.row]intValue]==3) {
-        //NSLog(@"group entredee didselet 2");
-        detailreport.paneltest_dict = [self.paneltests_arr objectAtIndex:indexPath.row];
-        detailreport.panelgrps_dict = [self.panelgrps_arr objectAtIndex:indexPath.row];
-        [self.navigationController pushViewController:detailreport animated:YES];
-        
-    }
-}
-*/
+
 
 @end

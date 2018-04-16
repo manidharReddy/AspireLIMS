@@ -228,11 +228,13 @@
     //NSLog(@"bookclicked");
     self.apptdate_str = [NSString stringWithFormat:@"%@%@%@",self.apptdate_str,@" ",@"00:00:00"];
     IMIHLRestService*apptrest = [IMIHLRestService getSharedInstance];
+    /*
     if ([apptrest createDoctorAppointment:self.apptdate_str appointmentTime:self.appttime_str doctorId:self.doctid_str patientId:self.patientid_str]==200) {
         [self showAlertController:@"SuccesFully Booked"];
     }else{
     
     }
+     */
     
 }
 -(void)showAlertController:(NSString*)alrtmsg{

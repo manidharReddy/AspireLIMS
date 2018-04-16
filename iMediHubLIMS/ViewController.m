@@ -96,23 +96,7 @@
     }
     self.nameLbl.text = [NSString stringWithFormat:@"%@%@%@",daystate_str,@" ",self.userLogin.firstname];
 }
--(void)listOfRecentActivities{
-    IMIHLRestService*restService = [IMIHLRestService getSharedInstance];
-    
-    if([restService recentActivities:self.patientId] == 200){
-        self.activityObj = [[IMIHLRecentActivities alloc]init];
-        NSLog(@"recentactivities:%@",restService.restresult_dict);
-        
-     self.activityObj = [self.activityObj setRecentActivitiesList:restService.restresult_dict];
-       
-        recentListArry =   [NSArray arrayWithArray:self.activityObj.allRecentActivities];
-        NSLog(@"items count :%lu",recentListArry.count);
-       
-        [self.testlist_tblview reloadData];
-    }
-    
-    
-}
+
 
 - (void)recentActivitiesCall{
     IMIHLRestService*restService = [IMIHLRestService getSharedInstance];
@@ -380,7 +364,8 @@
     }else if([identifiername isEqualToString:@"bookappointment"]){
         IMIHLBookAppointment * bvc = [storyboard instantiateViewControllerWithIdentifier:@"bookappointment"];
         bvc.patientid_str = self.patientId;
-       // bvc.patientname_str = self.patientName;
+        bvc.patientname_str =[NSString stringWithFormat:@"%@%@%@", self.userLogin.firstname,@" ",self.userLogin.lastname];
+        
         
         [self.navigationController pushViewController:bvc animated:YES];
     }
