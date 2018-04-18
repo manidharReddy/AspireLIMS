@@ -10,60 +10,28 @@
 #import "IMIHLDBManager.h"
 @implementation IMIHLAppointments
 
--(void)allocObjects{
-    self.apointmentId_arr = [[NSMutableArray alloc]init];
-    self.dept_id_arr = [[NSMutableArray alloc]init];
-    self.test_id_arr = [[NSMutableArray alloc]init];
-    self.testname_arr = [[NSMutableArray alloc]init];
-    self.deptname_arr = [[NSMutableArray alloc]init];
-    self.bookedtime_arr = [[NSMutableArray alloc]init];
-    self.bookeddate_arr = [[NSMutableArray alloc]init];
-    self.status_arr = [[NSMutableArray alloc]init];
-    
-    
-}
 
 - (void) encodeWithCoder:(NSCoder *)encoder {
     
-    [encoder encodeObject:self.apointmentId_arr forKey:@"apointmentId_arr"];
-    [encoder encodeObject:self.dept_id_arr forKey:@"dept_id_arr"];
-    [encoder encodeObject:self.test_id_arr forKey:@"test_id_arr"];
-    [encoder encodeObject:self.testname_arr forKey:@"testname_arr"];
-    [encoder encodeObject:self.deptname_arr forKey:@"deptname_arr"];
-    [encoder encodeObject:self.bookedtime_arr forKey:@"bookedtime_arr"];
-    [encoder encodeObject:self.bookeddate_arr forKey:@"bookeddate_arr"];
-    [encoder encodeObject:self.status_arr forKey:@"status_arr"];
-    
-    
-    
+    [encoder encodeObject:self.appoinments forKey:@"appoinments"];
     
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {
-    self.apointmentId_arr = [decoder decodeObjectForKey:@"apointmentId_arr"];
-    self.dept_id_arr = [decoder decodeObjectForKey:@"dept_id_arr"];
-    self.test_id_arr = [decoder decodeObjectForKey:@"test_id_arr"];
-    self.testname_arr = [decoder decodeObjectForKey:@"testname_arr"];
-    self.deptname_arr = [decoder decodeObjectForKey:@"deptname_arr"];
-    self.bookedtime_arr = [decoder decodeObjectForKey:@"bookedtime_arr"];
-    self.bookeddate_arr = [decoder decodeObjectForKey:@"bookeddate_arr"];
-    self.status_arr = [decoder decodeObjectForKey:@"status_arr"];
-    
-    
+    self.appoinments = [decoder decodeObjectForKey:@"appoinments"];
     return self;
-    
 }
 
 -(IMIHLAppointments*)getAppointmentsList:(NSDictionary*)responseresult{
     
-    [self allocObjects];
-    IMIHLDBManager*dbmanager = [IMIHLDBManager getSharedInstance];
+    self.appoinments = [NSMutableArray new];
+    
     //NSLog(@"getDepartment Service calledddddd");
     //NSLog(@"responseresult:%@",responseresult);
     for (NSDictionary*localdict in responseresult) {
         NSMutableString*strappnd = [[NSMutableString alloc]init];
         //NSLog(@"localdict:%@",localdict);
-        
+        ALAppointments*appintmentsObj = [ALAppointments new];
         //Appnt Id
         NSString*appntid_str = [NSString stringWithFormat:@"%@",[localdict objectForKey:@"apointmentId"]];
         if ([appntid_str isEqualToString:@""]||[appntid_str isEqualToString:@"(null)"]||appntid_str==nil||appntid_str==NULL||[appntid_str isEqualToString:@"<null>"]||[appntid_str isEqual:[NSNull null]])
@@ -75,8 +43,8 @@
         }
         //NSLog(@"appntid_str:%@",appntid_str);
         // [self.testid_arr addObject:testid_str];
-        
-        [self.apointmentId_arr addObject:appntid_str];
+        appintmentsObj.apointmentId = appntid_str;
+       
         
         //Department ID
         NSString*deptid_str = [NSString stringWithFormat:@"%@",[localdict objectForKey:@"dept_id"]];
@@ -90,7 +58,7 @@
         //NSLog(@"deptid_str:%@",deptid_str);
         // [self.testid_arr addObject:testid_str];
         
-        [self.dept_id_arr addObject:deptid_str];
+        appintmentsObj.deptId = deptid_str;
         NSArray*arrtest = [localdict objectForKey:@"services"];
         if (arrtest.count!=0) {
             
@@ -108,7 +76,7 @@
                 //NSLog(@"testid_str:%@",testid_str);
                 // [self.testid_arr addObject:testid_str];
                 
-                [self.test_id_arr addObject:testid_str];
+                appintmentsObj.testId = testid_str;
                 
                 //Test  name
                 NSString*testname_str = [NSString stringWithFormat:@"%@",[tstdict objectForKey:@"serviceName"]];
@@ -128,7 +96,8 @@
                 [strappnd appendString:testname_str];
             }
         }
-        [self.testname_arr addObject:strappnd];
+        //[self.testname_arr addObject:strappnd];
+        appintmentsObj.testName = strappnd;
         //NSLog(@"self.testname_arr:%@",self.testname_arr);
         //Dept name
         NSString*deptname_str = [NSString stringWithFormat:@"%@",[localdict objectForKey:@"deptname"]];
@@ -142,7 +111,7 @@
         //NSLog(@"deptname_str:%@",deptname_str);
         // [self.testid_arr addObject:testid_str];
         
-        [self.deptname_arr addObject:deptname_str];
+        appintmentsObj.deptName = deptname_str;
         
         //Booked Time name
         NSString*bookedtime_str = [NSString stringWithFormat:@"%@",[localdict objectForKey:@"bookedtime"]];
@@ -156,7 +125,7 @@
         //NSLog(@"bookedtime_str:%@",bookedtime_str);
         // [self.testid_arr addObject:testid_str];
         
-        [self.bookedtime_arr addObject:bookedtime_str];
+        appintmentsObj.bookedTime = bookedtime_str;
         
         //Booked Date name
         NSString*bookeddate_str = [NSString stringWithFormat:@"%@",[localdict objectForKey:@"bookeddate"]];
@@ -170,7 +139,7 @@
         //NSLog(@"bookeddate_str:%@",bookeddate_str);
         // [self.testid_arr addObject:testid_str];
         
-        [self.bookeddate_arr addObject:bookeddate_str];
+        appintmentsObj.bookedDate = bookeddate_str;
         
         //Dept name
         NSString*status_str = [NSString stringWithFormat:@"%@",[localdict objectForKey:@"status"]];
@@ -184,10 +153,8 @@
         //NSLog(@"status_str:%@",status_str);
         // [self.testid_arr addObject:testid_str];
         
-        [self.status_arr addObject:status_str];
-        
-        [dbmanager savePatientAppoinments:appntid_str :strappnd :bookeddate_str :deptname_str :status_str];
-        
+        appintmentsObj.status = status_str;
+        [self.appoinments addObject:appintmentsObj];
     }
     ////NSLog(@"self.deptid_arr:%@",self.deptid_arr);
     return self;

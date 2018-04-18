@@ -50,7 +50,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self loggedPatient];
+    //[self loggedPatient];
     [self setPatientName];
     
     
@@ -62,24 +62,6 @@
     self.copyright_lbl.text = [NSString stringWithFormat:@"copyright© %lu",[components year]];
     
     
-}
--(BOOL)loggedPatient{
-    
-    //NSLog(@"loggedPatient");
-    IMIHLDBManager*dbObj = [IMIHLDBManager getSharedInstance];
-    NSArray*patientinfo_arr = [dbObj getPatientInfoDB];
-    //NSLog(@"logged data:%@",patientinfo_arr);
-    
-    if (patientinfo_arr==nil) {
-        return NO;
-    }else{
-        //NSLog(@"logged in:%@",patientinfo_arr);
-        self.patientid_str = [patientinfo_arr objectAtIndex:0];
-        self.patientname_str = [NSString stringWithFormat:@"%@%@%@",[patientinfo_arr objectAtIndex:1],@" ",[patientinfo_arr objectAtIndex:2]];
-       // //NSLog(@"img patient:%@",[patientinfo_arr objectAtIndex:8]);
-        return YES;
-    }
-    return NO;
 }
 
 -(void)setPatientName{

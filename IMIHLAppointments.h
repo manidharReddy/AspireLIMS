@@ -7,16 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "ALAppointments.h"
 @interface IMIHLAppointments : NSObject<NSCoding>
-@property (strong,nonatomic) NSMutableArray*apointmentId_arr;
-@property (strong,nonatomic) NSMutableArray*dept_id_arr;
-@property (strong,nonatomic) NSMutableArray*test_id_arr;
-@property (strong,nonatomic) NSMutableArray*testname_arr;
-@property (strong,nonatomic) NSMutableArray*deptname_arr;
-@property (strong,nonatomic) NSMutableArray*bookedtime_arr;
-@property (strong,nonatomic) NSMutableArray*bookeddate_arr;
-@property (strong,nonatomic) NSMutableArray*status_arr;
-
+@property (strong,nonatomic) NSMutableArray<ALAppointments*>*appoinments;
 -(IMIHLAppointments*)getAppointmentsList:(NSDictionary*)responseresult;
 @end

@@ -76,7 +76,8 @@
     
     IMIHLDBManager*dbManager = [IMIHLDBManager getSharedInstance];
     self.listOfTests = [dbManager listOfTestsFilteredByDate:self.testId];
-    
+    NSLog(@"Test ID:%@",self.testId);
+    NSLog(@"listOfTests count:%d",self.listOfTests.count);
     if (self.listOfTests.count!=0) {
     ALTest*testObj = [self.listOfTests objectAtIndex:0];
     

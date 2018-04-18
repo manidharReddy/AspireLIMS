@@ -9,46 +9,31 @@
 #import "IMIHLOrdersList.h"
 
 @implementation IMIHLOrdersList
--(void)allocteArry{
-    self.orderid_arr = [[NSMutableArray alloc]init];
-    self.orderdate_arr = [[NSMutableArray alloc]init];
-    self.ordertime_arr = [[NSMutableArray alloc]init];
-    self.orderflag_arr = [[NSMutableArray alloc]init];
-    self.orderservices_dict = [[NSMutableDictionary alloc]init];
-}
 - (void) encodeWithCoder:(NSCoder *)encoder {
     
-    [encoder encodeObject:self.orderid_arr forKey:@"orderid_arr"];
-    [encoder encodeObject:self.orderdate_arr forKey:@"orderdate_arr"];
-    [encoder encodeObject:self.ordertime_arr forKey:@"ordertime_arr"];
-    [encoder encodeObject:self.orderflag_arr forKey:@"orderflag_arr"];
-    [encoder encodeObject:self.orderservices_dict forKey:@"orderservices_dict"];
+    [encoder encodeObject:self.orders forKey:@"orders"];
     
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {
-    self.orderid_arr = [decoder decodeObjectForKey:@"orderid_arr"];
-    self.orderdate_arr = [decoder decodeObjectForKey:@"orderdate_arr"];
-    self.ordertime_arr = [decoder decodeObjectForKey:@"ordertime_arr"];
-    self.orderflag_arr = [decoder decodeObjectForKey:@"orderflag_arr"];
-    self.orderservices_dict = [decoder decodeObjectForKey:@"orderservices_dict"];
-    
-    
+    self.orders = [decoder decodeObjectForKey:@"orders"];
     
     return self;
     
 }
 -(IMIHLOrdersList*)getOrdersListResult:(NSDictionary *)orderresult_dict{
     
-    [self allocteArry];
+    self.orders = [NSMutableArray new];
     for (NSDictionary *order_dict in orderresult_dict) {
+        
+        ALOrders*orderObj = [ALOrders new];
         NSString*orderid_str = [order_dict objectForKey:@"orderid"];
         
         if ([orderid_str isEqual:[NSNull null]]||[orderid_str isEqualToString:@"null"]||[orderid_str isEqualToString:@"(null)"]||orderid_str==nil||orderid_str==NULL) {
             orderid_str=@"Not Available";
         }
         
-        [self.orderid_arr addObject:orderid_str];
+        orderObj.orderId = orderid_str;
         
         NSString*orderflag_str = [NSString stringWithFormat:@"%@",[order_dict objectForKey:@"flag"]];
         
@@ -56,7 +41,7 @@
             orderflag_str=@"Not Available";
         }
         
-        [self.orderflag_arr addObject:orderflag_str];
+        orderObj.orderFlag = orderflag_str;
 
         
         NSString*orderdatetime = [order_dict objectForKey:@"orderDate"];
@@ -65,18 +50,23 @@
         }
         
         NSArray* service_arr = [order_dict objectForKey:@"patientservices"];
+        NSLog(@"service_arr:%@",service_arr);
+        orderObj.orderServicesDict = [NSMutableDictionary new];
         if ([service_arr isEqual:[NSNull null]]||[service_arr isEqual:nil]||service_arr == NULL) {
-            [self.orderservices_dict setObject:@"Not Available" forKey:@"empty"];
+            NSLog(@"empty servicess");
+            [orderObj.orderServicesDict setObject:@"empty" forKey:@"empty"];
+        }else{
+        [orderObj.orderServicesDict setObject:service_arr forKey:orderid_str];
         }
-        
-        [self.orderservices_dict setObject:service_arr forKey:orderid_str];
+       
         NSArray * arr = [orderdatetime componentsSeparatedByString:@" "];
         //NSLog(@"Array values date times are : %@",arr);
         NSString*strtime = [NSString stringWithFormat:@"%@ %@",[arr objectAtIndex:1],[arr objectAtIndex:2]];
-        [self.orderdate_arr addObject:[arr objectAtIndex:0]];
-        [self.ordertime_arr addObject:strtime];
-
-        
+       
+        orderObj.orderDate = [arr objectAtIndex:0];
+        orderObj.orderTime = strtime;
+        [self.orders addObject:orderObj];
+        orderObj = nil;
     }
     
     return self;

@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ALOrders : NSObject
+@interface ALOrders : NSObject<NSCoding>
 @property(strong,nonatomic) NSString*orderDate;
 @property(strong,nonatomic) NSString*orderId;
-
+@property(strong,nonatomic) NSString*orderTime;
+@property(strong,nonatomic) NSString*orderFlag;
+@property(strong,nonatomic) NSMutableDictionary*orderServicesDict;
 
 @end

@@ -10,7 +10,7 @@
 #import "NSString+FontAwesome.h"
 #import "FAImageView.h"
 #import "UIImage+FontAwesome.h"
-
+#import "IMIHLAppointments.h"
 @interface IMIHLAppointmentsTableViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *apntmentTblView;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *backarrowbarbtn;
@@ -22,6 +22,7 @@
 @property (strong, nonatomic) NSString*reason_str;
 @property (strong, nonatomic) NSString*apptnID_str;
 @property (strong, nonatomic) NSString*isCancle_str;
+@property (strong,nonatomic) IMIHLAppointments*appointments;
 - (IBAction)backArrowClick:(id)sender;
 - (IBAction)submitClick:(id)sender;
 - (IBAction)cancel:(id)sender;

@@ -7,12 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "ALOrders.h"
 @interface IMIHLOrdersList : NSObject<NSCoding>
-@property(strong,nonatomic)NSMutableArray*orderid_arr;
-@property(strong,nonatomic)NSMutableArray*orderdate_arr;
-@property(strong,nonatomic)NSMutableArray*ordertime_arr;
-@property(strong,nonatomic)NSMutableArray*orderflag_arr;
-@property(strong,nonatomic)NSMutableDictionary*orderservices_dict;
+@property(strong,nonatomic)NSMutableArray<ALOrders*>*orders;
 -(IMIHLOrdersList*)getOrdersListResult:(NSDictionary*)orderresult_dict;
 @end

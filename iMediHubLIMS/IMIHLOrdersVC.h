@@ -12,6 +12,7 @@
 #import "FAImageView.h"
 #import "UIImage+FontAwesome.h"
 #import "MBProgressHUD.h"
+#import "ALOrders.h"
 @interface IMIHLOrdersVC : UIViewController<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *orders_tblview;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *backItemBar;
@@ -20,6 +21,7 @@
 @property (assign, nonatomic) BOOL isFileReady;
 @property (weak, nonatomic) NSString*pdfname;
 @property  (strong,nonatomic)IMIHLOrdersList*orderlist_obj;
+@property (strong, nonatomic) ALOrders*ordersObj;
 - (IBAction)backBarItemClick:(id)sender;
 
 @end

@@ -26,7 +26,8 @@
     //[self getOrdersService];
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText = @"Loading....";
-    [self performSelector:@selector(getOrdersService) withObject:nil afterDelay:0.1];
+    //[self performSelector:@selector(getOrdersService) withObject:nil afterDelay:0.1];
+    [self getOrdersService];
     
 }
 -(void)viewWillAppear:(BOOL)animated{
@@ -72,29 +73,6 @@
             [MBProgressHUD hideHUDForView:self.view animated:YES];
         }
     }];
-    
-    /*
-    if ([ordersrestcall getPatientOrdersList:self.patientid_str]==200) {
-        //NSLog(@"orders result:%@",ordersrestcall.restresult_dict);
-        self.orderlist_obj = [[IMIHLOrdersList alloc]init];
-        self.orderlist_obj = [self.orderlist_obj getOrdersListResult:ordersrestcall.restresult_dict];
-        [self.orders_tblview reloadData];
-        //[[NSUserDefaults standardUserDefaults] setObject:ordersrestcall.restresult_dict forKey:@"orders"];
-        //[[NSUserDefaults standardUserDefaults]setValue:ordersrestcall.restresult_dict forKey:@"order"];
-        //[[NSUserDefaults standardUserDefaults] synchronize];
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-
-    }else{
-        //NSLog(@"orderss  localldict:%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"orders"]);
-        //ordersrestcall.restresult_dict = [[NSUserDefaults standardUserDefaults] objectForKey:@"orders"];
-      //ordersrestcall.restresult_dict =  [[NSUserDefaults standardUserDefaults]valueForKey:@"order"];
-       // self.orderlist_obj = [[IMIHLOrdersList alloc]init];
-        //self.orderlist_obj = [self.orderlist_obj getOrdersListResult:ordersrestcall.restresult_dict];
-        //[self.orders_tblview reloadData];
-       [self showAlertController:@"Not Avialable"];
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-    }
-     */
     
     }
 
@@ -201,7 +179,7 @@
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.orderlist_obj.orderid_arr.count;
+    return self.orderlist_obj.orders.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -233,21 +211,26 @@
     //cell.textLabel.text=@"";
     // [cell.textLabel setText:[self.specialitynamelist_arr objectAtIndex:indexPath.row]];
     cell.layer.cornerRadius = 10.0f;
+    
+    id obj = [self.orderlist_obj.orders objectAtIndex:indexPath.section];
+    if ([obj class] == [ALOrders class]) {
+        ALOrders*orderObj = (ALOrders*)obj;
+    
     UILabel*lbl;
     
     //NSLog(@"cellcheck4");
     lbl=(UILabel*)[cell viewWithTag:1];
-    NSString*orderidtemp =[self.orderlist_obj.orderid_arr objectAtIndex:indexPath.section];
+    NSString*orderidtemp =orderObj.orderId;
     lbl.text =orderidtemp;
     lbl.hidden=NO;
     //NSLog(@"cellcheck5");
     
     lbl=(UILabel*)[cell viewWithTag:2];
-    lbl.text = [self.orderlist_obj.orderdate_arr objectAtIndex:indexPath.section];
+    lbl.text = orderObj.orderDate;
     lbl.hidden=NO;
     //NSLog(@"dates:%@",[self.orderlist_obj.orderdate_arr objectAtIndex:indexPath.row]);
     lbl=(UILabel*)[cell viewWithTag:3];
-    lbl.text = [self.orderlist_obj.ordertime_arr objectAtIndex:indexPath.section];
+    lbl.text = orderObj.orderTime;
     lbl.hidden=NO;
     
     UIButton* btninvoice = (UIButton*)[cell viewWithTag:4];
@@ -257,8 +240,8 @@
     
     btninvoice.layer.cornerRadius = btninvoice.bounds.size.height/2;
     
-    NSArray*arr = [self.orderlist_obj.orderservices_dict objectForKey:orderidtemp];
-    
+    NSArray*arr = [orderObj.orderServicesDict objectForKey:orderObj.orderId];
+        NSLog(@"arr services:%@",arr);
     UIButton* btnreport = (UIButton*)[cell viewWithTag:5];
     btnreport.tag = indexPath.section;
     if (arr.count!= 0) {
@@ -269,6 +252,7 @@
     }
     
     btnreport.layer.cornerRadius = btnreport.bounds.size.height/2;
+    }
     return cell;
 }
 
@@ -285,14 +269,18 @@
 
 -(IBAction)reportPreview:(id)sender{
      UIButton*btn = (UIButton*)sender;
-    self.orderid_str=[self.orderlist_obj.orderid_arr objectAtIndex:btn.tag];
+    self.ordersObj = [self.orderlist_obj.orders objectAtIndex:btn.tag];
+    self.orderid_str=self.ordersObj.orderId;
         [self loadViewControllerFromStoryBoard:@"orderserviceid"];
     
     
 }
 -(IBAction)invoicePreview:(id)sender{
     UIButton*btn = (UIButton*)sender;
-    self.orderid_str=[self.orderlist_obj.orderid_arr objectAtIndex:btn.tag];
+    ALOrders*orderObj = [self.orderlist_obj.orders objectAtIndex:btn.tag];
+    
+    self.orderid_str=orderObj.orderId;
+
     IMIHLRestService*restserviceObj = [IMIHLRestService getSharedInstance];
     [restserviceObj invoiceDownloadPdf:self.orderid_str :@"invoice" withCompletionHandler:^(NSInteger response) {
         if (response == 200) {
@@ -326,9 +314,10 @@
     [self.navigationController pushViewController:pdfviewobj animated:YES];
     }else{
         IMIHLOrderServiceListVC *orderserviceObj =  [storyboard instantiateViewControllerWithIdentifier:identifiername];
-        orderserviceObj.services_arr = [self.orderlist_obj.orderservices_dict objectForKey:self.orderid_str];
+        orderserviceObj.services_arr = [self.ordersObj.orderServicesDict objectForKey:self.orderid_str];
+        NSLog(@"orderserviceObj.services_arr:%@",orderserviceObj.services_arr);
         if (orderserviceObj.services_arr == nil) {
-            
+            NSLog(@"empty servicess");
         }else{
             orderserviceObj.orderid = self.orderid_str;
             [self.navigationController pushViewController:orderserviceObj animated:YES];

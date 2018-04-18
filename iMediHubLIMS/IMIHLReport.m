@@ -26,7 +26,8 @@
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText = @"Loading....";
-
+ [self callReportMain];
+    /*
     if (self.tempreportdict==nil) {
        // self.calledchg_str=@"1";
         
@@ -38,6 +39,7 @@
         reportvalue= [reportvalue getReportResult:self.tempreportdict];
         
     }
+     */
 }
 -(void)viewWillAppear:(BOOL)animated{
     //[self.backbarItem setImage:[UIImage imageWithIcon:@"fa-arrow-left" backgroundColor:[UIColor clearColor] iconColor:[UIColor whiteColor] fontSize:20]];
@@ -79,8 +81,8 @@
             self.tempreportdict = restreport.restresult_dict;
             NSLog(@"restreport.restresult_dict:%@",restreport.restresult_dict);
             //reportvalue= [reportvalue getReportResult:restreport.restresult_dict];
-            self.reportValueObj = [self.reportValueObj getReports:restreport.restresult_dict];
-            
+            //self.reportValueObj = [self.reportValueObj getReports:restreport.restresult_dict];
+            self.reportValueObj = [self.reportValueObj getReports:restreport.restresult_dict ifSearch:false];
             NSData *recentacitivitiesdata = [NSKeyedArchiver archivedDataWithRootObject:self.reportValueObj];
             
             [[NSUserDefaults standardUserDefaults] setObject:recentacitivitiesdata forKey:@"testedreports"];
@@ -550,6 +552,7 @@
     IMDIHLReport * mrvc = [storyboard instantiateViewControllerWithIdentifier:@"reportgraph"];
     ALReports*report = [self.reportValueObj.alReportObjsArry objectAtIndex:indexvalue];
    ALTest*testObj = [report.resultDataArrObj objectAtIndex:indexvalue];
+    NSLog(@"testid:%@",testObj.testid);
     mrvc.testId = testObj.testid;
     [self.navigationController pushViewController:mrvc animated:YES];
     

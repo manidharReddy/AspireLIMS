@@ -26,6 +26,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
@@ -53,9 +54,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "35E44D5B1D13C54600E8BD29"
-            BuildableName = "iMediHubLIMS.app"
-            BlueprintName = "iMediHubLIMS"
-            ReferencedContainer = "container:iMediHubLIMS.xcodeproj">
+            BuildableName = "AspireLIMS.app"
+            BlueprintName = "AspireLIMS"
+            ReferencedContainer = "container:AspireLIMS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -65,6 +66,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -76,9 +78,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "35E44D5B1D13C54600E8BD29"
-            BuildableName = "iMediHubLIMS.app"
-            BlueprintName = "iMediHubLIMS"
-            ReferencedContainer = "container:iMediHubLIMS.xcodeproj">
+            BuildableName = "AspireLIMS.app"
+            BlueprintName = "AspireLIMS"
+            ReferencedContainer = "container:AspireLIMS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,9 +97,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "35E44D5B1D13C54600E8BD29"
-            BuildableName = "iMediHubLIMS.app"
-            BlueprintName = "iMediHubLIMS"
-            ReferencedContainer = "container:iMediHubLIMS.xcodeproj">
+            BuildableName = "AspireLIMS.app"
+            BlueprintName = "AspireLIMS"
+            ReferencedContainer = "container:AspireLIMS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

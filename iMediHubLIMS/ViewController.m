@@ -137,23 +137,6 @@
   return login;
 }
 
--(BOOL)loggedPatient{
-    
-    //NSLog(@"loggedPatient");
-    IMIHLDBManager*dbObj = [IMIHLDBManager getSharedInstance];
-    NSArray*patientinfo_arr = [dbObj getPatientInfoDB];
-    //NSLog(@"logged data:%@",patientinfo_arr);
-    
-    if (patientinfo_arr==nil) {
-        return NO;
-    }else{
-        //NSLog(@"logged in:%@",patientinfo_arr);
-        self.patientId = [patientinfo_arr objectAtIndex:0];
-        
-        return YES;
-    }
-    return NO;
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

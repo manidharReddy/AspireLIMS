@@ -17,13 +17,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *submit_btn;
 @property (strong, nonatomic) IBOutlet UIView *popreason;
 @property (strong, nonatomic) IBOutlet UITextView *txtviewreason;
-@property(nonatomic,retain)NSMutableArray*appntmntid_arr;
-@property(nonatomic,retain)NSMutableArray*appntmntusrname_arr;
-@property(nonatomic,retain)NSMutableArray*appntmntdptname_arr;
-@property(nonatomic,retain)NSMutableArray*appntmnttestname_arr;
-@property(nonatomic,retain)NSMutableArray*appntmntdate_arr;
-@property(nonatomic,retain)NSMutableArray*appntmnttime_arr;
-@property(nonatomic,retain)NSMutableArray*appntmntstatus_arr;
 @end
 
 @implementation IMIHLAppointmentsTableViewController
@@ -86,29 +79,6 @@
 }
 
 
--(void)setData{
-    self.appntmntid_arr = [[NSMutableArray alloc]initWithObjects:@"apntmt101",@"apntmt102",@"apntmt103",@"apntmt104", nil];
-    //self.appntmntusrname_arr = [[NSMutableArray alloc]initWithObjects:@"Surya bia",@"Kiran bai",@"Naresh",@"Suresh Kumar", nil];
-    self.appntmntdptname_arr = [[NSMutableArray alloc]initWithObjects:@"Bio Chemistry",@"Microbiology",@"Pathology",@"Radiology", nil];
-    self.appntmnttestname_arr = [[NSMutableArray alloc]initWithObjects:@"Test1",@"Test2",@"Test3",@"Test4", nil];
-    self.appntmntdate_arr = [[NSMutableArray alloc]initWithObjects:@"2th June 2016",@"3th May 2016",@"21th Apr 2016",@"2th Apr 2016", nil];
-    self.appntmnttime_arr = [[NSMutableArray alloc]initWithObjects:@"11:30am",@"2:30pm",@"11:30am",@"4:30pm", nil];
-    [self.apntmentTblView reloadData];
-}
-
--(void)getLocalAppointments{
-    IMIHLDBManager*dbmanager = [IMIHLDBManager getSharedInstance];
-    [dbmanager getPatientAppointmentsList];
-    self.appntmntid_arr = dbmanager.apptid_arr;
-    self.appntmntdptname_arr = dbmanager.departmentname_arr;
-    self.appntmnttestname_arr = dbmanager.apptest_arr;
-    self.appntmntdate_arr = dbmanager.apptdate_arr;
-    //self.appntmnttime_arr = apptobj.bookedtime_arr;
-    self.appntmntstatus_arr = dbmanager.patientteststatus_arr;
-    
-    [self.apntmentTblView reloadData];
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
-}
 -(void)getAppointments{
     IMIHLRestService*restgetappntmts = [IMIHLRestService getSharedInstance];
    // int statuscode =[restgetappntmts getAllAppointments:self.patientid_str];
@@ -118,8 +88,8 @@
             if (restgetappntmts.restresult_dict!=nil) {
                 
                 
-                IMIHLAppointments*apptobj = [[IMIHLAppointments alloc]init];
-                apptobj = [apptobj getAppointmentsList:restgetappntmts.restresult_dict];
+                self.appointments = [[IMIHLAppointments alloc]init];
+                self.appointments = [self.appointments getAppointmentsList:restgetappntmts.restresult_dict];
                 //NSLog(@"apptobj apppnts arr:%@",apptobj.apointmentId_arr);
                 //self.deptidlist_arr = deptobj.deptid_arr;
                 //self.deptnamelist_arr = deptobj.deptname_arr;
@@ -129,14 +99,8 @@
                 
                 //}else{
                 
-                self.appntmntid_arr = apptobj.apointmentId_arr;
-                self.appntmntdptname_arr = apptobj.deptname_arr;
-                self.appntmnttestname_arr = apptobj.testname_arr;
-                self.appntmntdate_arr = apptobj.bookeddate_arr;
-                self.appntmnttime_arr = apptobj.bookedtime_arr;
-                self.appntmntstatus_arr = apptobj.status_arr;
                 
-                NSData *recentacitivitiesdata = [NSKeyedArchiver archivedDataWithRootObject:apptobj];
+                NSData *recentacitivitiesdata = [NSKeyedArchiver archivedDataWithRootObject:self.appointments];
                 
                 [[NSUserDefaults standardUserDefaults] setObject:recentacitivitiesdata forKey:@"previousAppts"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
@@ -156,14 +120,8 @@
             [self showAlertController:@"No Network Connection"];
             NSUserDefaults*userdefaults = [NSUserDefaults standardUserDefaults];
             NSData *data = [userdefaults objectForKey:@"previousAppts"];
-            IMIHLAppointments*apptobj  = (IMIHLAppointments*)[NSKeyedUnarchiver unarchiveObjectWithData:data];
-            self.appntmntid_arr = apptobj.apointmentId_arr;
-            self.appntmntdptname_arr = apptobj.deptname_arr;
-            self.appntmnttestname_arr = apptobj.testname_arr;
-            self.appntmntdate_arr = apptobj.bookeddate_arr;
-            self.appntmnttime_arr = apptobj.bookedtime_arr;
-            self.appntmntstatus_arr = apptobj.status_arr;
-            [self.apntmentTblView reloadData];
+            self.appointments = (IMIHLAppointments*)[NSKeyedUnarchiver unarchiveObjectWithData:data];
+                        [self.apntmentTblView reloadData];
         }else{
             //NSLog(@"Error Message:%@",[restgetappntmts.restresult_dict objectForKey:@"message"]);
             [self showAlertController:@"You dnt have any appointments"];
@@ -200,7 +158,7 @@
 #pragma mark - Table view data source
 //////////////////////////////TableView Delegate Methods/////////////////////
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return self.appntmntid_arr.count;
+    return self.appointments.appoinments.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -231,6 +189,9 @@
 
     cell.layer.cornerRadius = 10.0f;
     
+    id obj = [self.appointments.appoinments objectAtIndex:indexPath.section];
+    if ([obj class] == [ALAppointments class]) {
+        ALAppointments*appObj = (ALAppointments*)obj;
     
     UILabel*lbl;
     
@@ -244,11 +205,11 @@
     lbl=(UILabel*)[cell viewWithTag:2];
     //lbl.text = [self.appntmntdptname_arr objectAtIndex:indexPath.row];
     UITextView*txtView=(UITextView*)[cell viewWithTag:3];
-    txtView.text = [self.appntmnttestname_arr objectAtIndex:indexPath.section];
+        txtView.text = appObj.testName;
     lbl=(UILabel*)[cell viewWithTag:4];
-    lbl.text = [self.appntmntdate_arr objectAtIndex:indexPath.row];
+        lbl.text = appObj.bookedDate;
     lbl=(UILabel*)[cell viewWithTag:5];
-    lbl.text = [NSString stringWithFormat:@"Time:%@",[self.appntmnttime_arr objectAtIndex:indexPath.section]];
+    lbl.text = [NSString stringWithFormat:@"Time:%@",appObj.bookedTime];
     
     //lbl.hidden=YES;
     
@@ -260,35 +221,35 @@
     btnreschedule.layer.cornerRadius = btncancel.bounds.size.height/2;
     btnreschedule.clipsToBounds = YES;
     UIButton*btn = (UIButton*)[cell viewWithTag:6];
-    [btn setTitle:[self.appntmntstatus_arr objectAtIndex:indexPath.section] forState:UIControlStateNormal];
+    [btn setTitle:appObj.status forState:UIControlStateNormal];
 
-    if ([[self.appntmntstatus_arr objectAtIndex:indexPath.section] isEqualToString:@"pendding"]) {
+    if ([appObj.status isEqualToString:@"pending"]) {
     //btn.backgroundColor = [UIColor colorWithRed:241.0/255.0 green:145.0/255.0 blue:50.0/255.0 alpha:1.0];
         [btn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
         btncancel.enabled=YES;
         btnreschedule.enabled=YES;
-        [btncancel setTag:[[self.appntmntid_arr objectAtIndex:indexPath.section] integerValue]];
+        [btncancel setTag:[appObj.apointmentId integerValue]];
         [btncancel addTarget:self action:@selector(submit:) forControlEvents:UIControlEventTouchUpInside];
-        [btnreschedule setTag:[[self.appntmntid_arr objectAtIndex:indexPath.section] integerValue]];
+        [btnreschedule setTag:[appObj.apointmentId integerValue]];
         [btnreschedule addTarget:self action:@selector(reScheduleSubmit:) forControlEvents:UIControlEventTouchUpInside];
 
-    }else if ([[self.appntmntstatus_arr objectAtIndex:indexPath.section] isEqualToString:@"confirmed"]){
+    }else if ([appObj.status isEqualToString:@"confirmed"]){
         //btn.backgroundColor = [UIColor colorWithRed:0/255.0 green:204.0/255.0 blue:102.0/255.0 alpha:1.0];
         [btn setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
         btncancel.enabled=YES;
         btnreschedule.enabled=YES;
-        [btncancel setTag:[[self.appntmntid_arr objectAtIndex:indexPath.section] integerValue]];
+        [btncancel setTag:[appObj.apointmentId integerValue]];
         [btncancel addTarget:self action:@selector(submit:) forControlEvents:UIControlEventTouchUpInside];
-        [btnreschedule setTag:[[self.appntmntid_arr objectAtIndex:indexPath.section] integerValue]];
+        [btnreschedule setTag:[appObj.apointmentId integerValue]];
         [btnreschedule addTarget:self action:@selector(reScheduleSubmit:) forControlEvents:UIControlEventTouchUpInside];
 
-    }else if ([[self.appntmntstatus_arr objectAtIndex:indexPath.section] isEqualToString:@"Rescheduled"]) {
+    }else if ([appObj.status isEqualToString:@"Rescheduled"]) {
         //btn.backgroundColor = [UIColor colorWithRed:229.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1.0];
         [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
         btncancel.enabled=NO;
         btnreschedule.enabled=NO;
         
-    }else if ([[self.appntmntstatus_arr objectAtIndex:indexPath.section] isEqualToString:@"Cancelled"]) {
+    }else if ([appObj.status isEqualToString:@"Cancelled"]) {
         btn.backgroundColor = [UIColor colorWithRed:229.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1.0];
         [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
         btncancel.enabled=NO;
@@ -311,7 +272,7 @@
     
     //btn.hidden=YES;
     
-    
+    }
    
     
     return cell;

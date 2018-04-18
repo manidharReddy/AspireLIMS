@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3501C8452085FC6E0047952C /* ALAppointments.m in Sources */ = {isa = PBXBuildFile; fileRef = 3501C8442085FC6E0047952C /* ALAppointments.m */; };
 		35156BE11D40E0B100261AA2 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 35156BE01D40E0B100261AA2 /* libsqlite3.0.tbd */; };
 		358A8CD01D17F164004F56FA /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 358A8CCF1D17F164004F56FA /* fontawesome-webfont.ttf */; };
 		358A8CD11D17F164004F56FA /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 358A8CCF1D17F164004F56FA /* fontawesome-webfont.ttf */; };
@@ -175,6 +176,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3501C8432085FC6E0047952C /* ALAppointments.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALAppointments.h; sourceTree = "<group>"; };
+		3501C8442085FC6E0047952C /* ALAppointments.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALAppointments.m; sourceTree = "<group>"; };
 		35156BE01D40E0B100261AA2 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		358A8CCF1D17F164004F56FA /* fontawesome-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fontawesome-webfont.ttf"; sourceTree = "<group>"; };
 		35CF68141D14070F00A90B69 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -980,6 +983,8 @@
 				386A3D8E207C96F600643B68 /* ALTest.m */,
 				386A3D90207C980E00643B68 /* ALGroup.h */,
 				386A3D91207C980E00643B68 /* ALGroup.m */,
+				3501C8432085FC6E0047952C /* ALAppointments.h */,
+				3501C8442085FC6E0047952C /* ALAppointments.m */,
 			);
 			path = ALModel;
 			sourceTree = "<group>";
@@ -1235,6 +1240,7 @@
 				38E4C4AA1EC3F1400091640B /* NIDropDown.m in Sources */,
 				38E4C47C1EC3D4920091640B /* UIImage+CropRotate.m in Sources */,
 				35E44D9E1D13EFCB00E8BD29 /* MFSideMenuContainerViewController.m in Sources */,
+				3501C8452085FC6E0047952C /* ALAppointments.m in Sources */,
 				38E4C4CE1EC3F1B90091640B /* FSCalendar.m in Sources */,
 				38D7FA411E428DF300421E12 /* MyReportsVC.m in Sources */,
 				38FA9BD120579B2300E1B02F /* ALRecentActivity.m in Sources */,

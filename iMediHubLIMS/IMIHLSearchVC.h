@@ -11,6 +11,9 @@
 #import "FAImageView.h"
 #import "UIImage+FontAwesome.h"
 #import "DropDownListView.h"
+#import "IMIHLReportValue.h"
+#import "ALReports.h"
+
 @interface IMIHLSearchVC : UITableViewController<UISearchBarDelegate,kDropDownListViewDelegate>
 @property (strong, nonatomic) NSString*patientid_str;
 @property(strong,nonatomic) NSMutableArray*serviceid_arr;
@@ -20,5 +23,5 @@
 - (IBAction)backbaritemClick:(id)sender;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchbar;
 @property (strong,nonatomic)NSString*servicename_str;
-
+@property (strong, nonatomic) IMIHLReportValue*reportValueObj;
 @end
